@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typeorm";
+import {TypeIdentification} from './type.identification.entity';
 
 @Entity()
 export class Supplier {
@@ -9,8 +10,9 @@ export class Supplier {
     @Column()
     name: string;
 
-    @Column()
-    type_identification: number;
+    @OneToOne(type => TypeIdentification)
+    @JoinColumn()
+    id_type_identification: TypeIdentification;
 
     @Column()
     identification: string;

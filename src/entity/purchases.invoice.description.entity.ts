@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typeorm";
+import {SupplierInvoice} from './supplier.invoices.entity';
 
 @Entity()
 export class PurchasesInvoiceDescription {
@@ -6,8 +7,9 @@ export class PurchasesInvoiceDescription {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    id_invoice: number;
+    @OneToOne(type => SupplierInvoice)
+    @JoinColumn()
+    id_invoice: SupplierInvoice;
 
     @Column()
     id_item: number;
