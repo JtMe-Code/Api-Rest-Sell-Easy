@@ -11,13 +11,10 @@ export class Customer {
     @Column()
     name: string;
 
-    @OneToOne(type => TypeIdentification)
+    @OneToMany(type => TypeIdentification, type_identification => type_identification.customer)
     @JoinColumn()
-    id_type_identification: TypeIdentification;
+    type_identification: TypeIdentification;
 
     @Column()
     identification: string;
-
-    @OneToOne(type => CustomerInvoices, CustomerInvoices => CustomerInvoices.id_customer)
-    id_customer_invoices: CustomerInvoices
 }

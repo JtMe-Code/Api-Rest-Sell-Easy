@@ -10,9 +10,9 @@ export class Supplier {
     @Column()
     name: string;
 
-    @OneToOne(type => TypeIdentification)
+    @OneToMany(type => TypeIdentification)
     @JoinColumn()
-    id_type_identification: TypeIdentification;
+    id_type_identification: TypeIdentification[];
 
     @Column()
     identification: string;

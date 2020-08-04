@@ -7,7 +7,7 @@ export class CustomerInvoices {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(type => Customer, id_customer => id_customer.id_customer_invoices)
+    @ManyToOne(type => Customer)
     @JoinColumn()
     id_customer: Customer;
 
