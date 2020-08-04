@@ -7,7 +7,7 @@ export class SaleInvoiceDescription {
     id: number;
 
     @Column()
-    id_factura: number;
+    id_invoice: number;
 
     @Column()
     id_item: number;

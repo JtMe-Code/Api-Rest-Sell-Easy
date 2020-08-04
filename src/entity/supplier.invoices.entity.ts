@@ -10,6 +10,6 @@ export class SupplierInvoice {
     id_proveedor: number;
 
     @Column()
-    fecha: Date;
+    date_creation: Date;
 
 }

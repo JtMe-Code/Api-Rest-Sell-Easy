@@ -7,9 +7,9 @@ export class CustomerInvoices {
     id: number;
 
     @Column()
-    id_cliente: number;
+    id_customer: number;
 
     @Column()
-    fecha: string;
+    date_creation: string;
 
 }
