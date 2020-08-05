@@ -1,6 +1,8 @@
+import { TypeIdentification } from '../entity/type.identification.entity';
+
 export interface ICustomer {
     id: number,
     name: string,
-    typeIdentification: number,
+    typeIdentification: TypeIdentification,
     identification: string
 }

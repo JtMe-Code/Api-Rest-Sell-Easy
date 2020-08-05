@@ -1,6 +1,8 @@
+import { Items } from '../entity/items.entity';
+
 export interface IPurchaseInvoiceDescription {
     id: number,
     supplierInvoice: number,
-    items: number,
+    items: Items,
     quantity: number
 }

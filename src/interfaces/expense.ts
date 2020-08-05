@@ -1,6 +1,8 @@
+import { TypeExpense } from '../entity/type.expense.entity';
+
 export interface IExpense {
     id: number,
-    typeExpense: string,
+    typeExpense: TypeExpense,
     description: string,
     items: number,
     quantity: number,

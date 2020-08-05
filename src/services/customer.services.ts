@@ -18,7 +18,8 @@ export class CustomerService {
             return `Ya existe un cliente con ${this.requestBody.typeIdentification} ${this.requestBody.identification}`;
         }
 
-        const saveData = await this.customer.save(this.requestBody);
+        const data = await this.customer.create(this.requestBody);
+        const saveData = await this.customer.save(data);
         return saveData;
     }
 
