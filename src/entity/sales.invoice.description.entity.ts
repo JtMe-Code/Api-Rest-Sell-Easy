@@ -8,7 +8,7 @@ export class SaleInvoiceDescription {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => CustomerInvoices, customerInvoices => customerInvoices.id)
+    @ManyToOne(type => CustomerInvoices, customerInvoices => customerInvoices.saleInvoiceDescription)
     customerInvoices: CustomerInvoices;
 
     @ManyToMany(type => Items)

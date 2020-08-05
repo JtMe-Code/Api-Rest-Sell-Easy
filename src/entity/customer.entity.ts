@@ -17,6 +17,6 @@ export class Customer {
     @Column()
     identification: string;
 
-    @OneToMany(type => CustomerInvoices, customer_invoice => customer_invoice.customer)
-    customer_invoice: CustomerInvoices[];
+    @OneToMany(type => CustomerInvoices, customerInvoice => customerInvoice.customer)
+    customerInvoice: CustomerInvoices[];
 }
