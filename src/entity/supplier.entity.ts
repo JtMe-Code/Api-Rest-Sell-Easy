@@ -1,6 +1,6 @@
 import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 import {TypeIdentification} from './type.identification.entity';
-import { SupplierInvoice } from './supplier.invoices.entity';
+import { SupplierInvoice } from './supplier.invoice.entity';
 
 @Entity()
 export class Supplier {
