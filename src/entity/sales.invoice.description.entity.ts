@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable} from "typeorm";
 import {CustomerInvoices} from './customer.invoices.entity';
 import {Items} from './items.entity';
 
@@ -8,13 +8,12 @@ export class SaleInvoiceDescription {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(type => CustomerInvoices)
-    @JoinColumn()
-    id_invoice: CustomerInvoices;
+    @ManyToOne(type => CustomerInvoices, customerInvoices => customerInvoices.id)
+    customerInvoices: CustomerInvoices;
 
-    @OneToOne(type => Items)
-    @JoinColumn()
-    id_item: Items;
+    @ManyToMany(type => Items)
+    @JoinTable()
+    items: Items[];
 
     @Column()
     quantity: number;

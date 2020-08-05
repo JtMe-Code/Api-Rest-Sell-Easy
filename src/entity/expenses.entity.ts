@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
 import {TypeExpenses} from './type.expenses.entity'
 
 @Entity()
@@ -7,15 +7,14 @@ export class Expenses {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(type => TypeExpenses)
-    @JoinColumn()
-    id_type_expenses: TypeExpenses;
+    @ManyToOne(type => TypeExpenses, type_expenses => type_expenses.id)
+    type_expenses: TypeExpenses;
 
     @Column()
     description: string;
 
     @Column()
-    id_item: number;
+    item: number;
 
     @Column()
     quantity: number;

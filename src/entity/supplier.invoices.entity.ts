@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
 import {Supplier} from './supplier.entity';
 
 @Entity()
@@ -7,9 +7,8 @@ export class SupplierInvoice {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToOne(type => Supplier)
-    @JoinColumn()
-    id_supplier: Supplier;
+    @ManyToOne(type => Supplier, supplier => supplier.id)
+    supplier: Supplier;
 
     @Column()
     date_creation: Date;

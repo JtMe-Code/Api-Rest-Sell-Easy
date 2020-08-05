@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
-import { Customer } from "./customer.entity";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import { Expenses } from "./expenses.entity";
 
 @Entity()
 export class TypeExpenses {
@@ -10,7 +10,7 @@ export class TypeExpenses {
     @Column()
     description: string;
 
-    @OneToMany(type => Customer, customer => customer.)
-    customer: Customer[];
+    @OneToMany(type => Expenses, expenses => expenses.type_expenses)
+    expenses: Expenses[];
 
 }

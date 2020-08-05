@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
 import {Customer} from './customer.entity';
 
 @Entity()
@@ -7,11 +7,10 @@ export class CustomerInvoices {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => Customer)
-    @JoinColumn()
-    id_customer: Customer;
+    @ManyToOne(type => Customer, customer => customer.id)
+    customer: Customer;
 
     @Column()
-    date_creation: string;    
+    date_creation: Date;    
 
 }
