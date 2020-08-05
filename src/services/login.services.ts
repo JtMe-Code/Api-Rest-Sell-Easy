@@ -1,12 +1,15 @@
 import {getRepository} from 'typeorm';
+import { Request } from 'express';
 import {Login} from '../entity/login.entity';
 import {ILogin} from '../interfaces/login';
 import {Encrypt} from './helpers/encrypt';
 import {JWT} from './helpers/jwt';
 
 export class LoginServices {
+    private requestBody: ILogin;
     private login = getRepository(Login);
-    constructor(private requestBody: ILogin){
+    constructor(req: Request){
+        this.requestBody = req.body;
     }
 
     async signup(): Promise<string | ILogin>{
