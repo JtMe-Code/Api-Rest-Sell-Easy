@@ -1,6 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 import {TypeIdentification} from './type.identification.entity';
-import { SupplierInvoice } from "./supplier.invoices.entity";
+import { SupplierInvoice } from './supplier.invoices.entity';
 
 @Entity()
 export class Supplier {
@@ -11,8 +11,8 @@ export class Supplier {
     @Column()
     name: string;
 
-    @ManyToOne(type => TypeIdentification, type_identification => type_identification.customer)
-    type_identification: TypeIdentification;
+    @ManyToOne(type => TypeIdentification, typeIdentification => typeIdentification.supplier)
+    typeIdentification: TypeIdentification;
 
     @Column()
     identification: string;

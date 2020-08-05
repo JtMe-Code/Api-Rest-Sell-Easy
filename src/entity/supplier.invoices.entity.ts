@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 import {Supplier} from './supplier.entity';
+import { PurchaseInvoiceDescription } from './purchase.invoice.description.entity';
 
 @Entity()
 export class SupplierInvoice {
@@ -7,10 +8,13 @@ export class SupplierInvoice {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => Supplier, supplier => supplier.id)
+    @ManyToOne(type => Supplier, supplier => supplier.supplierInvoice)
     supplier: Supplier;
 
     @Column()
-    date_creation: Date;
+    dateCreation: Date;
+
+    @OneToMany(type => PurchaseInvoiceDescription, purchaseInvoiceDescription => purchaseInvoiceDescription.supplierInvoice)
+    purchaseInvoiceDescription: PurchaseInvoiceDescription[];
 
 }

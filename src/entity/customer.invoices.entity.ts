@@ -1,9 +1,9 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 import {Customer} from './customer.entity';
-import { SaleInvoiceDescription } from "./sales.invoice.description.entity";
+import { SaleInvoiceDescription } from './sales.invoice.description.entity';
 
 @Entity()
-export class CustomerInvoices {
+export class CustomerInvoice {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -12,9 +12,9 @@ export class CustomerInvoices {
     customer: Customer;
 
     @Column()
-    date_creation: Date;
+    dateCreation: Date;
     
-    @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.customerInvoices)
+    @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.customerInvoice)
     saleInvoiceDescription: SaleInvoiceDescription[];
 
 }
