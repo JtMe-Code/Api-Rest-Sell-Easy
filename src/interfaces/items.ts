@@ -3,6 +3,6 @@ export interface IItems {
     description: string,
     stock: number,
     barcode: string,
-    sale_price: number,
-    purchase_price: number
+    salePrice: number,
+    purchasePrice: number
 }

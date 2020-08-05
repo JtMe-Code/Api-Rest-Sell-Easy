@@ -1,6 +1,6 @@
 export interface ISupplier {
     id: number,
     name: string,
-    type_identification: number,
+    typeIdentification: number,
     identification: string
 }

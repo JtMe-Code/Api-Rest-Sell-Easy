@@ -1,4 +1,4 @@
-export interface ITypeIdentification{
+export interface ITypeIdentification {
     id: number,
     description: string
 }

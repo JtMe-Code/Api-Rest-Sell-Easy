@@ -18,10 +18,10 @@ export class Items {
     barcode: string;
 
     @Column()
-    sale_price: number;
+    salePrice: number;
 
     @Column()
-    purchase_price: number;
+    purchasePrice: number;
 
     @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.items)
     saleInvoiceDescription: SaleInvoiceDescription[];
