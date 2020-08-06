@@ -14,12 +14,6 @@ export class Expense {
     description: string;
 
     @Column()
-    items: number;
-
-    @Column()
-    quantity: number;
-
-    @Column()
     value: number;
 
 }
