@@ -3,6 +3,8 @@ import { Request } from 'express';
 import { CustomerInvoice } from '../entity/customer.invoice.entity';
 import { ICustomerInvoice } from '../interfaces/customer.invoice';
 
+// *CRU -D*
+
 export class CustomerInvoiceService {
     private requestBody: ICustomerInvoice;
     private requestParam: any;
@@ -12,7 +14,7 @@ export class CustomerInvoiceService {
         this.requestParam = req.params;
     }
     
-    async create():Promise<string | ICustomerInvoice>{
+    async create():Promise<ICustomerInvoice>{
         const data = this.customerInvoice.create(this.requestBody);
         const saveData = await this.customerInvoice.save(data);
         return saveData;
@@ -34,7 +36,7 @@ export class CustomerInvoiceService {
         return result;
     }
 
-    async update(){
+    async update():Promise<string | ICustomerInvoice>{
         const result = await this.customerInvoice.findOne({id: this.requestParam});
         if(!result){
             return "no existe la factura";

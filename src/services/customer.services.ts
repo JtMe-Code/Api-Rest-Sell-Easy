@@ -43,13 +43,13 @@ export class CustomerService {
         return result;
     }
 
-    async update(){
+    async update():Promise<string | ICustomer>{
         const result = await this.customer.findOne({id: this.requestParam});
         if(!result){
             return "no existe el cliente";
         }
         const update = this.customer.merge(result, this.requestBody);
-        const saveUpdate = this.customer.save(update);
+        const saveUpdate = await this.customer.save(update);
         return saveUpdate;
     }
 }

@@ -36,7 +36,7 @@ export class ItemsService {
         return result;
     }
 
-    async update(){
+    async update():Promise<string | IItems>{
         const result = await this.items.findOne({id: this.requestParam});
         if(!result){
             return "gasto no encontrado";

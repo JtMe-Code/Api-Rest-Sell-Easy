@@ -1,6 +1,6 @@
 import { Supplier } from '../entity/supplier.entity';
 
-export interface ISupplierInvoce {
+export interface ISupplierInvoice {
     id: number,
     supplier: Supplier,
     dateCreation: Date

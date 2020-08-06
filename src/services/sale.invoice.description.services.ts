@@ -5,44 +5,44 @@ import { SaleInvoiceDescription } from '../entity/sale.invoice.description.entit
 
 // *CRU -D*
 
-export class PurchaseInvoiceDescriptionService {
-    private requestBody: IPurchaseInvoiceDescription;
+export class SaleInvoiceDescriptionService {
+    private requestBody: ISaleInvoiceDescription;
     private requestParam: any;
-    private purchaseInvoiceDescription = getRepository(PurchaseInvoiceDescription);
+    private saleInvoiceDescription = getRepository(SaleInvoiceDescription);
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;
     }
     
-    async create():Promise<IPurchaseInvoiceDescription | IPurchaseInvoiceDescription[]>{
-        const data = this.purchaseInvoiceDescription.create(this.requestBody);
-        const saveData = await this.purchaseInvoiceDescription.save(data);
+    async create():Promise<ISaleInvoiceDescription | ISaleInvoiceDescription[]>{
+        const data = this.saleInvoiceDescription.create(this.requestBody);
+        const saveData = await this.saleInvoiceDescription.save(data);
         return saveData;
     }
 
-    async read():Promise<string | IPurchaseInvoiceDescription>{
-        const result = await this.purchaseInvoiceDescription.findOne({id: this.requestParam});
+    async read():Promise<string | ISaleInvoiceDescription>{
+        const result = await this.saleInvoiceDescription.findOne({id: this.requestParam});
         if(!result){
             return "gasto no encontrado";
         }
         return result;
     }
 
-    async readAll():Promise<string | IPurchaseInvoiceDescription[]>{
-        const result = await this.purchaseInvoiceDescription.find();
+    async readAll():Promise<string | ISaleInvoiceDescription[]>{
+        const result = await this.saleInvoiceDescription.find();
         if(!result){
             return "sin resultados";
         }
         return result;
     }
 
-    async update():Promise<string | IPurchaseInvoiceDescription>{
-        const result = await this.purchaseInvoiceDescription.findOne({id: this.requestParam});
+    async update():Promise<string | ISaleInvoiceDescription>{
+        const result = await this.saleInvoiceDescription.findOne({id: this.requestParam});
         if(!result){
             return "gasto no encontrado";
         }
-        const update = this.purchaseInvoiceDescription.merge(result, this.requestBody);
-        const saveUpdate = await this.purchaseInvoiceDescription.save(update);
+        const update = this.saleInvoiceDescription.merge(result, this.requestBody);
+        const saveUpdate = await this.saleInvoiceDescription.save(update);
         return saveUpdate;
     }
 }

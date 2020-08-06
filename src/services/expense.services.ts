@@ -3,6 +3,8 @@ import { Request } from 'express';
 import { IExpense } from '../interfaces/expense';
 import { Expense } from '../entity/expense.entity';
 
+// *CRU -D*
+
 export class ExpenseService {
     private requestBody: IExpense;
     private requestParam: any;
@@ -34,7 +36,7 @@ export class ExpenseService {
         return result;
     }
 
-    async update(){
+    async update():Promise<string | IExpense>{
         const result = await this.expense.findOne({id: this.requestParam});
         if(!result){
             return "gasto no encontrado";

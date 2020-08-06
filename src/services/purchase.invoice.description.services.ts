@@ -14,7 +14,7 @@ export class PurchaseInvoiceDescriptionService {
         this.requestParam = req.params;
     }
     
-    async create():Promise<string | IPurchaseInvoiceDescription>{
+    async create():Promise<IPurchaseInvoiceDescription | IPurchaseInvoiceDescription[]>{
         const data = this.purchaseInvoiceDescription.create(this.requestBody);
         const saveData = await this.purchaseInvoiceDescription.save(data);
         return saveData;
@@ -36,7 +36,7 @@ export class PurchaseInvoiceDescriptionService {
         return result;
     }
 
-    async update(){
+    async update():Promise<string | IPurchaseInvoiceDescription>{
         const result = await this.purchaseInvoiceDescription.findOne({id: this.requestParam});
         if(!result){
             return "gasto no encontrado";

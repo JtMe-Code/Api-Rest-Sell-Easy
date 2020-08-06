@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
-import { SaleInvoiceDescription } from './sales.invoice.description.entity';
+import { SaleInvoiceDescription } from './sale.invoice.description.entity';
 import { PurchaseInvoiceDescription } from './purchase.invoice.description.entity';
 
 @Entity()

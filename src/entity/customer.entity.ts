@@ -19,4 +19,5 @@ export class Customer {
 
     @OneToMany(type => CustomerInvoice, customerInvoice => customerInvoice.customer)
     customerInvoice: CustomerInvoice[];
+    
 }
