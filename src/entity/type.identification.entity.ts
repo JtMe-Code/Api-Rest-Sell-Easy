@@ -1,9 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column, Tree, TreeChildren} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
 import { Customer } from './customer.entity';
 import { Supplier } from './supplier.entity';
 
 @Entity()
-@Tree("materialized-path")
 export class TypeIdentification {
 
     @PrimaryGeneratedColumn()
@@ -12,10 +11,10 @@ export class TypeIdentification {
     @Column()
     description: string;
 
-    @TreeChildren()
+    @OneToMany(type => Customer, customer => customer.typeIdentification)
     customer: Customer[];
 
-    @TreeChildren()
+    @OneToMany(type => Supplier, supplier => supplier.typeIdentification)
     supplier: Supplier[];
 
 }

@@ -1,9 +1,8 @@
-import {Entity, Column, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 import {TypeIdentification} from './type.identification.entity';
 import { CustomerInvoice } from './customer.invoice.entity';
 
 @Entity()
-@Tree("materialized-path")
 export class Customer {
 
     @PrimaryGeneratedColumn()
@@ -12,13 +11,13 @@ export class Customer {
     @Column()
     name: string;
 
-    @TreeParent()
+    @ManyToOne(type => TypeIdentification, typeIdentification => typeIdentification.customer)
     typeIdentification: TypeIdentification;
 
     @Column()
     identification: string;
 
-    @TreeChildren()
+    @OneToMany(type => CustomerInvoice, customerInvoice => customerInvoice.customer)
     customerInvoice: CustomerInvoice[];
     
 }
