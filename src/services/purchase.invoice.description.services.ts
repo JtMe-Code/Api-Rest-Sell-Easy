@@ -6,12 +6,10 @@ import { PurchaseInvoiceDescription } from '../entity/purchase.invoice.descripti
 // *CRU -D*
 
 export class PurchaseInvoiceDescriptionService {
-    private requestBody: IPurchaseInvoiceDescription;
-    private requestParam: any;
+    private requestBody: IPurchaseInvoiceDescription[];
     private purchaseInvoiceDescription = getRepository(PurchaseInvoiceDescription);
     constructor(req: Request){
         this.requestBody = req.body;
-        this.requestParam = req.params;
     }
     
     async create():Promise<IPurchaseInvoiceDescription | IPurchaseInvoiceDescription[]>{
@@ -20,11 +18,8 @@ export class PurchaseInvoiceDescriptionService {
         return saveData;
     }
 
-    async read():Promise<string | IPurchaseInvoiceDescription>{
-        const result = await this.purchaseInvoiceDescription.findOne({id: this.requestParam});
-        if(!result){
-            return `no existe la factura ${this.requestParam}`;
-        }
+    async readInvoiceDescription():Promise<string | IPurchaseInvoiceDescription[]>{
+        const result = await this.purchaseInvoiceDescription.find({});
         return result;
     }
 
@@ -34,15 +29,5 @@ export class PurchaseInvoiceDescriptionService {
             return "sin resultados";
         }
         return result;
-    }
-
-    async update():Promise<string | IPurchaseInvoiceDescription>{
-        const result = await this.purchaseInvoiceDescription.findOne({id: this.requestParam});
-        if(!result){
-            return `no existe la factura ${this.requestParam}`;
-        }
-        const update = this.purchaseInvoiceDescription.merge(result, this.requestBody);
-        const saveUpdate = await this.purchaseInvoiceDescription.save(update);
-        return saveUpdate;
     }
 }

@@ -2,7 +2,7 @@ export interface IItems {
     id: number,
     description: string,
     stock: number,
-    barcode: string,
+    barcode?: string,
     salePrice: number,
     purchasePrice: number
 }

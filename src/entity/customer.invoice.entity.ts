@@ -14,7 +14,9 @@ export class CustomerInvoice {
     @Column()
     dateCreation: Date;
     
-    @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.customerInvoice)
+    @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.customerInvoice, {
+        cascade: true
+    })
     saleInvoiceDescription: SaleInvoiceDescription[];
 
 }

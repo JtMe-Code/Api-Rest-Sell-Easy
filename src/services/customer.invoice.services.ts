@@ -23,7 +23,7 @@ export class CustomerInvoiceService {
     async read():Promise<string | ICustomerInvoice>{
         const result = await this.customerInvoice.findOne({id: this.requestParam});
         if(!result){
-            return `no existe la factura ${this.requestParam}`;
+            return "no existe la factura";
         }
         return result;
     }
@@ -39,7 +39,7 @@ export class CustomerInvoiceService {
     async update():Promise<string | ICustomerInvoice>{
         const result = await this.customerInvoice.findOne({id: this.requestParam});
         if(!result){
-            return `no existe la factura ${this.requestParam}`;
+            return "no existe la factura";
         }
         const update = this.customerInvoice.merge(result, this.requestBody);
         const saveUpdate = await this.customerInvoice.save(update);

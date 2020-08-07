@@ -6,12 +6,10 @@ import { SaleInvoiceDescription } from '../entity/sale.invoice.description.entit
 // *CRU -D*
 
 export class SaleInvoiceDescriptionService {
-    private requestBody: ISaleInvoiceDescription;
-    private requestParam: any;
+    private requestBody: ISaleInvoiceDescription[];
     private saleInvoiceDescription = getRepository(SaleInvoiceDescription);
     constructor(req: Request){
         this.requestBody = req.body;
-        this.requestParam = req.params;
     }
     
     async create():Promise<ISaleInvoiceDescription | ISaleInvoiceDescription[]>{
@@ -20,11 +18,8 @@ export class SaleInvoiceDescriptionService {
         return saveData;
     }
 
-    async read():Promise<string | ISaleInvoiceDescription>{
-        const result = await this.saleInvoiceDescription.findOne({id: this.requestParam});
-        if(!result){
-            return "gasto no encontrado";
-        }
+    async read():Promise<string | ISaleInvoiceDescription[]>{
+        const result = await this.saleInvoiceDescription.find();
         return result;
     }
 
@@ -34,15 +29,5 @@ export class SaleInvoiceDescriptionService {
             return "sin resultados";
         }
         return result;
-    }
-
-    async update():Promise<string | ISaleInvoiceDescription>{
-        const result = await this.saleInvoiceDescription.findOne({id: this.requestParam});
-        if(!result){
-            return "gasto no encontrado";
-        }
-        const update = this.saleInvoiceDescription.merge(result, this.requestBody);
-        const saveUpdate = await this.saleInvoiceDescription.save(update);
-        return saveUpdate;
     }
 }
