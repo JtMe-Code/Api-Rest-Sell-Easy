@@ -1,8 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, Tree, TreeChildren} from 'typeorm';
 import { SaleInvoiceDescription } from './sale.invoice.description.entity';
 import { PurchaseInvoiceDescription } from './purchase.invoice.description.entity';
 
 @Entity()
+@Tree("materialized-path")
 export class Items {
 
     @PrimaryGeneratedColumn()
@@ -23,10 +24,10 @@ export class Items {
     @Column()
     purchasePrice: number;
 
-    @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.items)
+    @TreeChildren()
     saleInvoiceDescription: SaleInvoiceDescription[];
 
-    @OneToMany(type => PurchaseInvoiceDescription, purchaseInvoiceDescription => purchaseInvoiceDescription.items)
+    @TreeChildren()
     purchaseInvoiceDescription: PurchaseInvoiceDescription[];
 
 }

@@ -1,7 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, Tree, TreeChildren} from 'typeorm';
 import { Expense } from './expense.entity';
 
 @Entity()
+@Tree("materialized-path")
 export class TypeExpense {
 
     @PrimaryGeneratedColumn()
@@ -10,7 +11,7 @@ export class TypeExpense {
     @Column()
     description: string;
 
-    @OneToMany(type => Expense, expense => expense.typeExpense)
+    @TreeChildren()
     expense: Expense[];
 
 }

@@ -23,7 +23,7 @@ export class ExpenseService {
     async read():Promise<string | IExpense>{
         const result = await this.expense.findOne({id: this.requestParam});
         if(!result){
-            return "gasto no encontrado";
+            return `no existe el gasto ${this.requestParam}`;
         }
         return result;
     }
@@ -39,7 +39,7 @@ export class ExpenseService {
     async update():Promise<string | IExpense>{
         const result = await this.expense.findOne({id: this.requestParam});
         if(!result){
-            return "gasto no encontrado";
+            return `no existe el gasto ${this.requestParam}`;
         }
         const update = this.expense.merge(result, this.requestBody);
         const saveUpdate = await this.expense.save(update);

@@ -1,20 +1,21 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, Tree, TreeChildren, TreeParent,} from 'typeorm';
 import {Supplier} from './supplier.entity';
 import { PurchaseInvoiceDescription } from './purchase.invoice.description.entity';
 
 @Entity()
+@Tree("materialized-path")
 export class SupplierInvoice {
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => Supplier, supplier => supplier.supplierInvoice)
+    @TreeParent()
     supplier: Supplier;
 
     @Column()
     dateCreation: Date;
 
-    @OneToMany(type => PurchaseInvoiceDescription, purchaseInvoiceDescription => purchaseInvoiceDescription.supplierInvoice)
+    @TreeChildren()
     purchaseInvoiceDescription: PurchaseInvoiceDescription[];
 
 }

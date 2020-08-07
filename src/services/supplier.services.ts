@@ -19,7 +19,7 @@ export class SupplierService {
             where: {typeIdentification: this.requestBody.typeIdentification, identification: this.requestBody.identification}
         });
         if(result){
-            return `Ya existe un cliente con ${this.requestBody.typeIdentification} ${this.requestBody.identification}`;
+            return `Ya existe un proveedor con ${this.requestBody.typeIdentification} ${this.requestBody.identification}`;
         }
 
         const data = this.customer.create(this.requestBody);
@@ -30,7 +30,7 @@ export class SupplierService {
     async read():Promise<string | ISupplier>{
         const result = await this.customer.findOne({id: this.requestParam});
         if(!result){
-            return "no existe el cliente";
+            return "no existe el proveedor";
         }
         return result;
     }
@@ -46,7 +46,7 @@ export class SupplierService {
     async update():Promise<string | ISupplier>{
         const result = await this.customer.findOne({id: this.requestParam});
         if(!result){
-            return "no existe el cliente";
+            return "no existe el proveedor";
         }
         const update = this.customer.merge(result, this.requestBody);
         const saveUpdate = await this.customer.save(update);

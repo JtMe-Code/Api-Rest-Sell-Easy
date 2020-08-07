@@ -1,13 +1,14 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, Tree, TreeParent} from 'typeorm';
 import {TypeExpense} from './type.expense.entity'
 
 @Entity()
+@Tree("materialized-path")
 export class Expense {
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => TypeExpense, typeExpense => typeExpense.expense)
+    @TreeParent()
     typeExpense: TypeExpense;
 
     @Column()

@@ -23,7 +23,7 @@ export class PurchaseInvoiceDescriptionService {
     async read():Promise<string | IPurchaseInvoiceDescription>{
         const result = await this.purchaseInvoiceDescription.findOne({id: this.requestParam});
         if(!result){
-            return "gasto no encontrado";
+            return `no existe la factura ${this.requestParam}`;
         }
         return result;
     }
@@ -39,7 +39,7 @@ export class PurchaseInvoiceDescriptionService {
     async update():Promise<string | IPurchaseInvoiceDescription>{
         const result = await this.purchaseInvoiceDescription.findOne({id: this.requestParam});
         if(!result){
-            return "gasto no encontrado";
+            return `no existe la factura ${this.requestParam}`;
         }
         const update = this.purchaseInvoiceDescription.merge(result, this.requestBody);
         const saveUpdate = await this.purchaseInvoiceDescription.save(update);
