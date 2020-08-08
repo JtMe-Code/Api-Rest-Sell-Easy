@@ -26,7 +26,7 @@ export class TypeExpenseService {
     }
 
     async read():Promise<string | ITypeExpense>{
-        const result = await this.typeExpense.findOne({id: this.requestParam});
+        const result = await this.typeExpense.findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }
@@ -42,7 +42,7 @@ export class TypeExpenseService {
     }
 
     async update():Promise<string | ITypeExpense>{
-        const result = await this.typeExpense.findOne({id: this.requestParam});
+        const result = await this.typeExpense.findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }

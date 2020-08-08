@@ -1,22 +1,23 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, BaseEntity, JoinColumn} from 'typeorm';
 import {Customer} from './customer.entity';
 import { SaleInvoiceDescription } from './sale.invoice.description.entity';
 
 @Entity()
-export class CustomerInvoice {
+export class CustomerInvoice extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column()
+    id_customer: number;
     @ManyToOne(type => Customer, customer => customer.customerInvoice)
+    @JoinColumn({name: "id_customer"})
     customer: Customer;
 
     @Column()
     dateCreation: Date;
     
-    @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.customerInvoice, {
-        cascade: true
-    })
+    @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.customerInvoice)
     saleInvoiceDescription: SaleInvoiceDescription[];
 
 }

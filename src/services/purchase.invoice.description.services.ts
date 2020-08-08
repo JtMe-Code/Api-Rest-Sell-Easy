@@ -6,10 +6,12 @@ import { PurchaseInvoiceDescription } from '../entity/purchase.invoice.descripti
 // *CRU -D*
 
 export class PurchaseInvoiceDescriptionService {
-    private requestBody: IPurchaseInvoiceDescription[];
+    private requestBody: IPurchaseInvoiceDescription[];    
+    private requestParam: any;
     private purchaseInvoiceDescription = getRepository(PurchaseInvoiceDescription);
     constructor(req: Request){
         this.requestBody = req.body;
+        this.requestParam = req.params;
     }
     
     async create():Promise<IPurchaseInvoiceDescription | IPurchaseInvoiceDescription[]>{
@@ -19,7 +21,7 @@ export class PurchaseInvoiceDescriptionService {
     }
 
     async readInvoiceDescription():Promise<string | IPurchaseInvoiceDescription[]>{
-        const result = await this.purchaseInvoiceDescription.find({});
+        const result = await this.purchaseInvoiceDescription.find({supplierInvoice: this.requestParam.supplierInvoiceId});
         return result;
     }
 

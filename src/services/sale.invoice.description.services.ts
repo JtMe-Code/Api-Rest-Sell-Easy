@@ -7,9 +7,11 @@ import { SaleInvoiceDescription } from '../entity/sale.invoice.description.entit
 
 export class SaleInvoiceDescriptionService {
     private requestBody: ISaleInvoiceDescription[];
+    private requestParam: any;
     private saleInvoiceDescription = getRepository(SaleInvoiceDescription);
     constructor(req: Request){
         this.requestBody = req.body;
+        this.requestParam = req.params;
     }
     
     async create():Promise<ISaleInvoiceDescription | ISaleInvoiceDescription[]>{
@@ -18,8 +20,8 @@ export class SaleInvoiceDescriptionService {
         return saveData;
     }
 
-    async read():Promise<string | ISaleInvoiceDescription[]>{
-        const result = await this.saleInvoiceDescription.find();
+    async readInvoiceDescription():Promise<string | ISaleInvoiceDescription[]>{
+        const result = await this.saleInvoiceDescription.find({customerInvoice: this.requestParam.customerInvoiceId});
         return result;
     }
 

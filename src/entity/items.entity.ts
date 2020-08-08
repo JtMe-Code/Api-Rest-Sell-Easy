@@ -1,9 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity} from 'typeorm';
 import { SaleInvoiceDescription } from './sale.invoice.description.entity';
 import { PurchaseInvoiceDescription } from './purchase.invoice.description.entity';
 
 @Entity()
-export class Items {
+export class Items extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;

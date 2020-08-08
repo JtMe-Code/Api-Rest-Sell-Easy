@@ -21,9 +21,9 @@ export class SupplierInvoiceService {
     }
 
     async read():Promise<string | ISupplierInvoice>{
-        const result = await this.supplierInvoice.findOne({id: this.requestParam});
+        const result = await this.supplierInvoice.findOne({id: this.requestParam.id});
         if(!result){
-            return `no existe la factura ${this.requestParam}`;
+            return `no existe la factura ${this.requestParam.id}`;
         }
         return result;
     }
@@ -37,9 +37,9 @@ export class SupplierInvoiceService {
     }
 
     async update():Promise<string | ISupplierInvoice>{
-        const result = await this.supplierInvoice.findOne({id: this.requestParam});
+        const result = await this.supplierInvoice.findOne({id: this.requestParam.id});
         if(!result){
-            return `no existe la factura ${this.requestParam}`;
+            return `no existe la factura ${this.requestParam.id}`;
         }
         const update = this.supplierInvoice.merge(result, this.requestBody);
         const saveUpdate = await this.supplierInvoice.save(update);

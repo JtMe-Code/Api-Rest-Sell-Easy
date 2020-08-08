@@ -1,8 +1,6 @@
-import { TypeIdentification } from '../entity/type.identification.entity';
-
 export interface ICustomer {
     id: number,
     name: string,
-    typeIdentification: TypeIdentification,
+    id_type_identification: number,
     identification: string
 }

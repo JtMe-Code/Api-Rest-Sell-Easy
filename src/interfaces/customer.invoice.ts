@@ -1,7 +1,5 @@
-import { Customer } from '../entity/customer.entity';
-
 export interface ICustomerInvoice {
     id: number,
-    customer: Customer,
+    id_customer: number,
     dateCreation: Date
 }

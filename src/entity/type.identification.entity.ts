@@ -1,9 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity} from 'typeorm';
 import { Customer } from './customer.entity';
 import { Supplier } from './supplier.entity';
 
 @Entity()
-export class TypeIdentification {
+export class TypeIdentification extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;

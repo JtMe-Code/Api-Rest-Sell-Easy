@@ -26,7 +26,7 @@ export class TypeIdentificationService {
     }
 
     async read():Promise<string | ITypeIdentification>{
-        const result = await this.typeIdentification.findOne({id: this.requestParam});
+        const result = await this.typeIdentification.findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }
@@ -42,7 +42,7 @@ export class TypeIdentificationService {
     }
 
     async update():Promise<string | ITypeIdentification>{
-        const result = await this.typeIdentification.findOne({id: this.requestParam});
+        const result = await this.typeIdentification.findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }

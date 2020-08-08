@@ -28,7 +28,7 @@ export class CustomerService {
     }
 
     async read():Promise<string | ICustomer>{
-        const result = await this.customer.findOne({id: this.requestParam});
+        const result = await this.customer.findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }
@@ -44,7 +44,7 @@ export class CustomerService {
     }
 
     async update():Promise<string | ICustomer>{
-        const result = await this.customer.findOne({id: this.requestParam});
+        const result = await this.customer.findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }

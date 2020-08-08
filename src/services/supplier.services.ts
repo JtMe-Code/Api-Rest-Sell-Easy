@@ -28,7 +28,7 @@ export class SupplierService {
     }
 
     async read():Promise<string | ISupplier>{
-        const result = await this.customer.findOne({id: this.requestParam});
+        const result = await this.customer.findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el proveedor";
         }
@@ -44,7 +44,7 @@ export class SupplierService {
     }
 
     async update():Promise<string | ISupplier>{
-        const result = await this.customer.findOne({id: this.requestParam});
+        const result = await this.customer.findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el proveedor";
         }

@@ -21,7 +21,7 @@ export class ExpenseService {
     }
 
     async read():Promise<string | IExpense>{
-        const result = await this.expense.findOne({id: this.requestParam});
+        const result = await this.expense.findOne({id: this.requestParam.id});
         if(!result){
             return `no existe el gasto ${this.requestParam}`;
         }
@@ -37,7 +37,7 @@ export class ExpenseService {
     }
 
     async update():Promise<string | IExpense>{
-        const result = await this.expense.findOne({id: this.requestParam});
+        const result = await this.expense.findOne({id: this.requestParam.id});
         if(!result){
             return `no existe el gasto ${this.requestParam}`;
         }
