@@ -16,10 +16,10 @@ export class SupplierService {
     
     async create():Promise<string | ISupplier>{
         const result = await this.customer.find({
-            where: {typeIdentification: this.requestBody.typeIdentification, identification: this.requestBody.identification}
+            where: {typeIdentification: this.requestBody.id_type_identification, identification: this.requestBody.identification}
         });
         if(result){
-            return `Ya existe un proveedor con ${this.requestBody.typeIdentification} ${this.requestBody.identification}`;
+            return `Ya existe un proveedor con ${this.requestBody.id_type_identification} ${this.requestBody.identification}`;
         }
 
         const data = this.customer.create(this.requestBody);
