@@ -12,7 +12,7 @@
      ```json
      "outDir": "./dist"
      ```
-2. También puede ejecutarse con Typescrypt puro haciendo uso de ts-node, para eso de instalar ts-node y seguir las instrucciones de la documentación en el repositorio de *[TS-node]( https://www.npmjs.com/package/ts-node "ts-node")*
+2. También puede ejecutarse con Typescrypt puro haciendo uso de ts-node, para eso debe instalar ts-node y seguir las instrucciones de la documentación en el repositorio de *[TS-node]( https://www.npmjs.com/package/ts-node "ts-node")*
 
 ---
 <!-- FOOTER -->
