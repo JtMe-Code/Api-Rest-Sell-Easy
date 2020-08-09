@@ -1,4 +1,4 @@
-import {getRepository, Like} from 'typeorm';
+import {Like} from 'typeorm';
 import { Request } from 'express';
 import { Items } from '../entity/items.entity';
 import { IItems } from '../interfaces/items';
@@ -8,7 +8,7 @@ import { IItems } from '../interfaces/items';
 export class ItemsService {
     private requestBody: IItems;
     private requestParam: any;
-    private items = getRepository(Items);
+    private items = Items;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;

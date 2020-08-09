@@ -1,4 +1,3 @@
-import {getRepository} from 'typeorm';
 import { Request } from 'express';
 import { IExpense } from '../interfaces/expense';
 import { Expense } from '../entity/expense.entity';
@@ -8,7 +7,7 @@ import { Expense } from '../entity/expense.entity';
 export class ExpenseService {
     private requestBody: IExpense;
     private requestParam: any;
-    private expense = getRepository(Expense);
+    private expense = Expense;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;

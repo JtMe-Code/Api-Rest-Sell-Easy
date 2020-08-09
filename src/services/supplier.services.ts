@@ -1,4 +1,3 @@
-import {getRepository} from 'typeorm';
 import { Request } from 'express';
 import { Supplier } from '../entity/supplier.entity';
 import { ISupplier } from '../interfaces/supplier';
@@ -8,7 +7,7 @@ import { ISupplier } from '../interfaces/supplier';
 export class SupplierService {
     private requestBody: ISupplier;
     private requestParam: any;
-    private customer = getRepository(Supplier);
+    private customer = Supplier;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;

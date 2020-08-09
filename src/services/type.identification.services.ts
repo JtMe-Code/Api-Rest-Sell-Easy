@@ -1,4 +1,3 @@
-import {getRepository} from 'typeorm';
 import { Request } from 'express';
 import { ITypeIdentification } from '../interfaces/type.identification';
 import { TypeIdentification } from '../entity/type.identification.entity';
@@ -8,7 +7,7 @@ import { TypeIdentification } from '../entity/type.identification.entity';
 export class TypeIdentificationService {
     private requestBody: ITypeIdentification;
     private requestParam: any;
-    private typeIdentification = getRepository(TypeIdentification);
+    private typeIdentification = TypeIdentification;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;

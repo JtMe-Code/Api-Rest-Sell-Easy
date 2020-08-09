@@ -1,4 +1,3 @@
-import {getRepository} from 'typeorm';
 import { Request } from 'express';
 import {Login} from '../entity/login.entity';
 import {ILogin} from '../interfaces/login';
@@ -7,7 +6,7 @@ import {JWT} from './helpers/jwt';
 
 export class LoginServices {
     private requestBody: ILogin;
-    private login = getRepository(Login);
+    private login = Login;
     constructor(req: Request){
         this.requestBody = req.body;
     }
@@ -20,7 +19,8 @@ export class LoginServices {
         const encryptedPassword = await new Encrypt(this.requestBody.password).encryptedPassword();
         this.requestBody.password = encryptedPassword;
 
-        const saveData = await this.login.save(this.requestBody);
+        const data = this.login.create(this.requestBody);
+        const saveData = await this.login.save(data);
         return saveData;
     }
 

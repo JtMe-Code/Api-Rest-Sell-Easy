@@ -1,4 +1,3 @@
-import {getRepository} from 'typeorm';
 import { Request } from 'express';
 import {Customer} from '../entity/customer.entity';
 import {ICustomer} from '../interfaces/customer';
@@ -8,7 +7,7 @@ import {ICustomer} from '../interfaces/customer';
 export class CustomerService {
     private requestBody: ICustomer;
     private requestParam: any;
-    private customer = getRepository(Customer);
+    private customer = Customer;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;

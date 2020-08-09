@@ -1,4 +1,3 @@
-import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { CustomerInvoice } from '../entity/customer.invoice.entity';
 import { ICustomerInvoice } from '../interfaces/customer.invoice';
@@ -8,7 +7,7 @@ import { ICustomerInvoice } from '../interfaces/customer.invoice';
 export class CustomerInvoiceService {
     private requestBody: ICustomerInvoice;
     private requestParam: any;
-    private customerInvoice = getRepository(CustomerInvoice);
+    private customerInvoice = CustomerInvoice;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;

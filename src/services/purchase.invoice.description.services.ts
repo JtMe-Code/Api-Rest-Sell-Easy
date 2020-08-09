@@ -1,4 +1,3 @@
-import {getRepository} from 'typeorm';
 import { Request } from 'express';
 import { IPurchaseInvoiceDescription } from '../interfaces/purchase.invoice.description';
 import { PurchaseInvoiceDescription } from '../entity/purchase.invoice.description.entity';
@@ -8,7 +7,7 @@ import { PurchaseInvoiceDescription } from '../entity/purchase.invoice.descripti
 export class PurchaseInvoiceDescriptionService {
     private requestBody: IPurchaseInvoiceDescription[];    
     private requestParam: any;
-    private purchaseInvoiceDescription = getRepository(PurchaseInvoiceDescription);
+    private purchaseInvoiceDescription = PurchaseInvoiceDescription;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;
