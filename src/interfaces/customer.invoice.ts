@@ -1,5 +1,5 @@
 export interface ICustomerInvoice {
     id: number,
     id_customer: number,
-    dateCreation: Date
+    date_creation: Date
 }

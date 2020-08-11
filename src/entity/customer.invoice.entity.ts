@@ -15,7 +15,7 @@ export class CustomerInvoice extends BaseEntity {
     customer: Customer;
 
     @Column()
-    dateCreation: Date;
+    date_creation: Date;
     
     @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.customerInvoice)
     saleInvoiceDescription: SaleInvoiceDescription[];
