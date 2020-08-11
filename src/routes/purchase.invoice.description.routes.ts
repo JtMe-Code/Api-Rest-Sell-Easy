@@ -4,6 +4,6 @@ import { PurchaseInvoiceDescriptionControllers } from '../controllers/purchase.i
 const router = Router();
 
 router.post('/purchase/invoice/description', PurchaseInvoiceDescriptionControllers.create);
-router.post('/purchase/invoice/description/:supplierInvoiceId', PurchaseInvoiceDescriptionControllers.readInvoiceDescription);
+router.get('/purchase/invoice/description/:supplierInvoiceId', PurchaseInvoiceDescriptionControllers.readInvoiceDescription);
 
 export default router;

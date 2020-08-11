@@ -4,8 +4,8 @@ import { TypeIdentificationControllers } from '../controllers/type.identificatio
 const router = Router();
 
 router.post('/type/identification', TypeIdentificationControllers.create);
-router.post('/type/identification/:id', TypeIdentificationControllers.read);
-router.post('/type/identification/all', TypeIdentificationControllers.readAll);
+router.get('/type/identification/:id', TypeIdentificationControllers.read);
+router.get('/type/identification/all', TypeIdentificationControllers.readAll);
 router.put('/type/identification/:id', TypeIdentificationControllers.update);
 
 export default router;
