@@ -1,3 +1,4 @@
+import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { SupplierInvoice } from '../entity/supplier.invoice.entity';
 import { ISupplierInvoice } from '../interfaces/supplier.invoice';
@@ -14,13 +15,13 @@ export class SupplierInvoiceService {
     }
     
     async create():Promise<ISupplierInvoice>{
-        const data = this.supplierInvoice.create(this.requestBody);
-        const saveData = await this.supplierInvoice.save(data);
+        const data = getRepository(this.supplierInvoice).create(this.requestBody);
+        const saveData = await getRepository(this.supplierInvoice).save(data);
         return saveData;
     }
 
     async read():Promise<string | ISupplierInvoice>{
-        const result = await this.supplierInvoice.findOne({id: this.requestParam.id});
+        const result = await getRepository(this.supplierInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe la factura ${this.requestParam.id}`;
         }
@@ -28,7 +29,7 @@ export class SupplierInvoiceService {
     }
 
     async readAll():Promise<string | ISupplierInvoice[]>{
-        const result = await this.supplierInvoice.find();
+        const result = await getRepository(this.supplierInvoice).find();
         if(!result){
             return "sin resultados";
         }
@@ -36,12 +37,12 @@ export class SupplierInvoiceService {
     }
 
     async update():Promise<string | ISupplierInvoice>{
-        const result = await this.supplierInvoice.findOne({id: this.requestParam.id});
+        const result = await getRepository(this.supplierInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe la factura ${this.requestParam.id}`;
         }
-        const update = this.supplierInvoice.merge(result, this.requestBody);
-        const saveUpdate = await this.supplierInvoice.save(update);
+        const update = getRepository(this.supplierInvoice).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(this.supplierInvoice).save(update);
         return saveUpdate;
     }
 }

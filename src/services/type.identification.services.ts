@@ -1,3 +1,4 @@
+import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { ITypeIdentification } from '../interfaces/type.identification';
 import { TypeIdentification } from '../entity/type.identification.entity';
@@ -14,18 +15,18 @@ export class TypeIdentificationService {
     }
     
     async create():Promise<string | ITypeIdentification>{
-        const result = await this.typeIdentification.find({description: this.requestBody.description});
+        const result = await getRepository(this.typeIdentification).find({description: this.requestBody.description});
         if(result){
             return `Ya un tipo de gasto ${this.requestBody.description}`;
         }
 
-        const data = this.typeIdentification.create(this.requestBody);
-        const saveData = await this.typeIdentification.save(data);
+        const data = getRepository(this.typeIdentification).create(this.requestBody);
+        const saveData = await getRepository(this.typeIdentification).save(data);
         return saveData;
     }
 
     async read():Promise<string | ITypeIdentification>{
-        const result = await this.typeIdentification.findOne({id: this.requestParam.id});
+        const result = await getRepository(this.typeIdentification).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }
@@ -33,7 +34,7 @@ export class TypeIdentificationService {
     }
 
     async readAll():Promise<string | ITypeIdentification[]>{
-        const result = await this.typeIdentification.find();
+        const result = await getRepository(this.typeIdentification).find();
         if(!result){
             return "sin resultados";
         }
@@ -41,12 +42,12 @@ export class TypeIdentificationService {
     }
 
     async update():Promise<string | ITypeIdentification>{
-        const result = await this.typeIdentification.findOne({id: this.requestParam.id});
+        const result = await getRepository(this.typeIdentification).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }
-        const update = this.typeIdentification.merge(result, this.requestBody);
-        const saveUpdate = await this.typeIdentification.save(update);
+        const update = getRepository(this.typeIdentification).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(this.typeIdentification).save(update);
         return saveUpdate;
     }
 }

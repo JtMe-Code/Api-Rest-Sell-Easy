@@ -1,3 +1,4 @@
+import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { CustomerInvoice } from '../entity/customer.invoice.entity';
 import { ICustomerInvoice } from '../interfaces/customer.invoice';
@@ -14,13 +15,13 @@ export class CustomerInvoiceService {
     }
     
     async create():Promise<ICustomerInvoice>{
-        const data = this.customerInvoice.create(this.requestBody);
-        const saveData = await this.customerInvoice.save(data);
+        const data = getRepository(this.customerInvoice).create(this.requestBody);
+        const saveData = await getRepository(this.customerInvoice).save(data);
         return saveData;
     }
 
     async read():Promise<string | ICustomerInvoice>{
-        const result = await this.customerInvoice.findOne({id: this.requestParam.id});
+        const result = await getRepository(this.customerInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe la factura";
         }
@@ -28,7 +29,7 @@ export class CustomerInvoiceService {
     }
 
     async readAll():Promise<string | ICustomerInvoice[]>{
-        const result = await this.customerInvoice.find();
+        const result = await getRepository(this.customerInvoice).find();
         if(!result){
             return "sin resultados";
         }
@@ -36,12 +37,12 @@ export class CustomerInvoiceService {
     }
 
     async update():Promise<string | ICustomerInvoice>{
-        const result = await this.customerInvoice.findOne({id: this.requestParam.id});
+        const result = await getRepository(this.customerInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe la factura";
         }
-        const update = this.customerInvoice.merge(result, this.requestBody);
-        const saveUpdate = await this.customerInvoice.save(update);
+        const update = getRepository(this.customerInvoice).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(this.customerInvoice).save(update);
         return saveUpdate;
     }
 }

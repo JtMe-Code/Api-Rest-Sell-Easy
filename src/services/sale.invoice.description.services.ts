@@ -1,3 +1,4 @@
+import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { ISaleInvoiceDescription } from '../interfaces/sale.invoice.description';
 import { SaleInvoiceDescription } from '../entity/sale.invoice.description.entity';
@@ -14,18 +15,18 @@ export class SaleInvoiceDescriptionService {
     }
     
     async create():Promise<ISaleInvoiceDescription | ISaleInvoiceDescription[]>{
-        const data = this.saleInvoiceDescription.create(this.requestBody);
-        const saveData = await this.saleInvoiceDescription.save(data);
+        const data = getRepository(this.saleInvoiceDescription).create(this.requestBody);
+        const saveData = await getRepository(this.saleInvoiceDescription).save(data);
         return saveData;
     }
 
     async readInvoiceDescription():Promise<string | ISaleInvoiceDescription[]>{
-        const result = await this.saleInvoiceDescription.find({customerInvoice: this.requestParam.customerInvoiceId});
+        const result = await getRepository(this.saleInvoiceDescription).find({customerInvoice: this.requestParam.customerInvoiceId});
         return result;
     }
 
     async readAll():Promise<string | ISaleInvoiceDescription[]>{
-        const result = await this.saleInvoiceDescription.find();
+        const result = await getRepository(this.saleInvoiceDescription).find();
         if(!result){
             return "sin resultados";
         }

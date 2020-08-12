@@ -1,3 +1,4 @@
+import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import {Login} from '../entity/login.entity';
 import {ILogin} from '../interfaces/login';
@@ -12,20 +13,20 @@ export class LoginServices {
     }
 
     async signup(): Promise<string | ILogin>{
-        const result = await this.login.findOne({user: this.requestBody.user});
+        const result = await getRepository(this.login).findOne({user: this.requestBody.user});
         if(result){
             return "El usuario ya existe";
         }
         const encryptedPassword = await new Encrypt(this.requestBody.password).encryptedPassword();
         this.requestBody.password = encryptedPassword;
 
-        const data = this.login.create(this.requestBody);
-        const saveData = await this.login.save(data);
+        const data = getRepository(this.login).create(this.requestBody);
+        const saveData = await getRepository(this.login).save(data);
         return saveData;
     }
 
     async signin(): Promise<string | {token: string}>{
-        const result = await this.login.findOne({user: this.requestBody.user});
+        const result = await getRepository(this.login).findOne({user: this.requestBody.user});
         if(!result){
             return "Usuario o contraseña incorrecta";
         }

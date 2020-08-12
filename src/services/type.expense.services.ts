@@ -1,3 +1,4 @@
+import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { ITypeExpense } from '../interfaces/type.expense';
 import { TypeExpense } from '../entity/type.expense.entity';
@@ -14,18 +15,18 @@ export class TypeExpenseService {
     }
     
     async create():Promise<string | ITypeExpense>{
-        const result = await this.typeExpense.find({description: this.requestBody.description});
+        const result = await getRepository(this.typeExpense).find({description: this.requestBody.description});
         if(result){
             return `Ya un tipo de gasto ${this.requestBody.description}`;
         }
 
-        const data = this.typeExpense.create(this.requestBody);
-        const saveData = await this.typeExpense.save(data);
+        const data = getRepository(this.typeExpense).create(this.requestBody);
+        const saveData = await getRepository(this.typeExpense).save(data);
         return saveData;
     }
 
     async read():Promise<string | ITypeExpense>{
-        const result = await this.typeExpense.findOne({id: this.requestParam.id});
+        const result = await getRepository(this.typeExpense).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }
@@ -33,7 +34,7 @@ export class TypeExpenseService {
     }
 
     async readAll():Promise<string | ITypeExpense[]>{
-        const result = await this.typeExpense.find();
+        const result = await getRepository(this.typeExpense).find();
         if(!result){
             return "sin resultados";
         }
@@ -41,12 +42,12 @@ export class TypeExpenseService {
     }
 
     async update():Promise<string | ITypeExpense>{
-        const result = await this.typeExpense.findOne({id: this.requestParam.id});
+        const result = await getRepository(this.typeExpense).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
         }
-        const update = this.typeExpense.merge(result, this.requestBody);
-        const saveUpdate = await this.typeExpense.save(update);
+        const update = getRepository(this.typeExpense).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(this.typeExpense).save(update);
         return saveUpdate;
     }
 }

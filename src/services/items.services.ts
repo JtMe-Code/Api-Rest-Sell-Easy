@@ -1,4 +1,4 @@
-import {Like} from 'typeorm';
+import { getRepository, Like } from 'typeorm';
 import { Request } from 'express';
 import { Items } from '../entity/items.entity';
 import { IItems } from '../interfaces/items';
@@ -15,13 +15,13 @@ export class ItemsService {
     }
     
     async create():Promise<string | IItems>{
-        const data = this.items.create(this.requestBody);
-        const saveData = await this.items.save(data);
+        const data = getRepository(this.items).create(this.requestBody);
+        const saveData = await getRepository(this.items).save(data);
         return saveData;
     }
 
     async read():Promise<string | IItems>{
-        const result = await this.items.findOne({id: this.requestParam});
+        const result = await getRepository(this.items).findOne({id: this.requestParam});
         if(!result){
             return "sin resultados";
         }
@@ -29,7 +29,7 @@ export class ItemsService {
     }
 
     async readBarCode():Promise<string | IItems[]>{
-        const result = await this.items.find({barcode: Like(`%${this.requestBody.barcode}%`)});
+        const result = await getRepository(this.items).find({barcode: Like(`%${this.requestBody.barcode}%`)});
         if(!result){
             return "sin resultados";
         }
@@ -37,7 +37,7 @@ export class ItemsService {
     }
 
     async readDescription():Promise<string | IItems[]>{
-        const result = await this.items.find({description:  Like(`%${this.requestBody.description}%`)});
+        const result = await getRepository(this.items).find({description:  Like(`%${this.requestBody.description}%`)});
         if(!result){
             return "sin resultados";
         }
@@ -45,7 +45,7 @@ export class ItemsService {
     }
 
     async readAll():Promise<string | IItems[]>{
-        const result = await this.items.find();
+        const result = await getRepository(this.items).find();
         if(!result){
             return "sin resultados";
         }
@@ -53,12 +53,12 @@ export class ItemsService {
     }
 
     async update():Promise<string | IItems>{
-        const result = await this.items.findOne({id: this.requestParam});
+        const result = await getRepository(this.items).findOne({id: this.requestParam});
         if(!result){
             return "items no encontrado";
         }
-        const update = this.items.merge(result, this.requestBody);
-        const saveUpdate = await this.items.save(update);
+        const update = getRepository(this.items).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(this.items).save(update);
         return saveUpdate;
     }
 }
