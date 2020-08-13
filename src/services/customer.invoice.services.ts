@@ -1,4 +1,4 @@
-import { getRepository, LessThanOrEqual } from 'typeorm';
+import { getRepository, MoreThanOrEqual } from 'typeorm';
 import { Request } from 'express';
 import { CustomerInvoice } from '../entity/customer.invoice.entity';
 import { ICustomerInvoice } from '../interfaces/customer.invoice';
@@ -18,9 +18,13 @@ export class CustomerInvoiceService {
     async create():Promise<string | object>{
         for (let i = 0; i < this.requestBody.saleInvoiceDescription.length; i++) {
             let element = this.requestBody.saleInvoiceDescription[i];
-            let result = await getRepository(Items).find({id: element.id_items, stock: LessThanOrEqual(element.quantity)});
-            if (!result) {
-                return `no hay la cantidad suficiente de ${element.items.description}`
+            let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)});
+            if (result) {
+                let newStock = result.stock - element.quantity;
+                let update = getRepository(Items).merge(result, {stock: newStock});
+                await getRepository(Items).save(update);
+            }else{
+                return `stock insuficiente de ${element.items.description}`
             }
         }
         const data = getRepository(this.customerInvoice).create(this.requestBody);
