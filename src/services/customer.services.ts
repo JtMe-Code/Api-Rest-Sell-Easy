@@ -14,7 +14,7 @@ export class CustomerService {
     }
     
     async create():Promise<string | object>{
-        const result = await getRepository(this.customer).find({
+        const result = await getRepository(this.customer).findOne({
             where: {typeIdentification: this.requestBody.id_type_identification, identification: this.requestBody.identification}
         });
         if(result){

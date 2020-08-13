@@ -1,9 +1,9 @@
-import {ILogin} from '../../interfaces/login';
 import jwt from "jsonwebtoken";
 import {jwtSecret} from './key';
+import { Login } from "../../entity/login.entity";
 
 export class JWT {
-    constructor(private requestBody: ILogin, private tokenBearer?: string) {
+    constructor(private requestBody: Login, private tokenBearer?: string) {
     }
 
     create(): {token: string}{

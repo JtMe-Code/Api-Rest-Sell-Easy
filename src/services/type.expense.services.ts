@@ -14,7 +14,7 @@ export class TypeExpenseService {
     }
     
     async create():Promise<string | object>{
-        const result = await getRepository(this.typeExpense).find({description: this.requestBody.description});
+        const result = await getRepository(this.typeExpense).findOne({description: this.requestBody.description});
         if(result){
             return `Ya existe un tipo de gasto ${this.requestBody.description}`;
         }
