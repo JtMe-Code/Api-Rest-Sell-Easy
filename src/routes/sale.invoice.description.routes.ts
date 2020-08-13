@@ -3,7 +3,6 @@ import { SaleInvoiceDescriptionControllers } from '../controllers/sale.invoice.d
 
 const router = Router();
 
-router.post('/sale/invoice/description', SaleInvoiceDescriptionControllers.create);
 router.get('/sale/invoice/description/:customerInvoiceId', SaleInvoiceDescriptionControllers.readInvoiceDescription);
 
 export default router;
