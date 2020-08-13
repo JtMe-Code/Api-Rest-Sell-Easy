@@ -1,12 +1,13 @@
-import { getRepository } from 'typeorm';
+import { getRepository, LessThanOrEqual } from 'typeorm';
 import { Request } from 'express';
 import { CustomerInvoice } from '../entity/customer.invoice.entity';
 import { ICustomerInvoice } from '../interfaces/customer.invoice';
+import { Items } from '../entity/items.entity';
 
 // *CRU -D*
 
 export class CustomerInvoiceService {
-    private requestBody: ICustomerInvoice;
+    private requestBody: CustomerInvoice;
     private requestParam: any;
     private customerInvoice = CustomerInvoice;
     constructor(req: Request){
@@ -14,7 +15,14 @@ export class CustomerInvoiceService {
         this.requestParam = req.params;
     }
     
-    async create():Promise<ICustomerInvoice>{
+    async create():Promise<string | object>{
+        for (let i = 0; i < this.requestBody.saleInvoiceDescription.length; i++) {
+            let element = this.requestBody.saleInvoiceDescription[i];
+            let result = await getRepository(Items).find({id: element.id_items, stock: LessThanOrEqual(element.quantity)});
+            if (!result) {
+                return `no hay la cantidad suficiente de ${element.items.description}`
+            }
+        }
         const data = getRepository(this.customerInvoice).create(this.requestBody);
         const saveData = await getRepository(this.customerInvoice).save(data);
         return saveData;

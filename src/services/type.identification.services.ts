@@ -15,9 +15,9 @@ export class TypeIdentificationService {
     }
     
     async create():Promise<string | ITypeIdentification>{
-        const result = await getRepository(this.typeIdentification).find({description: this.requestBody.description});
+        const result = await getRepository(this.typeIdentification).findOne({description: this.requestBody.description});
         if(result){
-            return `Ya un tipo de gasto ${this.requestBody.description}`;
+            return `Ya existe un tipo de identificaion ${this.requestBody.description}`;
         }
 
         const data = getRepository(this.typeIdentification).create(this.requestBody);
@@ -28,7 +28,7 @@ export class TypeIdentificationService {
     async read():Promise<string | ITypeIdentification>{
         const result = await getRepository(this.typeIdentification).findOne({id: this.requestParam.id});
         if(!result){
-            return "no existe el cliente";
+            return "no existe el tipo de identificacion";
         }
         return result;
     }
@@ -44,7 +44,7 @@ export class TypeIdentificationService {
     async update():Promise<string | ITypeIdentification>{
         const result = await getRepository(this.typeIdentification).findOne({id: this.requestParam.id});
         if(!result){
-            return "no existe el cliente";
+            return "no existe el tipo de identificacion";
         }
         const update = getRepository(this.typeIdentification).merge(result, this.requestBody);
         const saveUpdate = await getRepository(this.typeIdentification).save(update);

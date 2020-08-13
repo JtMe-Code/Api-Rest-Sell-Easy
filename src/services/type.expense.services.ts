@@ -17,7 +17,7 @@ export class TypeExpenseService {
     async create():Promise<string | ITypeExpense>{
         const result = await getRepository(this.typeExpense).find({description: this.requestBody.description});
         if(result){
-            return `Ya un tipo de gasto ${this.requestBody.description}`;
+            return `Ya existe un tipo de gasto ${this.requestBody.description}`;
         }
 
         const data = getRepository(this.typeExpense).create(this.requestBody);
@@ -28,7 +28,7 @@ export class TypeExpenseService {
     async read():Promise<string | ITypeExpense>{
         const result = await getRepository(this.typeExpense).findOne({id: this.requestParam.id});
         if(!result){
-            return "no existe el cliente";
+            return `no existe el tipo gasto`;
         }
         return result;
     }
@@ -44,7 +44,7 @@ export class TypeExpenseService {
     async update():Promise<string | ITypeExpense>{
         const result = await getRepository(this.typeExpense).findOne({id: this.requestParam.id});
         if(!result){
-            return "no existe el cliente";
+            return "no existe el tipo de gasto";
         }
         const update = getRepository(this.typeExpense).merge(result, this.requestBody);
         const saveUpdate = await getRepository(this.typeExpense).save(update);

@@ -5,6 +5,8 @@ import { createConnection } from 'typeorm';
 function main() {
     const app = new App();
     app.listen();
-    createConnection();
+    createConnection().then(()=>{
+        console.log('connect database')
+    });
 }
  main();
