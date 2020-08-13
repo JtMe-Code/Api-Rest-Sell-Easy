@@ -9,7 +9,7 @@ export class Expense {
 
     @Column()
     id_type_expense: number;
-    @ManyToOne(type => TypeExpense, typeExpense => typeExpense.expense)
+    @ManyToOne(type => TypeExpense, typeExpense => typeExpense.expense, {eager: true})
     @JoinColumn({name: "id_type_expense"})
     typeExpense: TypeExpense;
 

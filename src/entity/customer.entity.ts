@@ -13,7 +13,7 @@ export class Customer {
     
     @Column()
     id_type_identification: number;
-    @ManyToOne(type => TypeIdentification, typeIdentification => typeIdentification.customer)
+    @ManyToOne(type => TypeIdentification, typeIdentification => typeIdentification.customer, {eager: true})
     @JoinColumn({name: "id_type_identification"})
     typeIdentification: TypeIdentification;
 

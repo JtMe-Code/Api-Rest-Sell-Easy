@@ -10,13 +10,13 @@ export class SaleInvoiceDescription {
 
     @Column()
     id_customer_invoice: number;
-    @ManyToOne(type => CustomerInvoice, customerInvoice => customerInvoice.saleInvoiceDescription)
+    @ManyToOne(type => CustomerInvoice, customerInvoice => customerInvoice.saleInvoiceDescription, {eager: true, onDelete: 'CASCADE'})
     @JoinColumn({name: "id_customer_invoice"})
     customerInvoice: CustomerInvoice;
 
     @Column()
     id_items: number;
-    @ManyToOne(type => Items, items => items.saleInvoiceDescription)
+    @ManyToOne(type => Items, items => items.saleInvoiceDescription, {eager: true})
     @JoinColumn({name: "id_items"})
     items: Items;
 

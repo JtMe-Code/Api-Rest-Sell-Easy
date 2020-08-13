@@ -10,7 +10,7 @@ export class SupplierInvoice {
 
     @Column()
     id_supplier: number;
-    @ManyToOne(type => Supplier, supplier => supplier.supplierInvoice)
+    @ManyToOne(type => Supplier, supplier => supplier.supplierInvoice, {eager: true})
     @JoinColumn({name: "id_supplier"})
     supplier: Supplier;
 
@@ -20,7 +20,7 @@ export class SupplierInvoice {
     @UpdateDateColumn()
     updatedAt: Timestamp;
 
-    @OneToMany(type => PurchaseInvoiceDescription, purchaseInvoiceDescription => purchaseInvoiceDescription.supplierInvoice)
+    @OneToMany(type => PurchaseInvoiceDescription, purchaseInvoiceDescription => purchaseInvoiceDescription.supplierInvoice, {cascade: true})
     purchaseInvoiceDescription: PurchaseInvoiceDescription[];
 
 }
