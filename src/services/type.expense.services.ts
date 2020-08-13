@@ -1,12 +1,11 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
-import { ITypeExpense } from '../interfaces/type.expense';
 import { TypeExpense } from '../entity/type.expense.entity';
 
 // *CRU -D*
 
 export class TypeExpenseService {
-    private requestBody: ITypeExpense;
+    private requestBody: TypeExpense;
     private requestParam: any;
     private typeExpense = TypeExpense;
     constructor(req: Request){
@@ -14,7 +13,7 @@ export class TypeExpenseService {
         this.requestParam = req.params;
     }
     
-    async create():Promise<string | ITypeExpense>{
+    async create():Promise<string | object>{
         const result = await getRepository(this.typeExpense).find({description: this.requestBody.description});
         if(result){
             return `Ya existe un tipo de gasto ${this.requestBody.description}`;
@@ -25,7 +24,7 @@ export class TypeExpenseService {
         return saveData;
     }
 
-    async read():Promise<string | ITypeExpense>{
+    async read():Promise<string | object>{
         const result = await getRepository(this.typeExpense).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe el tipo gasto`;
@@ -33,7 +32,7 @@ export class TypeExpenseService {
         return result;
     }
 
-    async readAll():Promise<string | ITypeExpense[]>{
+    async readAll():Promise<string | object[]>{
         const result = await getRepository(this.typeExpense).find();
         if(!result){
             return "sin resultados";
@@ -41,7 +40,7 @@ export class TypeExpenseService {
         return result;
     }
 
-    async update():Promise<string | ITypeExpense>{
+    async update():Promise<string | object>{
         const result = await getRepository(this.typeExpense).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el tipo de gasto";

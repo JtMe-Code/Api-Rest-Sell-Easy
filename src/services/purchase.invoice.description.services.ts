@@ -1,12 +1,11 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
-import { IPurchaseInvoiceDescription } from '../interfaces/purchase.invoice.description';
 import { PurchaseInvoiceDescription } from '../entity/purchase.invoice.description.entity';
 
 // *CRU -D*
 
 export class PurchaseInvoiceDescriptionService {
-    private requestBody: IPurchaseInvoiceDescription[];    
+    private requestBody: PurchaseInvoiceDescription;    
     private requestParam: any;
     private purchaseInvoiceDescription = PurchaseInvoiceDescription;
     constructor(req: Request){
@@ -14,7 +13,7 @@ export class PurchaseInvoiceDescriptionService {
         this.requestParam = req.params;
     }
 
-    async readInvoiceDescription():Promise<string | IPurchaseInvoiceDescription[]>{
+    async readInvoiceDescription():Promise<string | object[]>{
         const result = await getRepository(this.purchaseInvoiceDescription).find({supplierInvoice: this.requestParam.supplierInvoiceId});
         return result;
     }

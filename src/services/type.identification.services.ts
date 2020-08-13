@@ -1,12 +1,11 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
-import { ITypeIdentification } from '../interfaces/type.identification';
 import { TypeIdentification } from '../entity/type.identification.entity';
 
 // *CRU -D*
 
 export class TypeIdentificationService {
-    private requestBody: ITypeIdentification;
+    private requestBody: TypeIdentification;
     private requestParam: any;
     private typeIdentification = TypeIdentification;
     constructor(req: Request){
@@ -14,7 +13,7 @@ export class TypeIdentificationService {
         this.requestParam = req.params;
     }
     
-    async create():Promise<string | ITypeIdentification>{
+    async create():Promise<string | object>{
         const result = await getRepository(this.typeIdentification).findOne({description: this.requestBody.description});
         if(result){
             return `Ya existe un tipo de identificaion ${this.requestBody.description}`;
@@ -25,7 +24,7 @@ export class TypeIdentificationService {
         return saveData;
     }
 
-    async read():Promise<string | ITypeIdentification>{
+    async read():Promise<string | object>{
         const result = await getRepository(this.typeIdentification).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el tipo de identificacion";
@@ -33,7 +32,7 @@ export class TypeIdentificationService {
         return result;
     }
 
-    async readAll():Promise<string | ITypeIdentification[]>{
+    async readAll():Promise<string | object[]>{
         const result = await getRepository(this.typeIdentification).find();
         if(!result){
             return "sin resultados";
@@ -41,7 +40,7 @@ export class TypeIdentificationService {
         return result;
     }
 
-    async update():Promise<string | ITypeIdentification>{
+    async update():Promise<string | object>{
         const result = await getRepository(this.typeIdentification).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el tipo de identificacion";

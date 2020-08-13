@@ -1,12 +1,11 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
-import { IExpense } from '../interfaces/expense';
 import { Expense } from '../entity/expense.entity';
 
 // *CRU -D*
 
 export class ExpenseService {
-    private requestBody: IExpense;
+    private requestBody: Expense;
     private requestParam: any;
     private expense = Expense;
     constructor(req: Request){
@@ -14,13 +13,13 @@ export class ExpenseService {
         this.requestParam = req.params;
     }
     
-    async create():Promise<string | IExpense>{
+    async create():Promise<string | object>{
         const data = getRepository(this.expense).create(this.requestBody);
         const saveData = await getRepository(this.expense).save(data);
         return saveData;
     }
 
-    async read():Promise<string | IExpense>{
+    async read():Promise<string | object>{
         const result = await getRepository(this.expense).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe el gasto ${this.requestParam}`;
@@ -28,7 +27,7 @@ export class ExpenseService {
         return result;
     }
 
-    async readAll():Promise<string | IExpense[]>{
+    async readAll():Promise<string | object[]>{
         const result = await getRepository(this.expense).find();
         if(!result){
             return "sin resultados";
@@ -36,7 +35,7 @@ export class ExpenseService {
         return result;
     }
 
-    async update():Promise<string | IExpense>{
+    async update():Promise<string | object>{
         const result = await getRepository(this.expense).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe el gasto ${this.requestParam}`;

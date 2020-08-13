@@ -1,7 +1,6 @@
 import { getRepository, MoreThanOrEqual } from 'typeorm';
 import { Request } from 'express';
 import { CustomerInvoice } from '../entity/customer.invoice.entity';
-import { ICustomerInvoice } from '../interfaces/customer.invoice';
 import { Items } from '../entity/items.entity';
 
 // *CRU -D*
@@ -32,7 +31,7 @@ export class CustomerInvoiceService {
         return saveData;
     }
 
-    async read():Promise<string | ICustomerInvoice>{
+    async read():Promise<string | object>{
         const result = await getRepository(this.customerInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe la factura";
@@ -40,7 +39,7 @@ export class CustomerInvoiceService {
         return result;
     }
 
-    async readAll():Promise<string | ICustomerInvoice[]>{
+    async readAll():Promise<string | object[]>{
         const result = await getRepository(this.customerInvoice).find();
         if(!result){
             return "sin resultados";
@@ -48,7 +47,7 @@ export class CustomerInvoiceService {
         return result;
     }
 
-    async update():Promise<string | ICustomerInvoice>{
+    async update():Promise<string | object>{
         const result = await getRepository(this.customerInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe la factura";

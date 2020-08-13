@@ -1,12 +1,11 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import {Customer} from '../entity/customer.entity';
-import {ICustomer} from '../interfaces/customer';
 
 // *CRU -D*
 
 export class CustomerService {
-    private requestBody: ICustomer;
+    private requestBody: Customer;
     private requestParam: any;
     private customer = Customer;
     constructor(req: Request){
@@ -14,7 +13,7 @@ export class CustomerService {
         this.requestParam = req.params;
     }
     
-    async create():Promise<string | ICustomer>{
+    async create():Promise<string | object>{
         const result = await getRepository(this.customer).find({
             where: {typeIdentification: this.requestBody.id_type_identification, identification: this.requestBody.identification}
         });
@@ -27,7 +26,7 @@ export class CustomerService {
         return saveData;
     }
 
-    async read():Promise<string | ICustomer>{
+    async read():Promise<string | object>{
         const result = await getRepository(this.customer).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";
@@ -35,7 +34,7 @@ export class CustomerService {
         return result;
     }
 
-    async readAll():Promise<string | ICustomer[]>{
+    async readAll():Promise<string | object[]>{
         const result = await getRepository(this.customer).find();
         if(!result){
             return "sin resultados";
@@ -43,7 +42,7 @@ export class CustomerService {
         return result;
     }
 
-    async update():Promise<string | ICustomer>{
+    async update():Promise<string | object>{
         const result = await getRepository(this.customer).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el cliente";

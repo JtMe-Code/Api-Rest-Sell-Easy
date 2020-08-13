@@ -1,12 +1,11 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { Supplier } from '../entity/supplier.entity';
-import { ISupplier } from '../interfaces/supplier';
 
 // *CRU -D*
 
 export class SupplierService {
-    private requestBody: ISupplier;
+    private requestBody: Supplier;
     private requestParam: any;
     private customer = Supplier;
     constructor(req: Request){
@@ -14,7 +13,7 @@ export class SupplierService {
         this.requestParam = req.params;
     }
     
-    async create():Promise<string | ISupplier>{
+    async create():Promise<string | object>{
         const result = await getRepository(this.customer).find({
             where: {typeIdentification: this.requestBody.id_type_identification, identification: this.requestBody.identification}
         });
@@ -27,7 +26,7 @@ export class SupplierService {
         return saveData;
     }
 
-    async read():Promise<string | ISupplier>{
+    async read():Promise<string | object>{
         const result = await getRepository(this.customer).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el proveedor";
@@ -35,7 +34,7 @@ export class SupplierService {
         return result;
     }
 
-    async readAll():Promise<string | ISupplier[]>{
+    async readAll():Promise<string | object[]>{
         const result = await getRepository(this.customer).find();
         if(!result){
             return "sin resultados";
@@ -43,7 +42,7 @@ export class SupplierService {
         return result;
     }
 
-    async update():Promise<string | ISupplier>{
+    async update():Promise<string | object>{
         const result = await getRepository(this.customer).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el proveedor";
