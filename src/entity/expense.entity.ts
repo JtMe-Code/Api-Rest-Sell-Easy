@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
 import {TypeExpense} from './type.expense.entity'
 
 @Entity()
@@ -18,5 +18,11 @@ export class Expense {
 
     @Column()
     value: number;
+
+    @CreateDateColumn()
+    createdAt: Timestamp;
+
+    @UpdateDateColumn()
+    updatedAt: Timestamp;
 
 }

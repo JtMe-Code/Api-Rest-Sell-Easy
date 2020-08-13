@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, Timestamp, UpdateDateColumn, CreateDateColumn} from 'typeorm';
 import {TypeIdentification} from './type.identification.entity';
 import { CustomerInvoice } from './customer.invoice.entity';
 
@@ -19,6 +19,12 @@ export class Customer {
 
     @Column()
     identification: string;
+
+    @CreateDateColumn()
+    createdAt: Timestamp;
+
+    @UpdateDateColumn()
+    updatedAt: Timestamp;
 
     @OneToMany(type => CustomerInvoice, customerInvoice => customerInvoice.customer)
     customerInvoice: CustomerInvoice[];

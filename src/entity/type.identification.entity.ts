@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
 import { Customer } from './customer.entity';
 import { Supplier } from './supplier.entity';
 
@@ -10,6 +10,12 @@ export class TypeIdentification {
 
     @Column()
     description: string;
+
+    @CreateDateColumn()
+    createdAt: Timestamp;
+
+    @UpdateDateColumn()
+    updatedAt: Timestamp;
 
     @OneToMany(type => Customer, customer => customer.typeIdentification)
     customer: Customer[];

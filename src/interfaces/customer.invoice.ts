@@ -1,5 +1,8 @@
+import { Timestamp } from "typeorm";
+
 export interface ICustomerInvoice {
     id: number,
     id_customer: number,
-    date_creation: Date
+    createdAt: Timestamp,
+    updatedAt: Timestamp
 }

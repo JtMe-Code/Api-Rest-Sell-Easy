@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
 import {Supplier} from './supplier.entity';
 import { PurchaseInvoiceDescription } from './purchase.invoice.description.entity';
 
@@ -14,8 +14,11 @@ export class SupplierInvoice {
     @JoinColumn({name: "id_supplier"})
     supplier: Supplier;
 
-    @Column()
-    date_creation: Date;
+    @CreateDateColumn()
+    createdAt: Timestamp;
+
+    @UpdateDateColumn()
+    updatedAt: Timestamp;
 
     @OneToMany(type => PurchaseInvoiceDescription, purchaseInvoiceDescription => purchaseInvoiceDescription.supplierInvoice)
     purchaseInvoiceDescription: PurchaseInvoiceDescription[];

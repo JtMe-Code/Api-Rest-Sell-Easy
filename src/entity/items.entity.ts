@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
 import { SaleInvoiceDescription } from './sale.invoice.description.entity';
 import { PurchaseInvoiceDescription } from './purchase.invoice.description.entity';
 
@@ -22,6 +22,12 @@ export class Items {
 
     @Column("double")
     purchasePrice: number;
+
+    @CreateDateColumn()
+    createdAt: Timestamp;
+
+    @UpdateDateColumn()
+    updatedAt: Timestamp;
 
     @OneToMany(type => SaleInvoiceDescription, saleInvoiceDescription => saleInvoiceDescription.items)
     saleInvoiceDescription: SaleInvoiceDescription[];

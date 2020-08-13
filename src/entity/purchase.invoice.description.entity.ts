@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
 import {SupplierInvoice} from './supplier.invoice.entity';
 import {Items} from './items.entity';
 
@@ -22,5 +22,11 @@ export class PurchaseInvoiceDescription {
 
     @Column()
     quantity: number;
+
+    @CreateDateColumn()
+    createdAt: Timestamp;
+
+    @UpdateDateColumn()
+    updatedAt: Timestamp;
 
 }

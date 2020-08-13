@@ -1,4 +1,8 @@
+import { Timestamp } from "typeorm";
+
 export interface ITypeIdentification {
     id: number,
-    description: string
+    description: string,
+    createdAt: Timestamp,
+    updatedAt: Timestamp
 }

@@ -1,5 +1,8 @@
+import { Timestamp } from "typeorm";
+
 export interface ISupplierInvoice {
     id: number,
     id_supplier: number,
-    date_creation: Date
+    createdAt: Timestamp,
+    updatedAt: Timestamp
 }
