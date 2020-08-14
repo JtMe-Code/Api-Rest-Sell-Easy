@@ -7,20 +7,19 @@ import { Expense } from '../entity/expense.entity';
 export class ExpenseService {
     private requestBody: Expense;
     private requestParam: any;
-    private expense = Expense;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;
     }
     
     async create():Promise<string | object>{
-        const data = getRepository(this.expense).create(this.requestBody);
-        const saveData = await getRepository(this.expense).save(data);
+        const data = getRepository(Expense).create(this.requestBody);
+        const saveData = await getRepository(Expense).save(data);
         return saveData;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(this.expense).findOne({id: this.requestParam.id});
+        const result = await getRepository(Expense).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe el gasto ${this.requestParam}`;
         }
@@ -28,7 +27,7 @@ export class ExpenseService {
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(this.expense).find();
+        const result = await getRepository(Expense).find();
         if(!result){
             return "sin resultados";
         }
@@ -36,12 +35,12 @@ export class ExpenseService {
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(this.expense).findOne({id: this.requestParam.id});
+        const result = await getRepository(Expense).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe el gasto ${this.requestParam}`;
         }
-        const update = getRepository(this.expense).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(this.expense).save(update);
+        const update = getRepository(Expense).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(Expense).save(update);
         return saveUpdate;
     }
 }

@@ -6,26 +6,25 @@ import {JWT} from './helpers/jwt';
 
 export class LoginServices {
     private requestBody: Login;
-    private login = Login;
     constructor(req: Request){
         this.requestBody = req.body;
     }
 
     async signup(): Promise<string | object>{
-        const result = await getRepository(this.login).findOne({user: this.requestBody.user});
+        const result = await getRepository(Login).findOne({user: this.requestBody.user});
         if(result){
             return "El usuario ya existe";
         }
         const encryptedPassword = await new Encrypt(this.requestBody.password).encryptedPassword();
         this.requestBody.password = encryptedPassword;
 
-        const data = getRepository(this.login).create(this.requestBody);
-        const saveData = await getRepository(this.login).save(data);
+        const data = getRepository(Login).create(this.requestBody);
+        const saveData = await getRepository(Login).save(data);
         return saveData;
     }
 
     async signin(): Promise<string | {token: string}>{
-        const result = await getRepository(this.login).findOne({user: this.requestBody.user});
+        const result = await getRepository(Login).findOne({user: this.requestBody.user});
         if(!result){
             return "Usuario o contraseña incorrecta";
         }

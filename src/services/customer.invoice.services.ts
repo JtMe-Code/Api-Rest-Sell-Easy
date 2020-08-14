@@ -8,7 +8,6 @@ import { Items } from '../entity/items.entity';
 export class CustomerInvoiceService {
     private requestBody: CustomerInvoice;
     private requestParam: any;
-    private customerInvoice = CustomerInvoice;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;
@@ -26,13 +25,13 @@ export class CustomerInvoiceService {
                 return `stock insuficiente de ${element.items.description}`
             }
         }
-        const data = getRepository(this.customerInvoice).create(this.requestBody);
-        const saveData = await getRepository(this.customerInvoice).save(data);
+        const data = getRepository(CustomerInvoice).create(this.requestBody);
+        const saveData = await getRepository(CustomerInvoice).save(data);
         return saveData;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(this.customerInvoice).findOne({id: this.requestParam.id});
+        const result = await getRepository(CustomerInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe la factura";
         }
@@ -40,7 +39,7 @@ export class CustomerInvoiceService {
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(this.customerInvoice).find();
+        const result = await getRepository(CustomerInvoice).find();
         if(!result){
             return "sin resultados";
         }
@@ -48,12 +47,12 @@ export class CustomerInvoiceService {
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(this.customerInvoice).findOne({id: this.requestParam.id});
+        const result = await getRepository(CustomerInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe la factura";
         }
-        const update = getRepository(this.customerInvoice).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(this.customerInvoice).save(update);
+        const update = getRepository(CustomerInvoice).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(CustomerInvoice).save(update);
         return saveUpdate;
     }
 }

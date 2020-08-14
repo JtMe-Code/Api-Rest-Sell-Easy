@@ -7,25 +7,24 @@ import { TypeExpense } from '../entity/type.expense.entity';
 export class TypeExpenseService {
     private requestBody: TypeExpense;
     private requestParam: any;
-    private typeExpense = TypeExpense;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;
     }
     
     async create():Promise<string | object>{
-        const result = await getRepository(this.typeExpense).findOne({description: this.requestBody.description});
+        const result = await getRepository(TypeExpense).findOne({description: this.requestBody.description});
         if(result){
             return `Ya existe un tipo de gasto ${this.requestBody.description}`;
         }
 
-        const data = getRepository(this.typeExpense).create(this.requestBody);
-        const saveData = await getRepository(this.typeExpense).save(data);
+        const data = getRepository(TypeExpense).create(this.requestBody);
+        const saveData = await getRepository(TypeExpense).save(data);
         return saveData;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(this.typeExpense).findOne({id: this.requestParam.id});
+        const result = await getRepository(TypeExpense).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe el tipo gasto`;
         }
@@ -33,7 +32,7 @@ export class TypeExpenseService {
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(this.typeExpense).find();
+        const result = await getRepository(TypeExpense).find();
         if(!result){
             return "sin resultados";
         }
@@ -41,12 +40,12 @@ export class TypeExpenseService {
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(this.typeExpense).findOne({id: this.requestParam.id});
+        const result = await getRepository(TypeExpense).findOne({id: this.requestParam.id});
         if(!result){
             return "no existe el tipo de gasto";
         }
-        const update = getRepository(this.typeExpense).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(this.typeExpense).save(update);
+        const update = getRepository(TypeExpense).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(TypeExpense).save(update);
         return saveUpdate;
     }
 }

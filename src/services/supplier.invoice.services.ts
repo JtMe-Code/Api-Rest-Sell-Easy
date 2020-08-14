@@ -1,4 +1,4 @@
-import { getRepository, MoreThanOrEqual } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { SupplierInvoice } from '../entity/supplier.invoice.entity';
 import { Items } from '../entity/items.entity';
@@ -8,7 +8,6 @@ import { Items } from '../entity/items.entity';
 export class SupplierInvoiceService {
     private requestBody: SupplierInvoice;
     private requestParam: any;
-    private supplierInvoice = SupplierInvoice;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;
@@ -26,13 +25,13 @@ export class SupplierInvoiceService {
                 return `no existe el articulo ${element.items.description}`
             }
         }
-        const data = getRepository(this.supplierInvoice).create(this.requestBody);
-        const saveData = await getRepository(this.supplierInvoice).save(data);
+        const data = getRepository(SupplierInvoice).create(this.requestBody);
+        const saveData = await getRepository(SupplierInvoice).save(data);
         return saveData;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(this.supplierInvoice).findOne({id: this.requestParam.id});
+        const result = await getRepository(SupplierInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe la factura ${this.requestParam.id}`;
         }
@@ -40,7 +39,7 @@ export class SupplierInvoiceService {
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(this.supplierInvoice).find();
+        const result = await getRepository(SupplierInvoice).find();
         if(!result){
             return "sin resultados";
         }
@@ -48,12 +47,12 @@ export class SupplierInvoiceService {
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(this.supplierInvoice).findOne({id: this.requestParam.id});
+        const result = await getRepository(SupplierInvoice).findOne({id: this.requestParam.id});
         if(!result){
             return `no existe la factura ${this.requestParam.id}`;
         }
-        const update = getRepository(this.supplierInvoice).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(this.supplierInvoice).save(update);
+        const update = getRepository(SupplierInvoice).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(SupplierInvoice).save(update);
         return saveUpdate;
     }
 }

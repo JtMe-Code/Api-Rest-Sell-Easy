@@ -7,20 +7,19 @@ import { Items } from '../entity/items.entity';
 export class ItemsService {
     private requestBody: Items;
     private requestParam: any;
-    private items = Items;
     constructor(req: Request){
         this.requestBody = req.body;
         this.requestParam = req.params;
     }
     
     async create():Promise<string | object>{
-        const data = getRepository(this.items).create(this.requestBody);
-        const saveData = await getRepository(this.items).save(data);
+        const data = getRepository(Items).create(this.requestBody);
+        const saveData = await getRepository(Items).save(data);
         return saveData;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(this.items).findOne({id: this.requestParam});
+        const result = await getRepository(Items).findOne({id: this.requestParam});
         if(!result){
             return "sin resultados";
         }
@@ -28,7 +27,7 @@ export class ItemsService {
     }
 
     async readBarCode():Promise<string | object[]>{
-        const result = await getRepository(this.items).find({barcode: Like(`%${this.requestBody.barcode}%`)});
+        const result = await getRepository(Items).find({barcode: Like(`%${this.requestBody.barcode}%`)});
         if(!result){
             return "sin resultados";
         }
@@ -36,7 +35,7 @@ export class ItemsService {
     }
 
     async readDescription():Promise<string | object[]>{
-        const result = await getRepository(this.items).find({description:  Like(`%${this.requestBody.description}%`)});
+        const result = await getRepository(Items).find({description:  Like(`%${this.requestBody.description}%`)});
         if(!result){
             return "sin resultados";
         }
@@ -44,7 +43,7 @@ export class ItemsService {
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(this.items).find();
+        const result = await getRepository(Items).find();
         if(!result){
             return "sin resultados";
         }
@@ -52,12 +51,12 @@ export class ItemsService {
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(this.items).findOne({id: this.requestParam});
+        const result = await getRepository(Items).findOne({id: this.requestParam});
         if(!result){
             return "items no encontrado";
         }
-        const update = getRepository(this.items).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(this.items).save(update);
+        const update = getRepository(Items).merge(result, this.requestBody);
+        const saveUpdate = await getRepository(Items).save(update);
         return saveUpdate;
     }
 }

@@ -6,7 +6,7 @@ function main() {
     const app = new App();
     app.listen();
     createConnection().then(()=>{
-        console.log('connect database')
+        console.log('Connected database')
     });
 }
  main();
