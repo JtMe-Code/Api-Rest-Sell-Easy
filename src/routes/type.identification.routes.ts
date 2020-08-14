@@ -5,7 +5,7 @@ const router = Router();
 
 router.post('/type/identification', TypeIdentificationControllers.create);
 router.get('/type/identification/:id', TypeIdentificationControllers.read);
-router.get('/type/identification/all', TypeIdentificationControllers.readAll);
+router.get('/type/identification_all', TypeIdentificationControllers.readAll);
 router.put('/type/identification/:id', TypeIdentificationControllers.update);
 
 export default router;

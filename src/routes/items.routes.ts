@@ -5,7 +5,7 @@ const router = Router();
 
 router.post('/items', ItemsControllers.create);
 router.get('/items/:id', ItemsControllers.read);
-router.get('/items/all', ItemsControllers.readAll);
+router.get('/items_all', ItemsControllers.readAll);
 router.put('/items/:id', ItemsControllers.update);
 
 export default router;
