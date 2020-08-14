@@ -17,13 +17,13 @@ export class SupplierInvoiceService {
     async create():Promise<string | object>{
         for (let i = 0; i < this.requestBody.purchaseInvoiceDescription.length; i++) {
             let element = this.requestBody.purchaseInvoiceDescription[i];
-            let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)});
+            let result = await getRepository(Items).findOne({id: element.id_items});
             if (result) {
-                let newStock = result.stock - element.quantity;
+                let newStock = result.stock + element.quantity;
                 let update = getRepository(Items).merge(result, {stock: newStock});
                 await getRepository(Items).save(update);
             }else{
-                return `stock insuficiente de ${element.items.description}`
+                return `no existe el articulo ${element.items.description}`
             }
         }
         const data = getRepository(this.supplierInvoice).create(this.requestBody);
