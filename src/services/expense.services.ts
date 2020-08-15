@@ -28,7 +28,7 @@ export class ExpenseService {
 
     async readAll():Promise<string | object[]>{
         const result = await getRepository(Expense).find();
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;

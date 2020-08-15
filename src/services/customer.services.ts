@@ -35,7 +35,7 @@ export class CustomerService {
 
     async readAll():Promise<string | object[]>{
         const result = await getRepository(Customer).find();
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;

@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
-import { SaleInvoiceDescription } from '../entity/sale.invoice.description.entity';
+import { CustomerInvoice } from '../entity/customer.invoice.entity';
 
 // *CRU -D*
 
@@ -10,8 +10,15 @@ export class SaleInvoiceDescriptionService {
         this.requestParam = req.params;
     }
 
-    async readInvoiceDescription():Promise<string | object[]>{
-        const result = await getRepository(SaleInvoiceDescription).find({customerInvoice: this.requestParam.customerInvoiceId});
+    async readInvoiceDescription():Promise<string | object>{
+        const result = await getRepository(CustomerInvoice)
+                                .findOneOrFail({id: this.requestParam.customerInvoiceId},
+                                    {relations: ["saleInvoiceDescription.items.description", 
+                                                "saleInvoiceDescription.items.salePrice",
+                                                "saleInvoiceDescription.quantity"]});
+        if(!result){
+            return "la factura no existe"
+        }
         return result;
     }
 }

@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
-import { PurchaseInvoiceDescription } from '../entity/purchase.invoice.description.entity';
+import { SupplierInvoice } from '../entity/supplier.invoice.entity';
 
 // *CRU -D*
 
@@ -10,8 +10,12 @@ export class PurchaseInvoiceDescriptionService {
         this.requestParam = req.params;
     }
 
-    async readInvoiceDescription():Promise<string | object[]>{
-        const result = await getRepository(PurchaseInvoiceDescription).find({supplierInvoice: this.requestParam.supplierInvoiceId});
+    async readInvoiceDescription():Promise<string | object>{
+        const result = await getRepository(SupplierInvoice)
+                                .findOneOrFail({id: this.requestParam.supplierInvoiceId}, 
+                                    {relations: ["purchaseInvoiceDescription.items.description",
+                                                "purchaseInvoiceDescription.items.purchasePrice",
+                                                "purchaseInvoiceDescription.quantity"]});
         return result;
     }
 }

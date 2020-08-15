@@ -10,7 +10,7 @@ export class SupplierInvoice {
 
     @Column()
     id_supplier: number;
-    @ManyToOne(type => Supplier, supplier => supplier.supplierInvoice, {eager: true})
+    @ManyToOne(type => Supplier, supplier => supplier.supplierInvoice)
     @JoinColumn({name: "id_supplier"})
     supplier: Supplier;
 

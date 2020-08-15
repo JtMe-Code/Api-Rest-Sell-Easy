@@ -35,7 +35,7 @@ export class SupplierService {
 
     async readAll():Promise<string | object[]>{
         const result = await getRepository(Supplier).find();
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;

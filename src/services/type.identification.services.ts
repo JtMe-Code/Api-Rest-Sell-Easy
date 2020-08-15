@@ -33,7 +33,7 @@ export class TypeIdentificationService {
 
     async readAll():Promise<string | object[]>{
         const result = await getRepository(TypeIdentification).find();
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;

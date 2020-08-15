@@ -33,7 +33,7 @@ export class TypeExpenseService {
 
     async readAll():Promise<string | object[]>{
         const result = await getRepository(TypeExpense).find();
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;

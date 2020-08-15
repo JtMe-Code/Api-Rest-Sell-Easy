@@ -5,7 +5,7 @@ const router = Router();
 
 router.post('/supplier', SupplierControllers.create);
 router.get('/supplier/:id', SupplierControllers.read);
-router.get('/supplier_all', SupplierControllers.readAll);
+router.get('/supplier/list/all', SupplierControllers.readAll);
 router.put('/supplier/:id', SupplierControllers.update);
 
 export default router;

@@ -28,7 +28,7 @@ export class ItemsService {
 
     async readBarCode():Promise<string | object[]>{
         const result = await getRepository(Items).find({barcode: Like(`%${this.requestBody.barcode}%`)});
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;
@@ -36,7 +36,7 @@ export class ItemsService {
 
     async readDescription():Promise<string | object[]>{
         const result = await getRepository(Items).find({description:  Like(`%${this.requestBody.description}%`)});
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;
@@ -44,7 +44,7 @@ export class ItemsService {
 
     async readAll():Promise<string | object[]>{
         const result = await getRepository(Items).find();
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;

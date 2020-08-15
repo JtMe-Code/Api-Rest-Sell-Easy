@@ -10,7 +10,7 @@ export class CustomerInvoice {
 
     @Column()
     id_customer: number;
-    @ManyToOne(type => Customer, customer => customer.customerInvoice, {eager: true})
+    @ManyToOne(type => Customer, customer => customer.customerInvoice)
     @JoinColumn({name: "id_customer"})
     customer: Customer;
 

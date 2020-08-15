@@ -22,7 +22,7 @@ export class CustomerInvoiceService {
                 let update = getRepository(Items).merge(result, {stock: newStock});
                 await getRepository(Items).save(update);
             }else{
-                return `stock insuficiente de ${element.items.description}`
+                return `stock insuficiente del articulo ${element.id_items}`
             }
         }
         const data = getRepository(CustomerInvoice).create(this.requestBody);
@@ -40,7 +40,7 @@ export class CustomerInvoiceService {
 
     async readAll():Promise<string | object[]>{
         const result = await getRepository(CustomerInvoice).find();
-        if(!result){
+        if(result.length < 1){
             return "sin resultados";
         }
         return result;
