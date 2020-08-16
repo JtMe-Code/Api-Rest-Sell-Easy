@@ -4,7 +4,7 @@
 ---
 <!-- BODY -->
 #### Descripción
-* tipo REST API
+* tipo API REST
 * La aplicación tiene como propósito dar una solución simple a las tiendas, permitiendo llevar registro de sus ventas, compras y gastos en general
 
 #### Detalles de implementación
