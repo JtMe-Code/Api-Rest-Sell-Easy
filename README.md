@@ -3,16 +3,15 @@
 ### Versión 0.0.1
 ---
 <!-- BODY -->
-#### Descripción
+## Descripción
 * tipo API REST
 * La aplicación tiene como propósito dar una solución simple a las tiendas, permitiendo llevar registro de sus ventas, compras y gastos en general
+---
+### Servidor de desarrollo
+Ejecute `npm run dev` para un servidor de desarrollo. Navegue a `http://localhost: 3000/`. La aplicación se recargará automáticamente si cambia alguno de los archivos de origen.
 
-#### Detalles de implementación
-1. Las configuraciones en el *tsconfig.json* le permiten construir el código dando salida outDir en la carpeta */dist* (*Recomendado*).
-     ```json
-     "outDir": "./dist"
-     ```
-2. También puede ejecutarse con Typescrypt puro haciendo uso de ts-node, para eso debe instalar ts-node y seguir las instrucciones de la documentación en el repositorio de *[TS-node]( https://www.npmjs.com/package/ts-node "ts-node")*.
+### Producción
+Ejecute `npm run build` para construir el proyecto. Los resultados de construcción se almacenarán en el directorio `dist/`. Use `npm run start` para construir y ejecutar el proyecto.
 
 ---
 <!-- FOOTER -->
