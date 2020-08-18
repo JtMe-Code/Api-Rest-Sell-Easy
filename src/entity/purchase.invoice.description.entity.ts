@@ -10,7 +10,7 @@ export class PurchaseInvoiceDescription {
 
     @Column()
     id_supplier_invoice: number;
-    @ManyToOne(type => SupplierInvoice, supplierInvoice => supplierInvoice.purchaseInvoiceDescription, {onDelete: 'CASCADE'})
+    @ManyToOne(type => SupplierInvoice, supplierInvoice => supplierInvoice.purchaseInvoiceDescription, {eager: true, onDelete: 'CASCADE'})
     @JoinColumn({name: "id_supplier_invoice"})
     supplierInvoice: SupplierInvoice;
 

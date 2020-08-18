@@ -13,7 +13,7 @@ export class Supplier {
 
     @Column()
     id_type_identification: number;
-    @ManyToOne(type => TypeIdentification, typeIdentification => typeIdentification.supplier)
+    @ManyToOne(type => TypeIdentification, typeIdentification => typeIdentification.supplier, {eager: true})
     @JoinColumn({name: "id_type_identification"})
     typeIdentification: TypeIdentification;
 

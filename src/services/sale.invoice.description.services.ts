@@ -11,11 +11,7 @@ export class SaleInvoiceDescriptionService {
     }
 
     async readInvoiceDescription():Promise<string | object>{
-        const result = await getRepository(CustomerInvoice)
-                                .findOneOrFail({id: this.requestParam.customerInvoiceId},
-                                    {relations: ["saleInvoiceDescription.items.description", 
-                                                "saleInvoiceDescription.items.salePrice",
-                                                "saleInvoiceDescription.quantity"]});
+        const result = await getRepository(CustomerInvoice).findOne({id: this.requestParam.customerInvoiceId})
         if(!result){
             return "la factura no existe"
         }
