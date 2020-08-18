@@ -3,31 +3,31 @@ import { TypeIdentificationService } from '../services/type.identification.servi
 
 export const TypeIdentificationControllers = {
     create: async (req: Request, res: Response): Promise<Response> => {
-        const outcome = await new TypeIdentificationService(req).create();
-        if(typeof outcome === "string"){
-            res.status(400).json({error: outcome})
+        const OUTCOME = await new TypeIdentificationService(req).create();
+        if(typeof OUTCOME === "string"){
+            res.status(400).json({error: OUTCOME})
         }
-        return res.status(200).json(outcome);
+        return res.status(200).json(OUTCOME);
     },
     read: async (req: Request, res: Response): Promise<Response> => {
-        const outcome = await new TypeIdentificationService(req).read();
-        if(typeof outcome === "string"){
-            res.status(400).json({error: outcome})
+        const OUTCOME = await new TypeIdentificationService(req).read();
+        if(typeof OUTCOME === "string"){
+            res.status(400).json({error: OUTCOME})
         }
-        return res.status(200).json(outcome);
+        return res.status(200).json(OUTCOME);
     },
     readAll:async (req: Request, res: Response): Promise<Response> => {
-        const outcome = await new TypeIdentificationService(req).readAll();
-        if(typeof outcome === "string"){
-            res.status(400).json({error: outcome})
+        const OUTCOME = await new TypeIdentificationService(req).readAll();
+        if(typeof OUTCOME === "string"){
+            res.status(400).json({error: OUTCOME})
         }
-        return res.status(200).json(outcome);
+        return res.status(200).json(OUTCOME);
     },
     update: async (req: Request, res: Response): Promise<Response> => {
-        const outcome = await new TypeIdentificationService(req).update();
-        if(typeof outcome === "string"){
-            res.status(400).json({error: outcome})
+        const OUTCOME = await new TypeIdentificationService(req).update();
+        if(typeof OUTCOME === "string"){
+            res.status(400).json({error: OUTCOME})
         }
-        return res.status(200).json(outcome);
+        return res.status(200).json(OUTCOME);
     }
 }

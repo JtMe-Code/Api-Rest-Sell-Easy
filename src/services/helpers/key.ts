@@ -1,3 +1,3 @@
 import randomstring from 'randomstring';
 
-export const jwtSecret = "randomstring.generate(20)";
+export const JWT_SECRET = "randomstring.generate(20)";

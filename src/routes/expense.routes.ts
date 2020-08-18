@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { ExpenseControllers } from '../controllers/expense.controllers';
 
-const router = Router();
+const ROUTER = Router();
 
-router.post('/expense', ExpenseControllers.create);
-router.get('/expense/:id', ExpenseControllers.read);
-router.get('/expense/list/all', ExpenseControllers.readAll);
-router.put('/expense/:id', ExpenseControllers.update);
+ROUTER.post('/expense', ExpenseControllers.create);
+ROUTER.get('/expense/:id', ExpenseControllers.read);
+ROUTER.get('/expense/list/all', ExpenseControllers.readAll);
+ROUTER.put('/expense/:id', ExpenseControllers.update);
 
-export default router;
+export default ROUTER;

@@ -6,9 +6,9 @@ export class Encrypt {
     }
     
     async encryptedPassword(): Promise<string>{
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(this.password, salt);
-        return hash;
+        const SALT = await bcrypt.genSalt(10);
+        const HASH = await bcrypt.hash(this.password, SALT);
+        return HASH;
     }
     async comparePassword(): Promise<boolean>{
         if(this.storedPassword){

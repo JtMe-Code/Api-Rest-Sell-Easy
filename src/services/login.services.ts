@@ -11,29 +11,29 @@ export class LoginServices {
     }
 
     async signup(): Promise<string | object>{
-        const result = await getRepository(Login).findOne({user: this.requestBody.user});
-        if(result){
+        const RESULT = await getRepository(Login).findOne({user: this.requestBody.user});
+        if(RESULT){
             return "El usuario ya existe";
         }
         const encryptedPassword = await new Encrypt(this.requestBody.password).encryptedPassword();
         this.requestBody.password = encryptedPassword;
 
-        const data = getRepository(Login).create(this.requestBody);
-        const saveData = await getRepository(Login).save(data);
-        return saveData;
+        const DATA = getRepository(Login).create(this.requestBody);
+        const SAVE_DATA = await getRepository(Login).save(DATA);
+        return SAVE_DATA;
     }
 
     async signin(): Promise<string | {token: string}>{
-        const result = await getRepository(Login).findOne({user: this.requestBody.user});
-        if(!result){
+        const RESULT = await getRepository(Login).findOne({user: this.requestBody.user});
+        if(!RESULT){
             return "Usuario o contraseña incorrecta";
         }
-        const comparePassword = await new Encrypt(this.requestBody.password, result.password).comparePassword();
-        if(!comparePassword){
+        const COMPARE_PASSWORD = await new Encrypt(this.requestBody.password, RESULT.password).comparePassword();
+        if(!COMPARE_PASSWORD){
             return "Usuario o contraseña incorrecta";
         }        
-        const token = new JWT(result).create();
-        return token;
+        const TOKEN = new JWT(RESULT).create();
+        return TOKEN;
     }
 
 }

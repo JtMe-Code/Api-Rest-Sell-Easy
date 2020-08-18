@@ -13,41 +13,41 @@ export class CustomerService {
     }
     
     async create():Promise<string | object>{
-        const result = await getRepository(Customer).findOne({
+        const RESULT = await getRepository(Customer).findOne({
             where: {typeIdentification: this.requestBody.id_type_identification, identification: this.requestBody.identification}
         });
-        if(result){
+        if(RESULT){
             return `Ya existe un cliente con ${this.requestBody.id_type_identification} ${this.requestBody.identification}`;
         }
 
-        const data = getRepository(Customer).create(this.requestBody);
-        const saveData = await getRepository(Customer).save(data);
-        return saveData;
+        const DATA = getRepository(Customer).create(this.requestBody);
+        const SAVE_DATA = await getRepository(Customer).save(DATA);
+        return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(Customer).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(Customer).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return "no existe el cliente";
         }
-        return result;
+        return RESULT;
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(Customer).find();
-        if(result.length < 1){
+        const RESULT = await getRepository(Customer).find();
+        if(RESULT.length < 1){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(Customer).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(Customer).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return "no existe el cliente";
         }
-        const update = getRepository(Customer).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(Customer).save(update);
-        return saveUpdate;
+        const UPDATE = getRepository(Customer).merge(RESULT, this.requestBody);
+        const SAVE_UPDATE = await getRepository(Customer).save(UPDATE);
+        return SAVE_UPDATE;
     }
 }

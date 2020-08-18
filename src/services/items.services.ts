@@ -13,50 +13,50 @@ export class ItemsService {
     }
     
     async create():Promise<string | object>{
-        const data = getRepository(Items).create(this.requestBody);
-        const saveData = await getRepository(Items).save(data);
-        return saveData;
+        const DATA = getRepository(Items).create(this.requestBody);
+        const SAVE_DATA = await getRepository(Items).save(DATA);
+        return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(Items).findOne({id: this.requestParam});
-        if(!result){
+        const RESULT = await getRepository(Items).findOne({id: this.requestParam});
+        if(!RESULT){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async readBarCode():Promise<string | object[]>{
-        const result = await getRepository(Items).find({barcode: Like(`%${this.requestBody.barcode}%`)});
-        if(result.length < 1){
+        const RESULT = await getRepository(Items).find({barcode: Like(`%${this.requestBody.barcode}%`)});
+        if(RESULT.length < 1){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async readDescription():Promise<string | object[]>{
-        const result = await getRepository(Items).find({description:  Like(`%${this.requestBody.description}%`)});
-        if(result.length < 1){
+        const RESULT = await getRepository(Items).find({description:  Like(`%${this.requestBody.description}%`)});
+        if(RESULT.length < 1){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(Items).find();
-        if(result.length < 1){
+        const RESULT = await getRepository(Items).find();
+        if(RESULT.length < 1){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(Items).findOne({id: this.requestParam});
-        if(!result){
+        const RESULT = await getRepository(Items).findOne({id: this.requestParam});
+        if(!RESULT){
             return "items no encontrado";
         }
-        const update = getRepository(Items).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(Items).save(update);
-        return saveUpdate;
+        const UPDATE = getRepository(Items).merge(RESULT, this.requestBody);
+        const SAVE_UPDATE = await getRepository(Items).save(UPDATE);
+        return SAVE_UPDATE;
     }
 }

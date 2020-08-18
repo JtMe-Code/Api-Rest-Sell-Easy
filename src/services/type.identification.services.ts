@@ -13,39 +13,39 @@ export class TypeIdentificationService {
     }
     
     async create():Promise<string | object>{
-        const result = await getRepository(TypeIdentification).findOne({description: this.requestBody.description});
-        if(result){
+        const RESULT = await getRepository(TypeIdentification).findOne({description: this.requestBody.description});
+        if(RESULT){
             return `Ya existe un tipo de identificaion ${this.requestBody.description}`;
         }
 
-        const data = getRepository(TypeIdentification).create(this.requestBody);
-        const saveData = await getRepository(TypeIdentification).save(data);
-        return saveData;
+        const DATA = getRepository(TypeIdentification).create(this.requestBody);
+        const SAVE_DATA = await getRepository(TypeIdentification).save(DATA);
+        return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(TypeIdentification).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(TypeIdentification).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return "no existe el tipo de identificacion";
         }
-        return result;
+        return RESULT;
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(TypeIdentification).find();
-        if(result.length < 1){
+        const RESULT = await getRepository(TypeIdentification).find();
+        if(RESULT.length < 1){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(TypeIdentification).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(TypeIdentification).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return "no existe el tipo de identificacion";
         }
-        const update = getRepository(TypeIdentification).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(TypeIdentification).save(update);
-        return saveUpdate;
+        const UPDATE = getRepository(TypeIdentification).merge(RESULT, this.requestBody);
+        const SAVE_UPDATE = await getRepository(TypeIdentification).save(UPDATE);
+        return SAVE_UPDATE;
     }
 }

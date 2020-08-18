@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import {jwtSecret} from './key';
+import { JWT_SECRET } from './key';
 import { Login } from "../../entity/login.entity";
 
 export class JWT {
@@ -7,11 +7,11 @@ export class JWT {
     }
 
     create(): {token: string}{
-        const tokenCreated = jwt.sign({ id: this.requestBody.id, user: this.requestBody.user }, jwtSecret, {
+        const TOKEN_CREATED = jwt.sign({ id: this.requestBody.id, user: this.requestBody.user }, JWT_SECRET, {
             expiresIn: 86400,
         });
-        const token = {token: tokenCreated}
-        return token;
+        const TOKEN = {token: TOKEN_CREATED}
+        return TOKEN;
     }
     // SOLO USAR PARA CONSULTAS EN CASO DE SER NECESARIO
     // decode(){

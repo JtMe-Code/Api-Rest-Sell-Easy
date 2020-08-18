@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { CustomerInvoiceControllers } from '../controllers/customer.invoice.controllers';
 
-const router = Router();
+const ROUTER = Router();
 
-router.post('/customer/invoice', CustomerInvoiceControllers.create);
-router.get('/customer/invoice/:id', CustomerInvoiceControllers.read);
-router.get('/customer/invoice/list/all', CustomerInvoiceControllers.readAll);
-router.put('/customer/invoice/:id', CustomerInvoiceControllers.update);
+ROUTER.post('/customer/invoice', CustomerInvoiceControllers.create);
+ROUTER.get('/customer/invoice/:id', CustomerInvoiceControllers.read);
+ROUTER.get('/customer/invoice/list/all', CustomerInvoiceControllers.readAll);
+ROUTER.put('/customer/invoice/:id', CustomerInvoiceControllers.update);
 
-export default router;
+export default ROUTER;

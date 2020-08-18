@@ -13,41 +13,41 @@ export class SupplierService {
     }
     
     async create():Promise<string | object>{
-        const result = await getRepository(Supplier).findOne({
+        const RESULT = await getRepository(Supplier).findOne({
             where: {typeIdentification: this.requestBody.id_type_identification, identification: this.requestBody.identification}
         });
-        if(result){
+        if(RESULT){
             return `Ya existe un proveedor con ${this.requestBody.id_type_identification} ${this.requestBody.identification}`;
         }
 
-        const data = getRepository(Supplier).create(this.requestBody);
-        const saveData = await getRepository(Supplier).save(data);
-        return saveData;
+        const DATA = getRepository(Supplier).create(this.requestBody);
+        const SAVE_DATA = await getRepository(Supplier).save(DATA);
+        return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(Supplier).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(Supplier).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return "no existe el proveedor";
         }
-        return result;
+        return RESULT;
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(Supplier).find();
-        if(result.length < 1){
+        const RESULT = await getRepository(Supplier).find();
+        if(RESULT.length < 1){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(Supplier).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(Supplier).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return "no existe el proveedor";
         }
-        const update = getRepository(Supplier).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(Supplier).save(update);
-        return saveUpdate;
+        const UPDATE = getRepository(Supplier).merge(RESULT, this.requestBody);
+        const SAVE_UPDATE = await getRepository(Supplier).save(UPDATE);
+        return SAVE_UPDATE;
     }
 }

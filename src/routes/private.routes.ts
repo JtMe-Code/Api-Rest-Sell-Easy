@@ -12,19 +12,19 @@ import typeExpenseRoutes from './type.expense.routes';
 import typeIdentificationRoutes from './type.identification.routes';
 
 
-const router = Router();
+const ROUTER = Router();
 
-router.use(passport.authenticate("jwt", { session: false }));
+ROUTER.use(passport.authenticate("jwt", { session: false }));
 
-router.use(customerRoutes);
-router.use(customerInvoiceRoutes);
-router.use(expenseRoutes);
-router.use(itemsRoutes);
-router.use(purchaseInvoiceDescriptionRoutes);
-router.use(saleInvoiceDescriptionRoutes);
-router.use(supplierInvoiceRoutes);
-router.use(supplierRoutes);
-router.use(typeExpenseRoutes);
-router.use(typeIdentificationRoutes);
+ROUTER.use(customerRoutes);
+ROUTER.use(customerInvoiceRoutes);
+ROUTER.use(expenseRoutes);
+ROUTER.use(itemsRoutes);
+ROUTER.use(purchaseInvoiceDescriptionRoutes);
+ROUTER.use(saleInvoiceDescriptionRoutes);
+ROUTER.use(supplierInvoiceRoutes);
+ROUTER.use(supplierRoutes);
+ROUTER.use(typeExpenseRoutes);
+ROUTER.use(typeIdentificationRoutes);
 
-export default router;
+export default ROUTER;

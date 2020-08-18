@@ -11,10 +11,10 @@ export class SaleInvoiceDescriptionService {
     }
 
     async readInvoiceDescription():Promise<string | object>{
-        const result = await getRepository(CustomerInvoice).findOne({id: this.requestParam.customerInvoiceId})
-        if(!result){
+        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.requestParam.customerInvoiceId})
+        if(!RESULT){
             return "la factura no existe"
         }
-        return result;
+        return RESULT;
     }
 }

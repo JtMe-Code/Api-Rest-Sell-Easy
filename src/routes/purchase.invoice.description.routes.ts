@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { PurchaseInvoiceDescriptionControllers } from '../controllers/purchase.invoice.description.controllers';
 
-const router = Router();
+const ROUTER = Router();
 
-router.get('/purchase/invoice/description/:supplierInvoiceId', PurchaseInvoiceDescriptionControllers.readInvoiceDescription);
+ROUTER.get('/purchase/invoice/description/:supplierInvoiceId', PurchaseInvoiceDescriptionControllers.readInvoiceDescription);
 
-export default router;
+export default ROUTER;

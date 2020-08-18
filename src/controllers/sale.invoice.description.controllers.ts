@@ -3,10 +3,10 @@ import { SaleInvoiceDescriptionService } from '../services/sale.invoice.descript
 
 export const SaleInvoiceDescriptionControllers = {
     readInvoiceDescription: async (req: Request, res: Response): Promise<Response> => {
-        const outcome = await new SaleInvoiceDescriptionService(req).readInvoiceDescription();
-        if(typeof outcome === "string"){
-            res.status(400).json({error: outcome})
+        const OUTCOME = await new SaleInvoiceDescriptionService(req).readInvoiceDescription();
+        if(typeof OUTCOME === "string"){
+            res.status(400).json({error: OUTCOME})
         }
-        return res.status(200).json(outcome);
+        return res.status(200).json(OUTCOME);
     }
 }

@@ -25,34 +25,34 @@ export class SupplierInvoiceService {
                 return `no existe el articulo ${element.items.description}`
             }
         }
-        const data = getRepository(SupplierInvoice).create(this.requestBody);
-        const saveData = await getRepository(SupplierInvoice).save(data);
-        return saveData;
+        const DATA = getRepository(SupplierInvoice).create(this.requestBody);
+        const SAVE_DATA = await getRepository(SupplierInvoice).save(DATA);
+        return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(SupplierInvoice).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(SupplierInvoice).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return `no existe la factura ${this.requestParam.id}`;
         }
-        return result;
+        return RESULT;
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(SupplierInvoice).find();
-        if(result.length < 1){
+        const RESULT = await getRepository(SupplierInvoice).find();
+        if(RESULT.length < 1){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(SupplierInvoice).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(SupplierInvoice).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return `no existe la factura ${this.requestParam.id}`;
         }
-        const update = getRepository(SupplierInvoice).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(SupplierInvoice).save(update);
-        return saveUpdate;
+        const UPDATE = getRepository(SupplierInvoice).merge(RESULT, this.requestBody);
+        const SAVE_UPDATE = await getRepository(SupplierInvoice).save(UPDATE);
+        return SAVE_UPDATE;
     }
 }

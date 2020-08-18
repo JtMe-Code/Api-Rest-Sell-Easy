@@ -3,8 +3,8 @@ import "reflect-metadata";
 import { createConnection } from 'typeorm';
 
 function main() {
-    const app = new App();
-    app.listen();
+    const APP = new App();
+    APP.listen();
     createConnection().then(()=>{
         console.log('Connected database')
     });

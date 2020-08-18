@@ -13,34 +13,34 @@ export class ExpenseService {
     }
     
     async create():Promise<string | object>{
-        const data = getRepository(Expense).create(this.requestBody);
-        const saveData = await getRepository(Expense).save(data);
-        return saveData;
+        const DATA = getRepository(Expense).create(this.requestBody);
+        const SAVE_DATA = await getRepository(Expense).save(DATA);
+        return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const result = await getRepository(Expense).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(Expense).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return `no existe el gasto ${this.requestParam}`;
         }
-        return result;
+        return RESULT;
     }
 
     async readAll():Promise<string | object[]>{
-        const result = await getRepository(Expense).find();
-        if(result.length < 1){
+        const RESULT = await getRepository(Expense).find();
+        if(RESULT.length < 1){
             return "sin resultados";
         }
-        return result;
+        return RESULT;
     }
 
     async update():Promise<string | object>{
-        const result = await getRepository(Expense).findOne({id: this.requestParam.id});
-        if(!result){
+        const RESULT = await getRepository(Expense).findOne({id: this.requestParam.id});
+        if(!RESULT){
             return `no existe el gasto ${this.requestParam}`;
         }
-        const update = getRepository(Expense).merge(result, this.requestBody);
-        const saveUpdate = await getRepository(Expense).save(update);
-        return saveUpdate;
+        const UPDATE = getRepository(Expense).merge(RESULT, this.requestBody);
+        const SAVE_UPDATE = await getRepository(Expense).save(UPDATE);
+        return SAVE_UPDATE;
     }
 }
