@@ -13,7 +13,7 @@ export class PurchaseInvoiceDescriptionService {
     async readInvoiceDescription():Promise<string | object>{
         const RESULT = await getRepository(SupplierInvoice).findOne({id: this.requestParam.supplierInvoiceId})
         if(!RESULT){
-            return "sin resultados"
+            return "la factura no existe"
         }
         return RESULT;
     }
