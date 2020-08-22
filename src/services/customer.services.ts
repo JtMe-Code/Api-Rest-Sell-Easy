@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getRepository, Like } from 'typeorm';
 import { Request } from 'express';
 import {Customer} from '../entity/customer.entity';
 
@@ -50,4 +50,16 @@ export class CustomerService {
         const SAVE_UPDATE = await getRepository(Customer).save(UPDATE);
         return SAVE_UPDATE;
     }
+
+    async search():Promise<string | object[]>{
+        const RESULT = await getRepository(Customer).find({where: [
+            {name: Like(`%${this.requestParam.search}%`)},
+            {identification: Like(`%${this.requestParam.search}%`)}
+        ]});
+        if(RESULT.length < 1){
+        return "sin resultados";
+        }
+        return RESULT;
+    }
+    
 }

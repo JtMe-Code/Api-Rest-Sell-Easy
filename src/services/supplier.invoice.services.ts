@@ -1,7 +1,8 @@
-import { getRepository } from 'typeorm';
+import { getRepository, In, Like } from 'typeorm';
 import { Request } from 'express';
 import { SupplierInvoice } from '../entity/supplier.invoice.entity';
 import { Items } from '../entity/items.entity';
+import { Supplier } from '../entity/supplier.entity';
 
 // *CRU -D*
 
@@ -55,4 +56,21 @@ export class SupplierInvoiceService {
         const SAVE_UPDATE = await getRepository(SupplierInvoice).save(UPDATE);
         return SAVE_UPDATE;
     }
+
+    async search():Promise<string | object[]>{
+        const RESULT = await getRepository(Supplier).find({where: [
+                                                        {name: Like(`%${this.requestParam.search}%`)},
+                                                        {identification: Like(`%${this.requestParam.search}%`)}
+                                                    ]});
+        if(RESULT.length < 1){
+            return "sin resultados";
+        }
+        const RESULT_MAP:number[] = RESULT.map((element) =>{
+            let newArray:number[] = [];
+            return newArray.push(element.id);            
+        })
+        const RESULT_INVOCE = await getRepository(SupplierInvoice).find({id_supplier: In(RESULT_MAP)});
+        return RESULT_INVOCE;
+    }
+    
 }

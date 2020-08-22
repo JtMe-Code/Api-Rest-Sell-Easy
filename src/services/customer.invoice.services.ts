@@ -1,7 +1,8 @@
-import { getRepository, MoreThanOrEqual } from 'typeorm';
+import { getRepository, MoreThanOrEqual, Like, In } from 'typeorm';
 import { Request } from 'express';
 import { CustomerInvoice } from '../entity/customer.invoice.entity';
 import { Items } from '../entity/items.entity';
+import { Customer } from '../entity/customer.entity';
 
 // *CRU -D*
 
@@ -55,4 +56,21 @@ export class CustomerInvoiceService {
         const SAVE_UPDATE = await getRepository(CustomerInvoice).save(UPDATE);
         return SAVE_UPDATE;
     }
+
+    async search():Promise<string | object[]>{
+        const RESULT = await getRepository(Customer).find({where: [
+                                                        {name: Like(`%${this.requestParam.search}%`)},
+                                                        {identification: Like(`%${this.requestParam.search}%`)}
+                                                    ]});
+        if(RESULT.length < 1){
+            return "sin resultados";
+        }
+        const RESULT_MAP:number[] = RESULT.map((element) =>{
+            let newArray:number[] = [];
+            return newArray.push(element.id);            
+        })
+        const RESULT_INVOCE = await getRepository(CustomerInvoice).find({id_customer: In(RESULT_MAP)});
+        return RESULT_INVOCE;
+    }
+    
 }
