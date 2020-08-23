@@ -16,9 +16,12 @@ export class SaleInvoiceDescription {
 
     @Column()
     id_items: number;
-    @ManyToOne(type => Items, items => items.saleInvoiceDescription, {eager: true})
+    @ManyToOne(type => Items, items => items.saleInvoiceDescription)
     @JoinColumn({name: "id_items"})
     items: Items;
+
+    @Column("double")
+    salePrice: number;
 
     @Column()
     quantity: number;

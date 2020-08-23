@@ -18,10 +18,10 @@ export class Items {
     barcode: string;
 
     @Column("double")
-    salePrice: number;
+    lastSalePrice: number;
 
     @Column("double")
-    purchasePrice: number;
+    lastPurchasePrice: number;
 
     @CreateDateColumn()
     createdAt: Timestamp;

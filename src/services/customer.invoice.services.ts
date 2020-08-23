@@ -3,20 +3,24 @@ import { Request } from 'express';
 import { CustomerInvoice } from '../entity/customer.invoice.entity';
 import { Items } from '../entity/items.entity';
 import { Customer } from '../entity/customer.entity';
+import { IResourceRequest } from '../interfaces/resourceRequest';
 
 // *CRU -D*
 
 export class CustomerInvoiceService {
-    private requestBody: CustomerInvoice;
-    private requestParam: any;
+    private body: CustomerInvoice;
+    private request: IResourceRequest;
     constructor(req: Request){
-        this.requestBody = req.body;
-        this.requestParam = req.params;
+        this.body = req.body;
+        this.request.Id = parseInt(req.params.id);
+        this.request.Search = req.params.search;
+        this.request.Offset = req.query.offset;
+        this.request.Limit = req.query.limit;
     }
     
     async create():Promise<string | object>{
-        for (let i = 0; i < this.requestBody.saleInvoiceDescription.length; i++) {
-            let element = this.requestBody.saleInvoiceDescription[i];
+        for (let i = 0; i < this.body.saleInvoiceDescription.length; i++) {
+            let element = this.body.saleInvoiceDescription[i];
             let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)});
             if (result) {
                 let newStock = result.stock - element.quantity;
@@ -26,13 +30,13 @@ export class CustomerInvoiceService {
                 return `stock insuficiente del articulo ${element.id_items}`
             }
         }
-        const DATA = getRepository(CustomerInvoice).create(this.requestBody);
+        const DATA = getRepository(CustomerInvoice).create(this.body);
         const SAVE_DATA = await getRepository(CustomerInvoice).save(DATA);
         return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.requestParam.id});
+        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.request.Id});
         if(!RESULT){
             return "no existe la factura";
         }
@@ -40,7 +44,12 @@ export class CustomerInvoiceService {
     }
 
     async readAll():Promise<string | object[]>{
-        const RESULT = await getRepository(CustomerInvoice).find();
+        let offset = parseInt(this.request.Offset);
+        let limit = parseInt(this.request.Offset);
+        if(offset < 0 && limit < offset){
+            return "consulta no valida";
+        }
+        const RESULT = await getRepository(CustomerInvoice).find({skip: offset, take: limit})
         if(RESULT.length < 1){
             return "sin resultados";
         }
@@ -48,26 +57,26 @@ export class CustomerInvoiceService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.requestParam.id});
+        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.request.Id});
         if(!RESULT){
             return "no existe la factura";
         }
-        const UPDATE = getRepository(CustomerInvoice).merge(RESULT, this.requestBody);
+        const UPDATE = getRepository(CustomerInvoice).merge(RESULT, this.body);
         const SAVE_UPDATE = await getRepository(CustomerInvoice).save(UPDATE);
         return SAVE_UPDATE;
     }
 
     async search():Promise<string | object[]>{
         const RESULT = await getRepository(Customer).find({where: [
-                                                        {name: Like(`%${this.requestParam.search}%`)},
-                                                        {identification: Like(`%${this.requestParam.search}%`)}
-                                                    ]});
+                                                        {name: Like(`%${this.request.Search}%`)},
+                                                        {identification: Like(`%${this.request.Search}%`)}
+                                                    ]})
         if(RESULT.length < 1){
             return "sin resultados";
         }
         const RESULT_MAP:number[] = RESULT.map((element) =>{
             let newArray:number[] = [];
-            return newArray.push(element.id);            
+            return newArray.push(element.id);
         })
         const RESULT_INVOCE = await getRepository(CustomerInvoice).find({id_customer: In(RESULT_MAP)});
         return RESULT_INVOCE;

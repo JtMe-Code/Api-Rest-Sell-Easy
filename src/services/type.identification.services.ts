@@ -1,30 +1,31 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { TypeIdentification } from '../entity/type.identification.entity';
+import { IResourceRequest } from '../interfaces/resourceRequest';
 
 // *CRU -D*
 
 export class TypeIdentificationService {
-    private requestBody: TypeIdentification;
-    private requestParam: any;
+    private body: TypeIdentification;
+    private request: IResourceRequest;
     constructor(req: Request){
-        this.requestBody = req.body;
-        this.requestParam = req.params;
+        this.body = req.body;
+        this.request.Id = parseInt(req.params.id);
     }
     
     async create():Promise<string | object>{
-        const RESULT = await getRepository(TypeIdentification).findOne({description: this.requestBody.description});
+        const RESULT = await getRepository(TypeIdentification).findOne({description: this.body.description});
         if(RESULT){
-            return `Ya existe un tipo de identificaion ${this.requestBody.description}`;
+            return `Ya existe un tipo de identificaion ${this.body.description}`;
         }
 
-        const DATA = getRepository(TypeIdentification).create(this.requestBody);
+        const DATA = getRepository(TypeIdentification).create(this.body);
         const SAVE_DATA = await getRepository(TypeIdentification).save(DATA);
         return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(TypeIdentification).findOne({id: this.requestParam.id});
+        const RESULT = await getRepository(TypeIdentification).findOne({id: this.request.Id});
         if(!RESULT){
             return "no existe el tipo de identificacion";
         }
@@ -40,11 +41,11 @@ export class TypeIdentificationService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(TypeIdentification).findOne({id: this.requestParam.id});
+        const RESULT = await getRepository(TypeIdentification).findOne({id: this.request.Id});
         if(!RESULT){
             return "no existe el tipo de identificacion";
         }
-        const UPDATE = getRepository(TypeIdentification).merge(RESULT, this.requestBody);
+        const UPDATE = getRepository(TypeIdentification).merge(RESULT, this.body);
         const SAVE_UPDATE = await getRepository(TypeIdentification).save(UPDATE);
         return SAVE_UPDATE;
     }

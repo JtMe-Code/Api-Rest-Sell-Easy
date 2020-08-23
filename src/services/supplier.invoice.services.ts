@@ -3,20 +3,24 @@ import { Request } from 'express';
 import { SupplierInvoice } from '../entity/supplier.invoice.entity';
 import { Items } from '../entity/items.entity';
 import { Supplier } from '../entity/supplier.entity';
+import { IResourceRequest } from '../interfaces/resourceRequest';
 
 // *CRU -D*
 
 export class SupplierInvoiceService {
-    private requestBody: SupplierInvoice;
-    private requestParam: any;
+    private body: SupplierInvoice;
+    private request: IResourceRequest;
     constructor(req: Request){
-        this.requestBody = req.body;
-        this.requestParam = req.params;
+        this.body = req.body;
+        this.request.Id = parseInt(req.params.id);
+        this.request.Search = req.params.search;
+        this.request.Offset = req.query.offset;
+        this.request.Limit = req.query.limit;
     }
     
     async create():Promise<string | object>{
-        for (let i = 0; i < this.requestBody.purchaseInvoiceDescription.length; i++) {
-            let element = this.requestBody.purchaseInvoiceDescription[i];
+        for (let i = 0; i < this.body.purchaseInvoiceDescription.length; i++) {
+            let element = this.body.purchaseInvoiceDescription[i];
             let result = await getRepository(Items).findOne({id: element.id_items});
             if (result) {
                 let newStock = result.stock + element.quantity;
@@ -26,21 +30,26 @@ export class SupplierInvoiceService {
                 return `no existe el articulo ${element.items.description}`
             }
         }
-        const DATA = getRepository(SupplierInvoice).create(this.requestBody);
+        const DATA = getRepository(SupplierInvoice).create(this.body);
         const SAVE_DATA = await getRepository(SupplierInvoice).save(DATA);
         return SAVE_DATA;
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(SupplierInvoice).findOne({id: this.requestParam.id});
+        const RESULT = await getRepository(SupplierInvoice).findOne({id: this.request.Id});
         if(!RESULT){
-            return `no existe la factura ${this.requestParam.id}`;
+            return `no existe la factura ${this.request.Id}`;
         }
         return RESULT;
     }
 
     async readAll():Promise<string | object[]>{
-        const RESULT = await getRepository(SupplierInvoice).find();
+        let offset = parseInt(this.request.Offset);
+        let limit = parseInt(this.request.Offset);
+        if(offset < 0 && limit < offset){
+            return "consulta no valida";
+        }
+        const RESULT = await getRepository(SupplierInvoice).find({skip: offset, take: limit})
         if(RESULT.length < 1){
             return "sin resultados";
         }
@@ -48,19 +57,19 @@ export class SupplierInvoiceService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(SupplierInvoice).findOne({id: this.requestParam.id});
+        const RESULT = await getRepository(SupplierInvoice).findOne({id: this.request.Id});
         if(!RESULT){
-            return `no existe la factura ${this.requestParam.id}`;
+            return `no existe la factura ${this.request.Id}`;
         }
-        const UPDATE = getRepository(SupplierInvoice).merge(RESULT, this.requestBody);
+        const UPDATE = getRepository(SupplierInvoice).merge(RESULT, this.body);
         const SAVE_UPDATE = await getRepository(SupplierInvoice).save(UPDATE);
         return SAVE_UPDATE;
     }
 
     async search():Promise<string | object[]>{
         const RESULT = await getRepository(Supplier).find({where: [
-                                                        {name: Like(`%${this.requestParam.search}%`)},
-                                                        {identification: Like(`%${this.requestParam.search}%`)}
+                                                        {name: Like(`%${this.request.Search}%`)},
+                                                        {identification: Like(`%${this.request.Search}%`)}
                                                     ]});
         if(RESULT.length < 1){
             return "sin resultados";

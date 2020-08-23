@@ -20,7 +20,7 @@ export class SupplierInvoice {
     @UpdateDateColumn()
     updatedAt: Timestamp;
 
-    @OneToMany(type => PurchaseInvoiceDescription, purchaseInvoiceDescription => purchaseInvoiceDescription.supplierInvoice, {eager: true, cascade: true})
+    @OneToMany(type => PurchaseInvoiceDescription, purchaseInvoiceDescription => purchaseInvoiceDescription.supplierInvoice, {cascade: true})
     purchaseInvoiceDescription: PurchaseInvoiceDescription[];
 
 }
