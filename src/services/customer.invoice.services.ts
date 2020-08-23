@@ -12,10 +12,10 @@ export class CustomerInvoiceService {
     private request: IResourceRequest;
     constructor(req: Request){
         this.body = req.body;
-        this.request.Id = parseInt(req.params.id);
-        this.request.Search = req.params.search;
-        this.request.Offset = req.query.offset;
-        this.request.Limit = req.query.limit;
+        this.request.id = parseInt(req.params.id);
+        this.request.search = req.params.search;
+        this.request.offset = req.query.offset;
+        this.request.limit = req.query.limit;
     }
     
     async create():Promise<string | object>{
@@ -36,7 +36,7 @@ export class CustomerInvoiceService {
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.request.Id});
+        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.request.id});
         if(!RESULT){
             return "no existe la factura";
         }
@@ -44,9 +44,9 @@ export class CustomerInvoiceService {
     }
 
     async readAll():Promise<string | object[]>{
-        let offset = parseInt(this.request.Offset);
-        let limit = parseInt(this.request.Limit);
-        if(offset < 0 && limit < offset){
+        let offset = parseInt(this.request.offset);
+        let limit = parseInt(this.request.limit);
+        if(offset < 0 || limit < offset){
             return "consulta no valida";
         }
         const RESULT = await getRepository(CustomerInvoice).find({skip: offset, take: limit})
@@ -57,7 +57,7 @@ export class CustomerInvoiceService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.request.Id});
+        const RESULT = await getRepository(CustomerInvoice).findOne({id: this.request.id});
         if(!RESULT){
             return "no existe la factura";
         }
@@ -68,8 +68,8 @@ export class CustomerInvoiceService {
 
     async search():Promise<string | object[]>{
         const RESULT = await getRepository(Customer).find({where: [
-                                                        {name: Like(`%${this.request.Search}%`)},
-                                                        {identification: Like(`%${this.request.Search}%`)}
+                                                        {name: Like(`%${this.request.search}%`)},
+                                                        {identification: Like(`%${this.request.search}%`)}
                                                     ]})
         if(RESULT.length < 1){
             return "sin resultados";

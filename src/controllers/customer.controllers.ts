@@ -38,3 +38,4 @@ export const CustomerControllers = {
         return res.status(200).json(OUTCOME);
     }
 }
+

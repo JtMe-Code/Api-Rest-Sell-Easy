@@ -10,10 +10,10 @@ export class ItemsService {
     private request: IResourceRequest;
     constructor(req: Request){
         this.body = req.body;
-        this.request.Id = parseInt(req.params.id);
-        this.request.Search = req.params.search;
-        this.request.Offset = req.query.offset;
-        this.request.Limit = req.query.limit;
+        this.request.id = parseInt(req.params.id);
+        this.request.search = req.params.search;
+        this.request.offset = req.query.offset;
+        this.request.limit = req.query.limit;
     }
     
     async create():Promise<string | object>{
@@ -23,7 +23,7 @@ export class ItemsService {
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(Items).findOne({id: this.request.Id});
+        const RESULT = await getRepository(Items).findOne({id: this.request.id});
         if(!RESULT){
             return "sin resultados";
         }
@@ -31,9 +31,9 @@ export class ItemsService {
     }
 
     async readAll():Promise<string | object[]>{
-        let offset = parseInt(this.request.Offset);
-        let limit = parseInt(this.request.Limit);
-        if(offset < 0 && limit < offset){
+        let offset = parseInt(this.request.offset);
+        let limit = parseInt(this.request.limit);
+        if(offset < 0 || limit < offset){
             return "consulta no valida";
         }
         const RESULT = await getRepository(Items).find({skip: offset, take: limit})
@@ -44,7 +44,7 @@ export class ItemsService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(Items).findOne({id: this.request.Id});
+        const RESULT = await getRepository(Items).findOne({id: this.request.id});
         if(!RESULT){
             return "items no encontrado";
         }
@@ -55,8 +55,8 @@ export class ItemsService {
 
     async search():Promise<string | object[]>{
         const RESULT = await getRepository(Items).find({where: [
-                                                            {description:  Like(`%${this.request.Search}%`)},
-                                                            {barcode: Like(`%${this.request.Search}%`)}
+                                                            {description:  Like(`%${this.request.search}%`)},
+                                                            {barcode: Like(`%${this.request.search}%`)}
                                                         ]});
         if(RESULT.length < 1){
         return "sin resultados";

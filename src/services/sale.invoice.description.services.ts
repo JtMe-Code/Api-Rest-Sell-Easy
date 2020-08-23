@@ -8,7 +8,7 @@ import { IResourceRequest } from '../interfaces/resourceRequest';
 export class SaleInvoiceDescriptionService {
     private request: IResourceRequest;
     constructor(req: Request){
-        this.request.Id = parseInt(req.params.id);
+        this.request.id = parseInt(req.params.id);
     }
 
     async readInvoiceDescription():Promise<string | object>{
@@ -17,7 +17,7 @@ export class SaleInvoiceDescriptionService {
                                 .select(['customerInvoice', 'saleInvoiceDescription.id_items', 'saleInvoiceDescription.salePrice', 'saleInvoiceDescription.quantity', 'items.description'])
                                 .innerJoin('customerInvoice.id', 'saleInvoiceDescription.id_customer_invoice')
                                 .innerJoin('saleInvoiceDescription.id_items', 'items')
-                                .where('customerInvoice.id = :id', {id: this.request.Id})
+                                .where('customerInvoice.id = :id', {id: this.request.id})
                                 .getMany()
         if(!RESULT){
             return "la factura no existe"
