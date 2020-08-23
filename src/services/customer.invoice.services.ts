@@ -45,7 +45,7 @@ export class CustomerInvoiceService {
 
     async readAll():Promise<string | object[]>{
         let offset = parseInt(this.request.Offset);
-        let limit = parseInt(this.request.Offset);
+        let limit = parseInt(this.request.Limit);
         if(offset < 0 && limit < offset){
             return "consulta no valida";
         }

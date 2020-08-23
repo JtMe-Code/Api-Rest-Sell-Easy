@@ -29,5 +29,12 @@ export const ItemsControllers = {
             res.status(400).json({error: OUTCOME})
         }
         return res.status(200).json(OUTCOME);
+    },
+    search: async (req: Request, res: Response): Promise<Response> => {
+        const OUTCOME = await new ItemsService(req).search();
+        if(typeof OUTCOME === "string"){
+            res.status(400).json({error: OUTCOME})
+        }
+        return res.status(200).json(OUTCOME);
     }
 }
