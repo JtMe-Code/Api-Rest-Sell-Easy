@@ -7,5 +7,6 @@ ROUTER.post('/items', ItemsControllers.create);
 ROUTER.get('/items/:id', ItemsControllers.read);
 ROUTER.get('/items/list/all', ItemsControllers.readAll);
 ROUTER.put('/items/:id', ItemsControllers.update);
+ROUTER.get('/items/search/:search', ItemsControllers.search);
 
 export default ROUTER;

@@ -3,6 +3,6 @@ import { PurchaseInvoiceDescriptionControllers } from '../controllers/purchase.i
 
 const ROUTER = Router();
 
-ROUTER.get('/purchase/invoice/description/:supplierInvoiceId', PurchaseInvoiceDescriptionControllers.readInvoiceDescription);
+ROUTER.get('/purchase/invoice/description/:id', PurchaseInvoiceDescriptionControllers.readInvoiceDescription);
 
 export default ROUTER;
