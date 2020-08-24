@@ -10,10 +10,7 @@ export class ExpenseService {
     private request: IResourceRequest;
     constructor(req: Request){
         this.body = req.body;
-        this.request.id = req.params.id;
-        this.request.search = req.params.search;
-        this.request.offset = req.query.offset;
-        this.request.limit = req.query.limit;
+        this.request = req.params;
     }
     
     async create():Promise<string | object>{
@@ -23,14 +20,14 @@ export class ExpenseService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.request.id === "undefined"){
-            return "consulta no valida"
+        if(typeof this.request.id === "string" && parseInt(this.request.id)> 0){  
+            const RESULT = await getRepository(Expense).findOne({id: parseInt(this.request.id)});
+            if(!RESULT){
+                return `no existe el gasto`;
+            }
+            return RESULT;
         }
-        const RESULT = await getRepository(Expense).findOne({id: parseInt(this.request.id)});
-        if(!RESULT){
-            return `no existe el gasto`;
-        }
-        return RESULT;
+        return "consulta invalida";        
     }
 
     async readAll():Promise<string | object[]>{
@@ -47,16 +44,16 @@ export class ExpenseService {
     }
 
     async update():Promise<string | object>{
-        if(typeof this.request.id === "undefined"){
-            return "consulta no valida"
+        if(typeof this.request.id === "string" && parseInt(this.request.id)> 0){  
+            const RESULT = await getRepository(Expense).findOne({id: parseInt(this.request.id)});
+            if(!RESULT){
+                return `no existe el gasto`;
+            }
+            const UPDATE = getRepository(Expense).merge(RESULT, this.body);
+            const SAVE_UPDATE = await getRepository(Expense).save(UPDATE);
+            return SAVE_UPDATE;
         }
-        const RESULT = await getRepository(Expense).findOne({id: parseInt(this.request.id)});
-        if(!RESULT){
-            return `no existe el gasto`;
-        }
-        const UPDATE = getRepository(Expense).merge(RESULT, this.body);
-        const SAVE_UPDATE = await getRepository(Expense).save(UPDATE);
-        return SAVE_UPDATE;
+        return "consulta invalida";       
     }
 
     async search():Promise<string | object[]>{
