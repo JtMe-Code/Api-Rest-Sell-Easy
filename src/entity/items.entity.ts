@@ -17,10 +17,10 @@ export class Items {
     @Column()
     barcode: string;
 
-    @Column("double")
+    @Column({type: "double", default: 0})
     lastSalePrice: number;
 
-    @Column("double")
+    @Column({type: "double", default: 0})
     lastPurchasePrice: number;
 
     @CreateDateColumn()
