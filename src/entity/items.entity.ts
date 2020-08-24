@@ -11,10 +11,10 @@ export class Items {
     @Column()
     description: string;
 
-    @Column()
+    @Column({default: 0})
     stock: number;
 
-    @Column()
+    @Column({default: ""})
     barcode: string;
 
     @Column({type: "double", default: 0})
