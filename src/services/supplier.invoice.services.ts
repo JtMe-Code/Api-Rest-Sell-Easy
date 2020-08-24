@@ -24,7 +24,8 @@ export class SupplierInvoiceService {
             let result = await getRepository(Items).findOne({id: element.id_items});
             if (result) {
                 let newStock = result.stock + element.quantity;
-                let update = getRepository(Items).merge(result, {stock: newStock});
+                let newPurchasePrice = element.purchasePrice;
+                let update = getRepository(Items).merge(result, {stock: newStock, lastPurchasePrice: newPurchasePrice});
                 await getRepository(Items).save(update);
             }else{
                 return `no existe el articulo ${element.items.description}`

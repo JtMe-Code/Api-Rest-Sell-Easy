@@ -14,7 +14,7 @@ import typeIdentificationRoutes from './type.identification.routes';
 
 const ROUTER = Router();
 
-ROUTER.use(passport.authenticate("jwt", { session: false }));
+// ROUTER.use(passport.authenticate("jwt", { session: false }));
 
 ROUTER.use(customerRoutes);
 ROUTER.use(customerInvoiceRoutes);
