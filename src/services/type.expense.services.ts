@@ -10,7 +10,7 @@ export class TypeExpenseService {
     private request: IResourceRequest;
     constructor(req: Request){
         this.body = req.body;
-        this.request.id = parseInt(req.params.id);
+        this.request.id = req.params.id;
     }
     
     async create():Promise<string | object>{
@@ -25,7 +25,10 @@ export class TypeExpenseService {
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(TypeExpense).findOne({id: this.request.id});
+        if(typeof this.request.id === "undefined"){
+            return "consulta no valida"
+        }
+        const RESULT = await getRepository(TypeExpense).findOne({id: parseInt(this.request.id)});
         if(!RESULT){
             return `no existe el tipo gasto`;
         }
@@ -41,7 +44,10 @@ export class TypeExpenseService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(TypeExpense).findOne({id: this.request.id});
+        if(typeof this.request.id === "undefined"){
+            return "consulta no valida"
+        }
+        const RESULT = await getRepository(TypeExpense).findOne({id: parseInt(this.request.id)});
         if(!RESULT){
             return "no existe el tipo de gasto";
         }

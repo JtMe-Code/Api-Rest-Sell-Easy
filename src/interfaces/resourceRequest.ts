@@ -1,6 +1,6 @@
 export interface IResourceRequest {
-    id: number,
-    search: string,
-    offset: any,
-    limit: any
+    id?: string,
+    search?: string,
+    offset?: any,
+    limit?: any
 }

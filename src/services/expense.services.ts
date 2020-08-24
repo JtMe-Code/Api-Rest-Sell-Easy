@@ -10,7 +10,7 @@ export class ExpenseService {
     private request: IResourceRequest;
     constructor(req: Request){
         this.body = req.body;
-        this.request.id = parseInt(req.params.id);
+        this.request.id = req.params.id;
         this.request.search = req.params.search;
         this.request.offset = req.query.offset;
         this.request.limit = req.query.limit;
@@ -23,7 +23,10 @@ export class ExpenseService {
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(Expense).findOne({id: this.request.id});
+        if(typeof this.request.id === "undefined"){
+            return "consulta no valida"
+        }
+        const RESULT = await getRepository(Expense).findOne({id: parseInt(this.request.id)});
         if(!RESULT){
             return `no existe el gasto`;
         }
@@ -44,7 +47,10 @@ export class ExpenseService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(Expense).findOne({id: this.request.id});
+        if(typeof this.request.id === "undefined"){
+            return "consulta no valida"
+        }
+        const RESULT = await getRepository(Expense).findOne({id: parseInt(this.request.id)});
         if(!RESULT){
             return `no existe el gasto`;
         }

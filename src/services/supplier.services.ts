@@ -10,7 +10,7 @@ export class SupplierService {
     private request: IResourceRequest;
     constructor(req: Request){
         this.body = req.body;
-        this.request.id = parseInt(req.params.id);
+        this.request.id = req.params.id;
         this.request.search = req.params.search;
         this.request.offset = req.query.offset;
         this.request.limit = req.query.limit;
@@ -30,7 +30,10 @@ export class SupplierService {
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(Supplier).findOne({id: this.request.id});
+        if(typeof this.request.id === "undefined"){
+            return "consulta no valida"
+        }
+        const RESULT = await getRepository(Supplier).findOne({id: parseInt(this.request.id)});
         if(!RESULT){
             return "no existe el proveedor";
         }
@@ -51,7 +54,10 @@ export class SupplierService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(Supplier).findOne({id: this.request.id});
+        if(typeof this.request.id === "undefined"){
+            return "consulta no valida"
+        }
+        const RESULT = await getRepository(Supplier).findOne({id: parseInt(this.request.id)});
         if(!RESULT){
             return "no existe el proveedor";
         }

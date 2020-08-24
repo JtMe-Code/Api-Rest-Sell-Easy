@@ -12,7 +12,7 @@ export class SupplierInvoiceService {
     private request: IResourceRequest;
     constructor(req: Request){
         this.body = req.body;
-        this.request.id = parseInt(req.params.id);
+        this.request.id = req.params.id;
         this.request.search = req.params.search;
         this.request.offset = req.query.offset;
         this.request.limit = req.query.limit;
@@ -37,7 +37,10 @@ export class SupplierInvoiceService {
     }
 
     async read():Promise<string | object>{
-        const RESULT = await getRepository(SupplierInvoice).findOne({id: this.request.id});
+        if(typeof this.request.id === "undefined"){
+            return "consulta no valida"
+        }
+        const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.request.id)});
         if(!RESULT){
             return `no existe la factura ${this.request.id}`;
         }
@@ -58,7 +61,10 @@ export class SupplierInvoiceService {
     }
 
     async update():Promise<string | object>{
-        const RESULT = await getRepository(SupplierInvoice).findOne({id: this.request.id});
+        if(typeof this.request.id === "undefined"){
+            return "consulta no valida"
+        }
+        const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.request.id)});
         if(!RESULT){
             return `no existe la factura ${this.request.id}`;
         }
