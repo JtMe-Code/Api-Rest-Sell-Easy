@@ -20,8 +20,8 @@ export class SaleInvoiceDescriptionService {
                                 .innerJoin('saleInvoiceDescription.items', 'items')
                                 .where('customerInvoice.id = :id', {id: parseInt(this.reqParams.id)})
                                 .getMany()
-            if(!RESULT){
-                return "la factura no existe"
+            if(RESULT.length < 1){
+                return "sin resultados"
             }
             return RESULT;
         }
