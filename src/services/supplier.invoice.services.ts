@@ -3,16 +3,19 @@ import { Request } from 'express';
 import { SupplierInvoice } from '../entity/supplier.invoice.entity';
 import { Items } from '../entity/items.entity';
 import { Supplier } from '../entity/supplier.entity';
-import { IResourceRequest } from '../interfaces/resourceRequest';
+import { IRequestParams } from '../interfaces/requestParams';
+import { IRequestQuery } from '../interfaces/requestQuery';
 
 // *CRU -D*
 
 export class SupplierInvoiceService {
     private body: SupplierInvoice;
-    private request: IResourceRequest;
+    private reqParams: IRequestParams;
+    private reqQuery: IRequestQuery;
     constructor(req: Request){
         this.body = req.body;
-        this.request = req.params;
+        this.reqParams = req.params;
+        this.reqQuery = req.query;
     }
     
     async create():Promise<string | object>{
@@ -34,10 +37,10 @@ export class SupplierInvoiceService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.request.id === "string" && parseInt(this.request.id)> 0){  
-            const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.request.id)});
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+            const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
-                return `no existe la factura ${this.request.id}`;
+                return `no existe la factura ${this.reqParams.id}`;
             }
             return RESULT;
         }
@@ -46,23 +49,26 @@ export class SupplierInvoiceService {
     }
 
     async readAll():Promise<string | object[]>{
-        let offset = parseInt(this.request.offset);
-        let limit = parseInt(this.request.limit);
-        if(offset < 0 || limit < offset){
-            return "consulta no valida";
+        if(typeof this.reqQuery.offset === "string" && typeof this.reqQuery.limit === "string"){
+            let offset = parseInt(this.reqQuery.offset);
+            let limit = parseInt(this.reqQuery.limit);
+            if(offset < 0 || limit < offset){
+                return "consulta no valida";
+            }
+            const RESULT = await getRepository(SupplierInvoice).find({skip: offset, take: limit})
+            if(RESULT.length < 1){
+                return "sin resultados";
+            }
+            return RESULT;
         }
-        const RESULT = await getRepository(SupplierInvoice).find({skip: offset, take: limit})
-        if(RESULT.length < 1){
-            return "sin resultados";
-        }
-        return RESULT;
+        return "consulta no valida"
     }
 
     async update():Promise<string | object>{
-        if(typeof this.request.id === "string" && parseInt(this.request.id)> 0){  
-            const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.request.id)});
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+            const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
-                return `no existe la factura ${this.request.id}`;
+                return `no existe la factura ${this.reqParams.id}`;
             }
             const UPDATE = getRepository(SupplierInvoice).merge(RESULT, this.body);
             const SAVE_UPDATE = await getRepository(SupplierInvoice).save(UPDATE);
@@ -72,19 +78,22 @@ export class SupplierInvoiceService {
     }
 
     async search():Promise<string | object[]>{
-        const RESULT = await getRepository(Supplier).find({where: [
-                                                        {name: Like(`%${this.request.search}%`)},
-                                                        {identification: Like(`%${this.request.search}%`)}
-                                                    ]});
-        if(RESULT.length < 1){
+        if(typeof this.reqParams.search === "string"){
+            const RESULT = await getRepository(Supplier).find({where: [
+                {name: Like(`%${this.reqParams.search}%`)},
+                {identification: Like(`%${this.reqParams.search}%`)}
+            ]});
+            if(RESULT.length < 1){
             return "sin resultados";
-        }
-        const RESULT_MAP:number[] = RESULT.map((element) =>{
+            }
+            const RESULT_MAP:number[] = RESULT.map((element) =>{
             let newArray:number[] = [];
             return newArray.push(element.id);            
-        })
-        const RESULT_INVOCE = await getRepository(SupplierInvoice).find({id_supplier: In(RESULT_MAP)});
-        return RESULT_INVOCE;
+            })
+            const RESULT_INVOCE = await getRepository(SupplierInvoice).find({id_supplier: In(RESULT_MAP)});
+            return RESULT_INVOCE;
+        }
+        return "consulta invalida";
     }
     
 }

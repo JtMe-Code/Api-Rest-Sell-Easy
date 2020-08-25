@@ -1,16 +1,16 @@
 import { getRepository } from 'typeorm';
 import { Request } from 'express';
 import { TypeExpense } from '../entity/type.expense.entity';
-import { IResourceRequest } from '../interfaces/resourceRequest';
+import { IRequestParams } from '../interfaces/requestParams';
 
 // *CRU -D*
 
 export class TypeExpenseService {
     private body: TypeExpense;
-    private request: IResourceRequest;
+    private reqParams: IRequestParams;
     constructor(req: Request){
         this.body = req.body;
-        this.request = req.params;
+        this.reqParams = req.params;
     }
     
     async create():Promise<string | object>{
@@ -25,8 +25,8 @@ export class TypeExpenseService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.request.id === "string" && parseInt(this.request.id)> 0){
-            const RESULT = await getRepository(TypeExpense).findOne({id: parseInt(this.request.id)});
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
+            const RESULT = await getRepository(TypeExpense).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return `no existe el tipo gasto`;
             }
@@ -44,8 +44,8 @@ export class TypeExpenseService {
     }
 
     async update():Promise<string | object>{
-        if(typeof this.request.id === "string" && parseInt(this.request.id)> 0){  
-            const RESULT = await getRepository(TypeExpense).findOne({id: parseInt(this.request.id)});
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+            const RESULT = await getRepository(TypeExpense).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return "no existe el tipo de gasto";
             }

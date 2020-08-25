@@ -1,16 +1,19 @@
 import { getRepository, Like } from 'typeorm';
 import { Request } from 'express';
 import { Expense } from '../entity/expense.entity';
-import { IResourceRequest } from '../interfaces/resourceRequest';
+import { IRequestParams } from '../interfaces/requestParams';
+import { IRequestQuery } from '../interfaces/requestQuery';
 
 // *CRU -D*
 
 export class ExpenseService {
     private body: Expense;
-    private request: IResourceRequest;
+    private reqParams: IRequestParams;
+    private reqQuery: IRequestQuery;
     constructor(req: Request){
         this.body = req.body;
-        this.request = req.params;
+        this.reqParams = req.params;
+        this.reqQuery = req.query;
     }
     
     async create():Promise<string | object>{
@@ -20,8 +23,8 @@ export class ExpenseService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.request.id === "string" && parseInt(this.request.id)> 0){  
-            const RESULT = await getRepository(Expense).findOne({id: parseInt(this.request.id)});
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+            const RESULT = await getRepository(Expense).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return `no existe el gasto`;
             }
@@ -31,21 +34,25 @@ export class ExpenseService {
     }
 
     async readAll():Promise<string | object[]>{
-        let offset = parseInt(this.request.offset);
-        let limit = parseInt(this.request.limit);
-        if(offset < 0 || limit < offset){
-            return "consulta no valida";
+        if(typeof this.reqQuery.offset === "string" && typeof this.reqQuery.limit === "string"){
+            let offset = parseInt(this.reqQuery.offset);
+            let limit = parseInt(this.reqQuery.limit);
+            if(offset < 0 || limit < offset){
+                return "consulta no valida";
+            }
+            const RESULT = await getRepository(Expense).find({skip: offset, take: limit})
+            if(RESULT.length < 1){
+                return "sin resultados";
+            }
+            return RESULT;
         }
-        const RESULT = await getRepository(Expense).find({skip: offset, take: limit})
-        if(RESULT.length < 1){
-            return "sin resultados";
-        }
-        return RESULT;
+        return "consulta no valida"
+        
     }
 
     async update():Promise<string | object>{
-        if(typeof this.request.id === "string" && parseInt(this.request.id)> 0){  
-            const RESULT = await getRepository(Expense).findOne({id: parseInt(this.request.id)});
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+            const RESULT = await getRepository(Expense).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return `no existe el gasto`;
             }
@@ -57,11 +64,14 @@ export class ExpenseService {
     }
 
     async search():Promise<string | object[]>{
-        const RESULT = await getRepository(Expense).find({description: Like(`%${this.request.search}%`)});
-        if(RESULT.length < 1){
-        return "sin resultados";
+        if(typeof this.reqParams.search === "string"){
+            const RESULT = await getRepository(Expense).find({description: Like(`%${this.reqParams.search}%`)});
+            if(RESULT.length < 1){
+            return "sin resultados";
+            }
+            return RESULT;
         }
-        return RESULT;
+        return "consulta invalida";       
     }
     
 }
