@@ -16,8 +16,8 @@ export class PurchaseInvoiceDescriptionService {
             const RESULT = await getRepository(SupplierInvoice)
                                 .createQueryBuilder('supplierInvoice')
                                 .select(['supplierInvoice', 'purchaseInvoiceDescription.id_items', 'purchaseInvoiceDescription.purchasePrice', 'purchaseInvoiceDescription.quantity', 'items.description'])
-                                .innerJoin('supplierInvoice.id', 'purchaseInvoiceDescription.id_supplier_invoice')
-                                .innerJoin('purchaseInvoiceDescription.id_items', 'items')
+                                .innerJoin('supplierInvoice.purchaseInvoiceDescription', 'purchaseInvoiceDescription')
+                                .innerJoin('purchaseInvoiceDescription.items', 'items')
                                 .where('supplierInvoice.id = :id', {id: parseInt(this.reqParams.id)})
                                 .getMany()
             if(!RESULT){
