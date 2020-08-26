@@ -79,9 +79,10 @@ export class SupplierInvoiceService {
 
     async search():Promise<string | object[]>{
         if(typeof this.reqParams.search === "string"){
+            const SEARCH = this.reqParams.search.toString();
             const RESULT = await getRepository(Supplier).find({where: [
-                {name: Like(`%${this.reqParams.search}%`)},
-                {identification: Like(`%${this.reqParams.search}%`)}
+                {name: Like(`%${SEARCH}%`)},
+                {identification: Like(`%${SEARCH}%`)}
             ]});
             if(RESULT.length < 1){
             return "sin resultados";

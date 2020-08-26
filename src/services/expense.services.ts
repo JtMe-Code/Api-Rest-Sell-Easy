@@ -65,7 +65,8 @@ export class ExpenseService {
 
     async search():Promise<string | object[]>{
         if(typeof this.reqParams.search === "string"){
-            const RESULT = await getRepository(Expense).find({description: Like(`%${this.reqParams.search}%`)});
+            const SEARCH = this.reqParams.search.toString();
+            const RESULT = await getRepository(Expense).find({description: Like(`%${SEARCH}%`)});
             if(RESULT.length < 1){
             return "sin resultados";
             }

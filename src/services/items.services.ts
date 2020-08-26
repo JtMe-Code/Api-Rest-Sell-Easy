@@ -67,9 +67,10 @@ export class ItemsService {
 
     async search():Promise<string | object[]>{
         if(typeof this.reqParams.search === "string"){
+            const SEARCH = this.reqParams.search.toString();
             const RESULT = await getRepository(Items).find({where: [
-                {description:  Like(`%${this.reqParams.search}%`)},
-                {barcode: Like(`%${this.reqParams.search}%`)}
+                {description:  Like(`%${SEARCH}%`)},
+                {barcode: Like(`%${SEARCH}%`)}
             ]});
             if(RESULT.length < 1){
             return "sin resultados";
