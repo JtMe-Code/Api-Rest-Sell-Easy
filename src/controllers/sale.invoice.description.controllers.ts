@@ -5,7 +5,7 @@ export const SaleInvoiceDescriptionControllers = {
     readInvoiceDescription: async (req: Request, res: Response): Promise<Response> => {
         const OUTCOME = await new SaleInvoiceDescriptionService(req).readInvoiceDescription();
         if(typeof OUTCOME === "string"){
-            res.status(400).json({error: OUTCOME})
+            return res.status(400).json({error: OUTCOME})
         }
         return res.status(200).json(OUTCOME);
     }

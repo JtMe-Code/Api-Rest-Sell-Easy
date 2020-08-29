@@ -18,10 +18,10 @@ export class CustomerService {
     
     async create():Promise<string | object>{
         const RESULT = await getRepository(Customer).findOne({
-            where: {typeIdentification: this.body.id_type_identification, identification: this.body.identification}
+            where: {id_type_identification: this.body.id_type_identification, identification: this.body.identification}
         });
         if(RESULT){
-            return `Ya existe un cliente con ${this.body.id_type_identification} ${this.body.identification}`;
+            return `Ya existe un cliente con ${RESULT.typeIdentification.description} ${this.body.identification}`;
         }
 
         const DATA = getRepository(Customer).create(this.body);

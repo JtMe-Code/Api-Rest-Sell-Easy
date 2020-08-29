@@ -18,10 +18,10 @@ export class SupplierService {
     
     async create():Promise<string | object>{
         const RESULT = await getRepository(Supplier).findOne({
-            where: {typeIdentification: this.body.id_type_identification, identification: this.body.identification}
+            where: {id_type_identification: this.body.id_type_identification, identification: this.body.identification}
         });
         if(RESULT){
-            return `Ya existe un proveedor con ${this.body.id_type_identification} ${this.body.identification}`;
+            return `Ya existe un proveedor con ${RESULT.typeIdentification.description} ${this.body.identification}`;
         }
 
         const DATA = getRepository(Supplier).create(this.body);
