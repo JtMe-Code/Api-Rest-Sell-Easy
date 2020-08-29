@@ -19,18 +19,25 @@ export class SupplierInvoiceService {
     }
     
     async create():Promise<string | object>{
+        let arrayItemsUpdate: [{}] = [{}];
         for (let i = 0; i < this.body.purchaseInvoiceDescription.length; i++) {
             let element = this.body.purchaseInvoiceDescription[i];
             let result = await getRepository(Items).findOne({id: element.id_items});
             if (result) {
                 let newStock = result.stock + element.quantity;
                 let newPurchasePrice = element.purchasePrice;
-                let update = getRepository(Items).merge(result, {stock: newStock, lastPurchasePrice: newPurchasePrice});
-                await getRepository(Items).save(update);
+                arrayItemsUpdate.push({id: element.id_items, stock: newStock, lastPurchasePrice: newPurchasePrice});
             }else{
                 return `no existe el articulo ${element.items.description}`
             }
         }
+
+        if(arrayItemsUpdate.length > 1){
+            arrayItemsUpdate.shift();        
+            arrayItemsUpdate.forEach(async element => {            
+            await getRepository(Items).save(element);
+        });}
+        
         const DATA = getRepository(SupplierInvoice).create(this.body);
         const SAVE_DATA = await getRepository(SupplierInvoice).save(DATA);
         return SAVE_DATA;

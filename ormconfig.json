@@ -6,8 +6,5 @@
     "password": "1234",
     "database": "tiendamg",
     "synchronize": true,
-    "entities": [
-        "dist/entity/**/*.js"
-    ],
-    "logging": ["query", "error"]
+    "entities": ["dist/entity/**/*.js"]
 }
