@@ -37,7 +37,7 @@ export class ExpenseService {
         if(typeof this.reqQuery.offset === "string" && typeof this.reqQuery.limit === "string"){
             let offset = parseInt(this.reqQuery.offset);
             let limit = parseInt(this.reqQuery.limit);
-            if(offset < 0 || limit < offset){
+            if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
             const RESULT = await getRepository(Expense).find({skip: offset, take: limit})
