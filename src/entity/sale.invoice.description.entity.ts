@@ -20,6 +20,9 @@ export class SaleInvoiceDescription {
     @JoinColumn({name: "id_items"})
     items: Items;
 
+    @Column()
+    itemsDescription: string;
+
     @Column("double")
     salePrice: number;
 
