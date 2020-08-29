@@ -23,8 +23,11 @@ export class SaleInvoiceDescription {
     @Column("double")
     salePrice: number;
 
-    @Column()
+    @Column("double")
     quantity: number;
+
+    @Column("double")
+    totalValue: number;
 
     @CreateDateColumn()
     createdAt: Timestamp;
