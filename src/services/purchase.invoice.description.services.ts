@@ -12,15 +12,9 @@ export class PurchaseInvoiceDescriptionService {
     }
 
     async readInvoiceDescription():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
-            const RESULT = await getRepository(SupplierInvoice)
-                                .createQueryBuilder('supplierInvoice')
-                                .select(['supplierInvoice', 'purchaseInvoiceDescription.id_items', 'purchaseInvoiceDescription.purchasePrice', 'purchaseInvoiceDescription.quantity', 'items.description'])
-                                .innerJoin('supplierInvoice.purchaseInvoiceDescription', 'purchaseInvoiceDescription')
-                                .innerJoin('purchaseInvoiceDescription.items', 'items')
-                                .where('supplierInvoice.id = :id', {id: parseInt(this.reqParams.id)})
-                                .getMany()
-            if(RESULT.length < 1){
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
+            const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.reqParams.id)});
+            if(!RESULT){
                 return "sin resultados"
             }
             return RESULT;
