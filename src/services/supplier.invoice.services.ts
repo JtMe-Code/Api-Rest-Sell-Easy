@@ -34,9 +34,7 @@ export class SupplierInvoiceService {
 
         if(arrayItemsUpdate.length > 1){
             arrayItemsUpdate.shift();        
-            arrayItemsUpdate.forEach(async element => {            
-            await getRepository(Items).save(element);
-        });}
+            await getRepository(Items).save(arrayItemsUpdate);}
         
         const DATA = getRepository(SupplierInvoice).create(this.body);
         const SAVE_DATA = await getRepository(SupplierInvoice).save(DATA);

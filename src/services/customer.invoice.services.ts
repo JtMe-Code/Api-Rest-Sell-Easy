@@ -32,10 +32,9 @@ export class CustomerInvoiceService {
         }
         
         if(arrayItemsUpdate.length > 1){
-            arrayItemsUpdate.shift();        
-            arrayItemsUpdate.forEach(async element => {            
-            await getRepository(Items).save(element);
-        });}
+            arrayItemsUpdate.shift();
+            await getRepository(Items).save(arrayItemsUpdate);
+        }
 
         const DATA = getRepository(CustomerInvoice).create(this.body);
         const SAVE_DATA = await getRepository(CustomerInvoice).save(DATA);
@@ -43,7 +42,7 @@ export class CustomerInvoiceService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
             const RESULT = await getRepository(CustomerInvoice).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return "no existe la factura";
