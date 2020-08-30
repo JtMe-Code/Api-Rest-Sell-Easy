@@ -13,12 +13,12 @@ export class SaleInvoiceDescriptionService {
 
     async readInvoiceDescription():Promise<string | object>{
         if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
-            const RESULT = await getRepository(CustomerInvoice).findOne({id: parseInt(this.reqParams.id)});
+            const RESULT = await getRepository(CustomerInvoice).findOne({id: parseInt(this.reqParams.id)}, {relations: ['saleInvoiceDescription']});
             if(!RESULT){
                 return "sin resultados"
             }
             return RESULT;
         }
-        return "consulta invalida";           
+        return "consulta invalida";
     }
 }
