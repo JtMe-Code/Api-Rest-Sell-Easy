@@ -34,14 +34,14 @@ export class ItemsService {
         
     }
 
-    async readAll():Promise<string | object[]>{
+    async readAll():Promise<string | [Items[], number]>{
         if(typeof this.reqQuery.offset === "string" && typeof this.reqQuery.limit === "string"){
             let offset = parseInt(this.reqQuery.offset);
             let limit = parseInt(this.reqQuery.limit);
             if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(Items).find({skip: offset, take: limit})
+            const RESULT = await getRepository(Items).findAndCount({skip: offset, take: limit})
             if(RESULT.length < 1){
                 return "sin resultados";
             }

@@ -53,14 +53,14 @@ export class SupplierInvoiceService {
         
     }
 
-    async readAll():Promise<string | object[]>{
+    async readAll():Promise<string | [SupplierInvoice[], number]>{
         if(typeof this.reqQuery.offset === "string" && typeof this.reqQuery.limit === "string"){
             let offset = parseInt(this.reqQuery.offset);
             let limit = parseInt(this.reqQuery.limit);
             if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(SupplierInvoice).find({skip: offset, take: limit})
+            const RESULT = await getRepository(SupplierInvoice).findAndCount({skip: offset, take: limit})
             if(RESULT.length < 1){
                 return "sin resultados";
             }
