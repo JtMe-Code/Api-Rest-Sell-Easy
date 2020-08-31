@@ -49,7 +49,7 @@ export class SupplierService {
                 return "consulta no valida";
             }
             const RESULT = await getRepository(Supplier).findAndCount({skip: offset, take: limit})
-            if(RESULT.length < 1){
+            if(RESULT[1] < 1){
                 return "sin resultados";
             }
             return RESULT;
