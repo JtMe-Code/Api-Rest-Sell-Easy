@@ -21,7 +21,7 @@ export const CustomerInvoiceControllers = {
         if(typeof OUTCOME === "string"){
             return res.status(400).json({error: OUTCOME})
         }
-        return res.status(200).json(OUTCOME);
+        return res.status(200).json({list: OUTCOME[0], count: OUTCOME[1]});
     },
     update: async (req: Request, res: Response): Promise<Response> => {
         const OUTCOME = await new CustomerInvoiceService(req).update();
