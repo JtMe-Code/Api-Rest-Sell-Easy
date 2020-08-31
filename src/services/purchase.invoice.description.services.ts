@@ -13,7 +13,7 @@ export class PurchaseInvoiceDescriptionService {
 
     async readInvoiceDescription():Promise<string | object>{
         if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
-            const RESULT = await getRepository(SupplierInvoice).findOneOrFail({id: parseInt(this.reqParams.id)}, {relations: ['purchaseInvoiceDescription']});
+            const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.reqParams.id)}, {relations: ['purchaseInvoiceDescription']});
             if(!RESULT){
                 return "sin resultados"
             }
