@@ -19,13 +19,19 @@ export class CustomerInvoiceService {
     }
     
     async create():Promise<string | object>{
-        let arrayItemsUpdate: [{}] = [{}];
+        let arrayItemsUpdate: [{id: number, stock: number}] = [{id:0, stock:0}];
         for (let i = 0; i < this.body.saleInvoiceDescription.length; i++) {
             let element = this.body.saleInvoiceDescription[i];
             let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)});
             if (result) {
                 let newStock = result.stock - element.quantity;
-                arrayItemsUpdate.push({id: element.id_items, stock: newStock});
+                arrayItemsUpdate.forEach(array => {
+                    if (array.id == result.id) {
+                        array.stock = array.stock - element.quantity;
+                    } else {
+                        arrayItemsUpdate.push({id: element.id_items, stock: newStock});
+                    }
+                });
             }else{
                 return `stock insuficiente del articulo ${element.id_items}`
             }
