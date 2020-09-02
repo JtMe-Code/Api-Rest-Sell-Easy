@@ -26,7 +26,7 @@ export class CustomerInvoiceService {
             if (result) {
                 let newStock = result.stock - element.quantity;
                 arrayItemsUpdate.forEach(array => {
-                    if (array.id == result.id) {
+                    if (array.id == result?.id) {
                         array.stock = array.stock - element.quantity;
                     } else {
                         arrayItemsUpdate.push({id: element.id_items, stock: newStock});

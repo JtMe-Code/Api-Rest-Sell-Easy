@@ -27,7 +27,7 @@ export class SupplierInvoiceService {
                 let newStock = result.stock + element.quantity;
                 let newPurchasePrice = element.purchasePrice;
                 arrayItemsUpdate.forEach(array => {
-                    if (array.id == result.id) {
+                    if (array.id == result?.id) {
                         array.stock = array.stock + element.quantity;
                         array.lastPurchasePrice = newPurchasePrice;
                     } else {
