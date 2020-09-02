@@ -22,7 +22,7 @@ export class CustomerInvoiceService {
         let arrayItemsUpdate: [{id: number, stock: number}] = [{id:0, stock:0}];
         for (let i = 0; i < this.body.saleInvoiceDescription.length; i++) {
             let element = this.body.saleInvoiceDescription[i];
-            let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)});
+            let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)}, {select: ["id","stock"]});
             if (result) {
                 let newStock = result.stock - element.quantity;
                 arrayItemsUpdate.forEach(array => {

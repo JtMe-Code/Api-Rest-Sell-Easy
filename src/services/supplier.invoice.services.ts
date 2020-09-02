@@ -22,7 +22,7 @@ export class SupplierInvoiceService {
         let arrayItemsUpdate: [{id: number, stock: number, lastPurchasePrice: number}] = [{id:0, stock:0, lastPurchasePrice:0}];
         for (let i = 0; i < this.body.purchaseInvoiceDescription.length; i++) {
             let element = this.body.purchaseInvoiceDescription[i];
-            let result = await getRepository(Items).findOne({id: element.id_items});
+            let result = await getRepository(Items).findOne({id: element.id_items}, {select: ["id","stock","lastPurchasePrice"]});
             if (result) {
                 let newStock = result.stock + element.quantity;
                 let newPurchasePrice = element.purchasePrice;
