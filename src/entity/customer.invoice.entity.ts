@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, Timestamp, UpdateDateColumn, Index} from 'typeorm';
 import {Customer} from './customer.entity';
 import { SaleInvoiceDescription } from './sale.invoice.description.entity';
 
@@ -9,6 +9,7 @@ export class CustomerInvoice {
     id: number;
 
     @Column()
+    @Index()
     id_customer: number;
     @ManyToOne(type => Customer, customer => customer.customerInvoice, {eager: true})
     @JoinColumn({name: "id_customer"})

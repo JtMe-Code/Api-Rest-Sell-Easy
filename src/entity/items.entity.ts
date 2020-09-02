@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, Timestamp, UpdateDateColumn, Index} from 'typeorm';
 import { SaleInvoiceDescription } from './sale.invoice.description.entity';
 import { PurchaseInvoiceDescription } from './purchase.invoice.description.entity';
 
@@ -9,12 +9,14 @@ export class Items {
     id: number;
 
     @Column()
+    @Index()
     description: string;
 
     @Column({default: 0})
     stock: number;
 
     @Column({default: ""})
+    @Index()
     barcode: string;
 
     @Column({type: "double", default: 0})

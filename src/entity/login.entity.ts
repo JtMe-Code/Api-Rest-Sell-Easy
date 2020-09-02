@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Timestamp, UpdateDateColumn, Index} from 'typeorm';
 
 @Entity()
 export class Login {
@@ -7,6 +7,7 @@ export class Login {
     id: number;
 
     @Column()
+    @Index()
     user: string;
 
     @Column()

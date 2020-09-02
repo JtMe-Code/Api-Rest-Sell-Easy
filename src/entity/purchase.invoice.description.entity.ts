@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, Timestamp, UpdateDateColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, CreateDateColumn, Timestamp, UpdateDateColumn, Index} from 'typeorm';
 import {SupplierInvoice} from './supplier.invoice.entity';
 import {Items} from './items.entity';
 
@@ -9,6 +9,7 @@ export class PurchaseInvoiceDescription {
     id: number;
 
     @Column()
+    @Index()
     id_supplier_invoice: number;
     @ManyToOne(type => SupplierInvoice, supplierInvoice => supplierInvoice.purchaseInvoiceDescription, {onDelete: 'CASCADE'})
     @JoinColumn({name: "id_supplier_invoice"})

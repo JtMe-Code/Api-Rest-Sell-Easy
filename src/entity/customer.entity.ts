@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, Timestamp, UpdateDateColumn, CreateDateColumn} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, Timestamp, UpdateDateColumn, CreateDateColumn, Index} from 'typeorm';
 import {TypeIdentification} from './type.identification.entity';
 import { CustomerInvoice } from './customer.invoice.entity';
 
@@ -9,15 +9,18 @@ export class Customer {
     id: number;
 
     @Column()
+    @Index()
     name: string;
     
     @Column()
+    @Index()
     id_type_identification: number;
     @ManyToOne(type => TypeIdentification, typeIdentification => typeIdentification.customer, {eager: true})
     @JoinColumn({name: "id_type_identification"})
     typeIdentification: TypeIdentification;
 
     @Column()
+    @Index()
     identification: string;
 
     @CreateDateColumn()
