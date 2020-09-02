@@ -5,6 +5,9 @@
     "username": "root",
     "password": "1234",
     "database": "tiendamg",
-    "synchronize": true,
+    "cache": {
+        "duration": 3000
+    },
+    "synchronize": true, 
     "entities": ["dist/entity/**/*.js"]
 }
