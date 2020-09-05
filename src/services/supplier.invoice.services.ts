@@ -21,28 +21,30 @@ export class SupplierInvoiceService {
     async create():Promise<string | object>{
         let arrayItemsUpdate: [{id: number, stock: number, lastPurchasePrice: number}] = [{id:0, stock:0, lastPurchasePrice:0}];
         for (let i = 0; i < this.body.purchaseInvoiceDescription.length; i++) {
-            let element = this.body.purchaseInvoiceDescription[i];
-            let result = await getRepository(Items).findOne({id: element.id_items}, {select: ["id","stock","lastPurchasePrice"]});
-            if (result) {
-                let newStock = result.stock + element.quantity;
-                let newPurchasePrice = element.purchasePrice;
-                arrayItemsUpdate.forEach(array => {
-                    if (array.id == result?.id) {
-                        array.stock = array.stock + element.quantity;
-                        array.lastPurchasePrice = newPurchasePrice;
-                    } else {
-                        arrayItemsUpdate.push({id: element.id_items, stock: newStock, lastPurchasePrice: newPurchasePrice});
-                    }
-                });
-            }else{
-                return `no existe el articulo ${element.items.description}`
+            let element = this.body.purchaseInvoiceDescription[i];            
+            let existItem = arrayItemsUpdate.findIndex(array => element.id_items == array.id);
+            if(existItem >= 0){
+                if(arrayItemsUpdate[existItem].stock >= element.quantity){
+                    arrayItemsUpdate[existItem].stock = arrayItemsUpdate[existItem].stock - element.quantity;
+                    arrayItemsUpdate[existItem].lastPurchasePrice = element.purchasePrice;
+                }else{
+                    console.log("Error aqui");
+                    return `stock insuficiente del articulo ${element.id_items}`;
+                }
+            }else{                           
+                let result = await getRepository(Items).findOne({id: element.id_items});
+                if (result) {
+                    let newStock = result.stock - element.quantity;
+                    arrayItemsUpdate.push({id: result.id, stock: newStock, lastPurchasePrice: element.purchasePrice});
+                }else{
+                    console.log("Error aca");
+                    return `stock insuficiente del articulo ${element.id_items}`;
+                }
             }
         }
-
-        if(arrayItemsUpdate.length > 1){
-            arrayItemsUpdate.shift();
-            await getRepository(Items).save(arrayItemsUpdate);
-        }
+        
+        arrayItemsUpdate.shift();
+        await getRepository(Items).save(arrayItemsUpdate);
         
         const DATA = getRepository(SupplierInvoice).create(this.body);
         const SAVE_DATA = await getRepository(SupplierInvoice).save(DATA);

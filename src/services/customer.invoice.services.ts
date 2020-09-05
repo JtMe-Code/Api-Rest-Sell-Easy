@@ -21,26 +21,29 @@ export class CustomerInvoiceService {
     async create():Promise<string | object>{
         let arrayItemsUpdate: [{id: number, stock: number}] = [{id:0, stock:0}];
         for (let i = 0; i < this.body.saleInvoiceDescription.length; i++) {
-            let element = this.body.saleInvoiceDescription[i];
-            let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)}, {select: ["id","stock"]});
-            if (result) {
-                let newStock = result.stock - element.quantity;
-                arrayItemsUpdate.forEach(array => {
-                    if (array.id == result?.id) {
-                        array.stock = array.stock - element.quantity;
-                    } else {
-                        arrayItemsUpdate.push({id: element.id_items, stock: newStock});
-                    }
-                });
-            }else{
-                return `stock insuficiente del articulo ${element.id_items}`
+            let element = this.body.saleInvoiceDescription[i];            
+            let existItem = arrayItemsUpdate.findIndex(array => element.id_items == array.id);
+            if(existItem >= 0){
+                if(arrayItemsUpdate[existItem].stock >= element.quantity){
+                    arrayItemsUpdate[existItem].stock = arrayItemsUpdate[existItem].stock - element.quantity;
+                }else{
+                    console.log("Error aqui");
+                    return `stock insuficiente del articulo ${element.id_items}`;
+                }
+            }else{                           
+                let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)});
+                if (result) {
+                    let newStock = result.stock - element.quantity;
+                    arrayItemsUpdate.push({id: result.id, stock: newStock});
+                }else{
+                    console.log("Error aca");
+                    return `stock insuficiente del articulo ${element.id_items}`;
+                }
             }
         }
         
-        if(arrayItemsUpdate.length > 1){
-            arrayItemsUpdate.shift();
-            await getRepository(Items).save(arrayItemsUpdate);
-        }
+        arrayItemsUpdate.shift();
+        await getRepository(Items).save(arrayItemsUpdate);
 
         const DATA = getRepository(CustomerInvoice).create(this.body);
         const SAVE_DATA = await getRepository(CustomerInvoice).save(DATA);
