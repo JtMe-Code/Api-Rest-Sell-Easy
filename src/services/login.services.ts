@@ -31,7 +31,7 @@ export class LoginServices {
         const COMPARE_PASSWORD = await new Encrypt(this.body.password, RESULT.password).comparePassword();
         if(!COMPARE_PASSWORD){
             return "Usuario o contraseña incorrecta";
-        }        
+        }
         const TOKEN = new JWT(RESULT).create();
         return TOKEN;
     }

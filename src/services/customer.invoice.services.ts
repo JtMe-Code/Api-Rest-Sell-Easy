@@ -21,7 +21,7 @@ export class CustomerInvoiceService {
     async create():Promise<string | object>{
         let arrayItemsUpdate: [{id: number, stock: number}] = [{id:0, stock:0}];
         for (let i = 0; i < this.body.saleInvoiceDescription.length; i++) {
-            let element = this.body.saleInvoiceDescription[i];            
+            let element = this.body.saleInvoiceDescription[i];
             let existItem = arrayItemsUpdate.findIndex(array => element.id_items == array.id);
             if(existItem >= 0){
                 if(arrayItemsUpdate[existItem].stock >= element.quantity){
@@ -30,7 +30,7 @@ export class CustomerInvoiceService {
                     console.log("Error aqui");
                     return `stock insuficiente del articulo ${element.id_items}`;
                 }
-            }else{                           
+            }else{
                 let result = await getRepository(Items).findOne({id: element.id_items, stock: MoreThanOrEqual(element.quantity)});
                 if (result) {
                     let newStock = result.stock - element.quantity;
@@ -68,7 +68,7 @@ export class CustomerInvoiceService {
             if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(CustomerInvoice).findAndCount({skip: offset, take: limit})
+            const RESULT = await getRepository(CustomerInvoice).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }
@@ -78,7 +78,7 @@ export class CustomerInvoiceService {
     }
 
     async update():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
             const RESULT = await getRepository(CustomerInvoice).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return "no existe la factura";
@@ -107,6 +107,6 @@ export class CustomerInvoiceService {
             const RESULT_INVOCE = await getRepository(CustomerInvoice).find({id_customer: In(RESULT_MAP)});
             return RESULT_INVOCE;
         }
-        return "consulta invalida";         
-    }    
+        return "consulta invalida";
+    }
 }

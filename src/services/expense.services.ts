@@ -23,14 +23,14 @@ export class ExpenseService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
             const RESULT = await getRepository(Expense).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return `no existe el gasto`;
             }
             return RESULT;
         }
-        return "consulta invalida";        
+        return "consulta invalida";
     }
 
     async readAll():Promise<string | [Expense[], number]>{
@@ -40,18 +40,19 @@ export class ExpenseService {
             if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(Expense).findAndCount({skip: offset, take: limit})
+            const RESULT = await getRepository(Expense).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }
             return RESULT;
         }
-        return "consulta no valida"
+        return "consulta no valida";
         
     }
 
     async update():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
+            
             const RESULT = await getRepository(Expense).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return `no existe el gasto`;
@@ -60,7 +61,7 @@ export class ExpenseService {
             const SAVE_UPDATE = await getRepository(Expense).save(UPDATE);
             return SAVE_UPDATE;
         }
-        return "consulta invalida";       
+        return "consulta invalida";
     }
 
     async search():Promise<string | object[]>{
@@ -72,7 +73,7 @@ export class ExpenseService {
             }
             return RESULT;
         }
-        return "consulta invalida";       
+        return "consulta invalida";
     }
     
 }

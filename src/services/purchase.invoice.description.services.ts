@@ -20,6 +20,5 @@ export class PurchaseInvoiceDescriptionService {
             return RESULT;
         }
         return "consulta invalida";
-        
     }
 }

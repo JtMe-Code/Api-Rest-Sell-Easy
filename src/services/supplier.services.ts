@@ -30,7 +30,7 @@ export class SupplierService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
             const RESULT = await getRepository(Supplier).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return "no existe el proveedor";
@@ -48,17 +48,17 @@ export class SupplierService {
             if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(Supplier).findAndCount({skip: offset, take: limit})
+            const RESULT = await getRepository(Supplier).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }
             return RESULT;
         }
-        return "consulta no valida"        
+        return "consulta no valida";
     }
 
     async update():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
             const RESULT = await getRepository(Supplier).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return "no existe el proveedor";

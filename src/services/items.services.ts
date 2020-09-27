@@ -23,14 +23,14 @@ export class ItemsService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
             const RESULT = await getRepository(Items).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return "sin resultados";
             }
             return RESULT;
         }
-        return "consulta invalida"; 
+        return "consulta invalida";
         
     }
 
@@ -41,13 +41,13 @@ export class ItemsService {
             if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(Items).findAndCount({skip: offset, take: limit})
+            const RESULT = await getRepository(Items).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }
             return RESULT;
         }
-        return "consulta no valida"
+        return "consulta no valida";
         
     }
 
@@ -77,6 +77,6 @@ export class ItemsService {
             }
             return RESULT;
         }
-        return "consulta invalida";         
+        return "consulta invalida";
     }
 }

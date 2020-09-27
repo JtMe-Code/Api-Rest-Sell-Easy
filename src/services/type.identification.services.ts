@@ -53,6 +53,6 @@ export class TypeIdentificationService {
             const SAVE_UPDATE = await getRepository(TypeIdentification).save(UPDATE);
             return SAVE_UPDATE;
         }
-        return "consulta invalida";        
+        return "consulta invalida";
     }
 }

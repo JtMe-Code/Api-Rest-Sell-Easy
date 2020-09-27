@@ -32,7 +32,7 @@ export class TypeExpenseService {
             }
             return RESULT;
         }
-        return "consulta invalida";        
+        return "consulta invalida";
     }
 
     async readAll():Promise<string | object[]>{
@@ -44,7 +44,7 @@ export class TypeExpenseService {
     }
 
     async update():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
             const RESULT = await getRepository(TypeExpense).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return "no existe el tipo de gasto";

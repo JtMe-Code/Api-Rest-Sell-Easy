@@ -37,7 +37,7 @@ export class CustomerService {
             }
             return RESULT;
         }
-        return "consulta invalida";       
+        return "consulta invalida";
     }
 
     async readAll():Promise<string | [Customer[], number]>{
@@ -47,13 +47,13 @@ export class CustomerService {
             if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(Customer).findAndCount({skip: offset, take: limit})
+            const RESULT = await getRepository(Customer).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }
             return RESULT;
         }
-        return "consulta no valida";        
+        return "consulta no valida";
     }
 
     async update():Promise<string | object>{
@@ -66,7 +66,7 @@ export class CustomerService {
             const SAVE_UPDATE = await getRepository(Customer).save(UPDATE);
             return SAVE_UPDATE;
         }
-        return "consulta invalida";         
+        return "consulta invalida";
     }
 
     async search():Promise<string | object[]>{

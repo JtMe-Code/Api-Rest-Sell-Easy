@@ -31,7 +31,7 @@ export class SupplierInvoiceService {
                     console.log("Error aqui");
                     return `stock insuficiente del articulo ${element.id_items}`;
                 }
-            }else{                           
+            }else{
                 let result = await getRepository(Items).findOne({id: element.id_items});
                 if (result) {
                     let newStock = result.stock - element.quantity;
@@ -52,7 +52,7 @@ export class SupplierInvoiceService {
     }
 
     async read():Promise<string | object>{
-        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){  
+        if(typeof this.reqParams.id === "string" && parseInt(this.reqParams.id)> 0){
             const RESULT = await getRepository(SupplierInvoice).findOne({id: parseInt(this.reqParams.id)});
             if(!RESULT){
                 return `no existe la factura ${this.reqParams.id}`;
@@ -70,7 +70,7 @@ export class SupplierInvoiceService {
             if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(SupplierInvoice).findAndCount({skip: offset, take: limit})
+            const RESULT = await getRepository(SupplierInvoice).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }
@@ -89,7 +89,7 @@ export class SupplierInvoiceService {
             const SAVE_UPDATE = await getRepository(SupplierInvoice).save(UPDATE);
             return SAVE_UPDATE;
         }
-        return "consulta invalida";        
+        return "consulta invalida";
     }
 
     async search():Promise<string | object[]>{
@@ -104,7 +104,7 @@ export class SupplierInvoiceService {
             }
             const RESULT_MAP:number[] = RESULT.map((element) =>{
             let newArray:number[] = [];
-            return newArray.push(element.id);            
+            return newArray.push(element.id);
             })
             const RESULT_INVOCE = await getRepository(SupplierInvoice).find({id_supplier: In(RESULT_MAP)});
             return RESULT_INVOCE;
