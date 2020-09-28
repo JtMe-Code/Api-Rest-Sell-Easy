@@ -65,7 +65,7 @@ export class CustomerInvoiceService {
         if(typeof this.reqQuery.offset === "string" && typeof this.reqQuery.limit === "string"){
             let offset = parseInt(this.reqQuery.offset);
             let limit = parseInt(this.reqQuery.limit);
-            if(offset < 0 || limit <= offset || isNaN(offset) || isNaN(limit)){
+            if(offset < 0 || limit < 1 || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
             const RESULT = await getRepository(CustomerInvoice).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
