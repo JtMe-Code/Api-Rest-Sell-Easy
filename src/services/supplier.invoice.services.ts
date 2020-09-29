@@ -102,11 +102,11 @@ export class SupplierInvoiceService {
             if(RESULT.length < 1){
             return "sin resultados";
             }
-            let newArray:number[] = [];
-            const RESULT_MAP:number[] = RESULT.map((element) =>{
-            return newArray.push(element.id);
+            let resultMap:number[] = [];
+            RESULT.map((element) =>{
+                resultMap.push(element.id);
             });
-            const RESULT_INVOCE = await getRepository(SupplierInvoice).find({id_supplier: In(RESULT_MAP)});
+            const RESULT_INVOCE = await getRepository(SupplierInvoice).find({id_supplier: In(resultMap)});
             return RESULT_INVOCE;
         }
         return "consulta invalida";

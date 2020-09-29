@@ -100,11 +100,11 @@ export class CustomerInvoiceService {
             if(RESULT.length < 1){
             return "sin resultados";
             }
-            let newArray:number[] = [];
-            const RESULT_MAP:number[] = RESULT.map((element) =>{
-            return newArray.push(element.id);
+            let resultMap:number[] = [];
+            RESULT.map((element) =>{
+                resultMap.push(element.id);
             });
-            const RESULT_INVOCE = await getRepository(CustomerInvoice).find({id_customer: In(RESULT_MAP)});
+            const RESULT_INVOCE = await getRepository(CustomerInvoice).find({id_customer: In(resultMap)});
             return RESULT_INVOCE;
         }
         return "consulta invalida";
