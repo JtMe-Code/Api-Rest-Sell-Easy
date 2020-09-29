@@ -47,7 +47,7 @@ export class CustomerService {
             if(offset < 0 || limit < 1 || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(Customer).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
+            const RESULT = await getRepository(Customer).findAndCount({order: {name: "ASC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }
@@ -75,7 +75,7 @@ export class CustomerService {
             const RESULT = await getRepository(Customer).find({where: [
                 {name: Like(`%${SEARCH}%`)},
                 {identification: Like(`%${SEARCH}%`)}
-            ]});
+            ], order: {createdAt: "DESC"}});
             if(RESULT.length < 1){
             return "sin resultados";
             }

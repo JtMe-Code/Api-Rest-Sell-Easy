@@ -41,7 +41,7 @@ export class ItemsService {
             if(offset < 0 || limit < 1 || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(Items).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
+            const RESULT = await getRepository(Items).findAndCount({order: {description: "ASC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }

@@ -48,7 +48,7 @@ export class SupplierService {
             if(offset < 0 || limit < 1 || isNaN(offset) || isNaN(limit)){
                 return "consulta no valida";
             }
-            const RESULT = await getRepository(Supplier).findAndCount({order: {createdAt: "DESC"}, skip: offset, take: limit});
+            const RESULT = await getRepository(Supplier).findAndCount({order: {name: "ASC"}, skip: offset, take: limit});
             if(RESULT[1] < 1){
                 return "sin resultados";
             }
