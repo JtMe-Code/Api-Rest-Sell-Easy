@@ -15,6 +15,9 @@ export class CustomerInvoice {
     @JoinColumn({name: "id_customer"})
     customer: Customer;
 
+    @Column("double")
+    totalValue: number;
+
     @CreateDateColumn()
     createdAt: Timestamp;
 

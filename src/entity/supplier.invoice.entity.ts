@@ -15,6 +15,9 @@ export class SupplierInvoice {
     @JoinColumn({name: "id_supplier"})
     supplier: Supplier;
 
+    @Column("double")
+    totalValue: number;
+
     @CreateDateColumn()
     createdAt: Timestamp;
 
