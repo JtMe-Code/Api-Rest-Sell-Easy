@@ -100,7 +100,7 @@ export class SupplierInvoiceService {
                 {identification: Like(`%${SEARCH}%`)}
             ]});
             if(RESULT.length < 1){
-            return "sin resultados";
+                return "sin resultados";
             }
             let resultMap:number[] = [];
             RESULT.map((element) =>{
