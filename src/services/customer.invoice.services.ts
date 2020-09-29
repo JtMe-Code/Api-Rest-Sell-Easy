@@ -105,6 +105,9 @@ export class CustomerInvoiceService {
                 resultMap.push(element.id);
             });
             const RESULT_INVOCE = await getRepository(CustomerInvoice).find({id_customer: In(resultMap)});
+            if(RESULT_INVOCE.length < 1){
+                return "sin resultados";
+            }
             return RESULT_INVOCE;
         }
         return "consulta invalida";

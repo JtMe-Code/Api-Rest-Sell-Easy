@@ -107,6 +107,9 @@ export class SupplierInvoiceService {
                 resultMap.push(element.id);
             });
             const RESULT_INVOCE = await getRepository(SupplierInvoice).find({id_supplier: In(resultMap)});
+            if(RESULT_INVOCE.length < 1){
+                return "sin resultados";
+            }
             return RESULT_INVOCE;
         }
         return "consulta invalida";
