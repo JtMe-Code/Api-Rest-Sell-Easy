@@ -102,10 +102,10 @@ export class SupplierInvoiceService {
             if(RESULT.length < 1){
             return "sin resultados";
             }
-            const RESULT_MAP:number[] = RESULT.map((element) =>{
             let newArray:number[] = [];
+            const RESULT_MAP:number[] = RESULT.map((element) =>{
             return newArray.push(element.id);
-            })
+            });
             const RESULT_INVOCE = await getRepository(SupplierInvoice).find({id_supplier: In(RESULT_MAP)});
             return RESULT_INVOCE;
         }
