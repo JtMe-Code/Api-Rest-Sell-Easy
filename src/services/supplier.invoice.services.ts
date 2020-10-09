@@ -21,7 +21,7 @@ export class SupplierInvoiceService {
     async create():Promise<string | object>{
         let arrayItemsUpdate: [{id: number, stock: number, lastPurchasePrice: number}] = [{id:0, stock:0, lastPurchasePrice:0}];
         for (let i = 0; i < this.body.purchaseInvoiceDescription.length; i++) {
-            let element = this.body.purchaseInvoiceDescription[i];            
+            let element = this.body.purchaseInvoiceDescription[i];
             let existItem = arrayItemsUpdate.findIndex(array => element.id_items == array.id);
             if(existItem >= 0){
                 if(arrayItemsUpdate[existItem].stock >= element.quantity){
@@ -34,7 +34,7 @@ export class SupplierInvoiceService {
             }else{
                 let result = await getRepository(Items).findOne({id: element.id_items});
                 if (result) {
-                    let newStock = result.stock - element.quantity;
+                    let newStock = result.stock + element.quantity;
                     arrayItemsUpdate.push({id: result.id, stock: newStock, lastPurchasePrice: element.purchasePrice});
                 }else{
                     console.log("Error aca");
