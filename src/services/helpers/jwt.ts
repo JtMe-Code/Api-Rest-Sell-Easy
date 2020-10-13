@@ -6,11 +6,11 @@ export class JWT {
     constructor(private requestBody: Login, private tokenBearer?: string) {
     }
 
-    create(): {token: string}{
+    create(): {token: string, expiresIn: number}{
         const TOKEN_CREATED = jwt.sign({ id: this.requestBody.id, user: this.requestBody.user }, JWT_SECRET, {
             expiresIn: 86400,
         });
-        const TOKEN = {token: TOKEN_CREATED}
+        const TOKEN = {token: TOKEN_CREATED, expiresIn: 86400}
         return TOKEN;
     }
     // SOLO USAR PARA CONSULTAS EN CASO DE SER NECESARIO

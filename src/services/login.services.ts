@@ -6,8 +6,10 @@ import {JWT} from './helpers/jwt';
 
 export class LoginServices {
     private body: Login;
+    private request: any;
     constructor(req: Request){
         this.body = req.body;
+        this.request = req;
     }
 
     async signup(): Promise<string | object>{
@@ -23,7 +25,7 @@ export class LoginServices {
         return SAVE_DATA;
     }
 
-    async signin(): Promise<string | {token: string}>{
+    async signin(): Promise<string | {token: string, expiresIn: number}>{
         const RESULT = await getRepository(Login).findOne({user: this.body.user});
         if(!RESULT){
             return "Usuario o contraseña incorrecta";
