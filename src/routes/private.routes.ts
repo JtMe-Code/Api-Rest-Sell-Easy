@@ -10,6 +10,7 @@ import supplierInvoiceRoutes from './supplier.invoice.routes';
 import supplierRoutes from './supplier.routes';
 import typeExpenseRoutes from './type.expense.routes';
 import typeIdentificationRoutes from './type.identification.routes';
+import reportRoutes from './report.routes';
 
 
 const ROUTER = Router();
@@ -26,5 +27,6 @@ ROUTER.use(supplierInvoiceRoutes);
 ROUTER.use(supplierRoutes);
 ROUTER.use(typeExpenseRoutes);
 ROUTER.use(typeIdentificationRoutes);
+ROUTER.use(reportRoutes);
 
 export default ROUTER;
