@@ -13,7 +13,7 @@ const config:any = {
         "duration": 3000
     },
     "synchronize": true, 
-    "entities": ["dist/entity/**/*.js"]
+    "entities": [__dirname + "/entity/**/*.js"]
  }
 
 function main() {
